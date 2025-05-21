@@ -32,6 +32,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxVc2VyUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Dell/TripNest/Views/Agency/AgencyLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmN5XEFnZW5jeUxvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dell/TripNest/Views/Agency/Bookings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmN5XEJvb2tpbmdzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dell/TripNest/Views/Agency/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmN5XERhc2hib2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dell/TripNest/Views/Agency/Feedback.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmN5XEZlZWRiYWNrLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dell/TripNest/Views/Agency/ManageTours.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmN5XE1hbmFnZVRvdXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Dell/TripNest/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -42,6 +62,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Dell/TripNest/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dell/TripNest/Views/Shared/_AgencyDashboardLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZ2VuY3lEYXNoYm9hcmRMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Dell/TripNest/Views/Shared/_ValidationScriptsPartial.cshtml]

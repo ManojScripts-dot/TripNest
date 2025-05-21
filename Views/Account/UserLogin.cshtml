@@ -1,23 +1,12 @@
-@model UserLoginViewModel
+<h2>Login</h2>
+<form asp-action="Login" method="post">
+    <label>Email:</label>
+    <input name="email" class="form-control" /><br />
 
-@{
-    ViewData["Title"] = "User Login";
-}
+    <label>Password:</label>
+    <input name="password" type="password" class="form-control" /><br />
 
-<h2>User Login</h2>
+    <button type="submit" class="btn btn-primary">Login</button>
 
-<form asp-action="UserLogin" method="post">
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Login as User</button>
+    <p style="color:red">@ViewBag.Error</p>
 </form>

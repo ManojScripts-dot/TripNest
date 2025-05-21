@@ -1,41 +1,70 @@
 using Microsoft.AspNetCore.Mvc;
+using TripNest.Data;
+using TripNest.Models;
 
 namespace TripNest.Controllers
 {
     public class AccountController : Controller
     {
-        [HttpGet]
-        public IActionResult UserLogin()
+        private readonly ApplicationDbContext _context;
+
+        public AccountController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
 
+        // GET: /Account/Register
+        public IActionResult Register()
+        {
+            // Return the UserRegister.cshtml view explicitly
+            return View("UserRegister");
+        }
+
+        // POST: /Account/Register
         [HttpPost]
-        public IActionResult UserLogin(UserLoginViewModel model)
+        public IActionResult Register(User user)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            if (ModelState.IsValid)
+            {
+                // In real apps, hash the password!
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                return RedirectToAction("Login");
+            }
 
-            // Authentication logic here
-
-            return RedirectToAction("Index", "Home");
+            // Return UserRegister.cshtml with validation errors and user model
+            return View("UserRegister", user);
         }
 
-        [HttpGet]
-        public IActionResult AgencyLogin()
+        // GET: /Account/Login
+        public IActionResult Login()
         {
-            return View();
+            // Return the UserLogin.cshtml view explicitly
+            return View("UserLogin");
         }
 
+        // POST: /Account/Login
         [HttpPost]
-        public IActionResult AgencyLogin(AgencyLoginViewModel model)
+        public IActionResult Login(string email, string password)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+            if (user != null)
+            {
+                // In real apps, use proper authentication/claims
+                HttpContext.Session.SetString("UserEmail", user.Email);
+                return RedirectToAction("Index", "Home");
+            }
 
-            // Authentication logic here
+            ViewBag.Error = "Invalid email or password";
+            // Return UserLogin.cshtml view with error message
+            return View("UserLogin");
+        }
 
-            return RedirectToAction("AgencyDashboard", "Agency");
+        // GET: /Account/Logout
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }

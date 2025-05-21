@@ -35,16 +35,18 @@
         @RenderBody()
     </div>
 
-    <footer class="bg-dark text-white mt-5 p-4 text-center"></footer>
-    <div class="container">
-        <p class="mb-1">© 2025 TripNest. All rights reserved.</p>
-        <p class="mb-0">
-            <a href="/Home/Privacy" class="text-white text-decoration-underline">Privacy Policy</a> |
-            <a href="/Home/Contact" class="text-white text-decoration-underline">Contact Us</a>
-        </p>
-    </div>
-</footer>
+    <footer class="bg-dark text-white mt-5 p-4 text-center">
+        <div class="container">
+            <p class="mb-1">© 2025 TripNest. All rights reserved.</p>
+            <p class="mb-0">
+                <a href="/Home/Privacy" class="text-white text-decoration-underline">Privacy Policy</a> |
+                <a href="/Home/Contact" class="text-white text-decoration-underline">Contact Us</a>
+            </p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

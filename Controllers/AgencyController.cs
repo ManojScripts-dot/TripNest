@@ -66,8 +66,9 @@ namespace TripNest.Controllers
             if (string.IsNullOrEmpty(agencyEmail))
                 return RedirectToAction("Login");
 
+            var tours = _context.Tours.ToList(); // Or filter based on agency, if applicable
             ViewData["Title"] = "Manage Tours";
-            return View();
+            return View(tours);
         }
 
         // GET: /Agency/Bookings

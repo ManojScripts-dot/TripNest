@@ -116,5 +116,15 @@ namespace TripNest.Controllers
             return RedirectToAction("Dashboard", "Agency"); // or Index or wherever you want
         }
 
+        public IActionResult Details(int id)
+{
+    var tour = _context.Tours.FirstOrDefault(t => t.Id == id);
+    if (tour == null)
+    {
+        return NotFound();
+    }
+    return View(tour);
+}
+
     }
 }

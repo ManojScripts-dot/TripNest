@@ -6,7 +6,7 @@
 
 <h2 class="mb-4">Your Tours</h2>
 
-<a href="@Url.Action("Create", "Tours")" class="btn btn-success mb-3">+ Add New Tour</a>
+<a href="@Url.Action("Create", "Tour")" class="btn btn-success mb-3">+ Add New Tour</a>
 
 <table class="table table-bordered table-striped">
     <thead class="thead-light">
@@ -36,8 +36,8 @@
                     </span>
                 </td>
                 <td>
-                    <a href="@Url.Action("Edit", "Tours", new { id = tour.Id })" class="text-primary me-2">Edit</a>
-                    <a href="@Url.Action("Delete", "Tours", new { id = tour.Id })" class="text-danger">Delete</a>
+                    <a href="@Url.Action("Edit", "Tour", new { id = tour.Id })" class="text-primary me-2">Edit</a>
+                    <a href="@Url.Action("Delete", "Tour", new { id = tour.Id })" class="text-danger">Delete</a>
                 </td>
             </tr>
         }

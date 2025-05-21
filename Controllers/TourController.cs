@@ -46,7 +46,8 @@ namespace TripNest.Controllers
             {
                 _context.Tours.Add(tour);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Dashboard", "Agency");
+
             }
 
             return View(tour);

@@ -1,16 +1,19 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TripNest.Models  // Replace with your actual project namespace
+namespace TripNest.Models
 {
-    public class UserLoginViewModel
+    public class User
     {
+        public int Id { get; set; }
+
         [Required]
         [EmailAddress]
         public required string Email { get; set; }
 
         [Required]
-        [DataType(DataType.Password)]
         public required string Password { get; set; }
-    }
 
+        [Required]
+        public string Role { get; set; } = "User"; // Default role is "User"
+    }
 }

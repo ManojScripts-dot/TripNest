@@ -1,8 +1,28 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<TripNest.Models.Tour>
+
+@{
+    ViewData["Title"] = "Explore Tours";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Explore Our Popular Tours</h2>
+    <div class="row">
+        @foreach (var tour in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="@tour.ImageUrl" class="card-img-top" alt="@tour.Title" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@tour.Title</h5>
+                        <p class="card-text text-muted">@tour.Description?.Substring(0, Math.Min(100, tour.Description.Length))... </p>
+                        <div class="mt-auto">
+                            <p class="fw-bold mb-1">Duration: @tour.DurationDays days</p>
+                            <p class="fw-bold mb-2 text-primary">Price: $@tour.Price</p>
+                            <a href="/Tour/Details/@tour.Id" class="btn btn-dark w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

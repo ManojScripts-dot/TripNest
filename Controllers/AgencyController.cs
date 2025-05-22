@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TripNest.Data;
 using TripNest.Models;
-using Microsoft.AspNetCore.Http; // For session
 
 namespace TripNest.Controllers
 {
@@ -17,7 +16,7 @@ namespace TripNest.Controllers
         // GET: /Agency/Login
         public IActionResult Login()
         {
-            return View("AgencyLogin"); // Explicitly specify the view name
+            return View("AgencyLogin");
         }
 
         // POST: /Agency/Login
@@ -26,12 +25,20 @@ namespace TripNest.Controllers
         {
             var agency = _context.Users.FirstOrDefault(u =>
                 u.Email == email &&
-                u.Password == password && // TODO: Hash passwords in production
+                u.Password == password && // TODO: Use hashed passwords in production
                 u.Role == "Agency");
 
             if (agency != null)
             {
-                HttpContext.Session.SetString("AgencyEmail", agency.Email);
+                // ✅ Set cookie
+                Response.Cookies.Append("AgencyEmail", agency.Email, new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddHours(1),
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true
+                });
+
                 return RedirectToAction("Dashboard");
             }
 
@@ -42,16 +49,14 @@ namespace TripNest.Controllers
         // GET: /Agency/Dashboard
         public IActionResult Dashboard()
         {
-            var agencyEmail = HttpContext.Session.GetString("AgencyEmail");
+            var agencyEmail = Request.Cookies["AgencyEmail"];
             if (string.IsNullOrEmpty(agencyEmail))
-            {
                 return RedirectToAction("Login");
-            }
 
             var agency = _context.Users.FirstOrDefault(u => u.Email == agencyEmail && u.Role == "Agency");
             if (agency == null)
             {
-                HttpContext.Session.Clear();
+                Response.Cookies.Delete("AgencyEmail");
                 return RedirectToAction("Login");
             }
 
@@ -62,11 +67,11 @@ namespace TripNest.Controllers
         // GET: /Agency/ManageTours
         public IActionResult ManageTours()
         {
-            var agencyEmail = HttpContext.Session.GetString("AgencyEmail");
+            var agencyEmail = Request.Cookies["AgencyEmail"];
             if (string.IsNullOrEmpty(agencyEmail))
                 return RedirectToAction("Login");
 
-            var tours = _context.Tours.ToList(); // Or filter based on agency, if applicable
+            var tours = _context.Tours.ToList(); // You can filter by agency later
             ViewData["Title"] = "Manage Tours";
             return View(tours);
         }
@@ -74,7 +79,7 @@ namespace TripNest.Controllers
         // GET: /Agency/Bookings
         public IActionResult Bookings()
         {
-            var agencyEmail = HttpContext.Session.GetString("AgencyEmail");
+            var agencyEmail = Request.Cookies["AgencyEmail"];
             if (string.IsNullOrEmpty(agencyEmail))
                 return RedirectToAction("Login");
 
@@ -85,7 +90,7 @@ namespace TripNest.Controllers
         // GET: /Agency/Feedback
         public IActionResult Feedback()
         {
-            var agencyEmail = HttpContext.Session.GetString("AgencyEmail");
+            var agencyEmail = Request.Cookies["AgencyEmail"];
             if (string.IsNullOrEmpty(agencyEmail))
                 return RedirectToAction("Login");
 
@@ -96,7 +101,7 @@ namespace TripNest.Controllers
         // GET: /Agency/Logout
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("AgencyEmail");
+            Response.Cookies.Delete("AgencyEmail");
             return RedirectToAction("Login");
         }
     }

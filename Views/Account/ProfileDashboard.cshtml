@@ -1,0 +1,59 @@
+@model TripNest.Models.ViewModels.ProfileDashboardViewModel
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container mt-4">
+    <h2>@Model.Profile.FirstName @Model.Profile.LastName's Dashboard</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <img src="@Model.Profile.ProfileImageUrl" alt="Profile Image" class="img-thumbnail" style="width: 100%; max-width: 200px;" />
+        </div>
+        <div class="col-md-8">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Email:</strong> @Model.Profile.Email</li>
+                <li class="list-group-item"><strong>Phone:</strong> @Model.Profile.PhoneNumber</li>
+                <li class="list-group-item"><strong>Address:</strong> @Model.Profile.Address</li>
+                <li class="list-group-item"><strong>Country:</strong> @Model.Profile.Country</li>
+                <li class="list-group-item"><strong>Language:</strong> @Model.Profile.PreferredLanguage</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <h3>Your Bookings</h3>
+
+    @if (Model.Bookings != null && Model.Bookings.Any())
+    {
+        <table class="table table-bordered table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tour</th>
+                    <th>Booking Date</th>
+                    <th>Status</th>
+                    <th>Agency</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model.Bookings)
+                {
+                    <tr>
+                        <td>@booking.TourName</td>
+                        <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                        <td>@booking.Status</td>
+                        <td>@booking.AgencyId</td> <!-- Replace with AgencyName if available -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info mt-3">
+            You have no bookings yet.
+        </div>
+    }
+</div>

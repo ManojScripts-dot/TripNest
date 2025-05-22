@@ -1,0 +1,95 @@
+@model TripNest.Models.Booking
+
+@{
+    ViewData["Title"] = "Book Tour";
+    var tour = ViewBag.Tour as TripNest.Models.Tour;
+}
+
+@if (tour == null)
+{
+    <div class="alert alert-danger">Tour information could not be loaded.</div>
+}
+else
+{
+    <h2>Book Tour: @tour.Title</h2>
+
+    <form asp-action="Create" method="post" class="mt-4">
+        <!-- Hidden TourId field -->
+        <input type="hidden" asp-for="TourId" value="@tour.Id" />
+
+        <!-- Customer Name -->
+        <div class="mb-3">
+            <label asp-for="CustomerName" class="form-label"></label>
+            <input asp-for="CustomerName" class="form-control" />
+            <span asp-validation-for="CustomerName" class="text-danger"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="mb-3">
+            <label asp-for="PhoneNumber" class="form-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <!-- Number of Guests -->
+        <div class="mb-3">
+            <label asp-for="NumberOfGuests" class="form-label"></label>
+            <input asp-for="NumberOfGuests" class="form-control" type="number" min="1" max="100" />
+            <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
+        </div>
+
+        <!-- Preferred Tour Date -->
+        <div class="mb-3">
+            <label asp-for="PreferredTourDate" class="form-label"></label>
+            <input asp-for="PreferredTourDate" class="form-control" type="date" />
+            <span asp-validation-for="PreferredTourDate" class="text-danger"></span>
+        </div>
+
+        <!-- Special Requests -->
+        <div class="mb-3">
+            <label asp-for="SpecialRequests" class="form-label"></label>
+            <textarea asp-for="SpecialRequests" class="form-control"></textarea>
+            <span asp-validation-for="SpecialRequests" class="text-danger"></span>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="mb-3">
+            <label asp-for="AdditionalNotes" class="form-label"></label>
+            <textarea asp-for="AdditionalNotes" class="form-control"></textarea>
+            <span asp-validation-for="AdditionalNotes" class="text-danger"></span>
+        </div>
+
+        <!-- Tour Price and Total Amount -->
+        <p><strong>Tour Price per guest:</strong> $@tour.Price</p>
+        <p><strong>Total Amount:</strong> <span id="totalAmount">$@Model.TotalAmount</span></p>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+    </form>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            const pricePerGuest = @tour.Price;
+            const guestsInput = document.querySelector('input[name="NumberOfGuests"]');
+            const totalAmountSpan = document.getElementById('totalAmount');
+
+            function updateTotal() {
+                let guests = parseInt(guestsInput.value) || 0;
+                if (guests < 1) guests = 1;
+                const total = (pricePerGuest * guests).toFixed(2);
+                totalAmountSpan.textContent = `$${total}`;
+            }
+
+            guestsInput.addEventListener('input', updateTotal);
+            updateTotal();
+        </script>
+    }
+}

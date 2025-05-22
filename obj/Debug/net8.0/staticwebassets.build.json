@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GYXyD3Y5STjjhRX30CplM9ASPDgIWrWLXIOW6DKQas0=",
+  "Hash": "Sla76/zmaiuOrWYxWAG2wNh42AnqOPGXa4VV/6N5K8w=",
   "Source": "TripNest",
   "BasePath": "_content/TripNest",
   "Mode": "Default",
@@ -167,6 +167,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/logo.png"
+    },
+    {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/mission.jpg",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/mission.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/mission.jpg"
     },
     {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/js/site.js",

@@ -1,49 +1,122 @@
 /* _content/TripNest/Views/Shared/_Layout.cshtml.rz.scp.css */
-/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand[b-xgxb53mb94] {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+/* Custom styles for the navbar */
+.navbar[b-4dq3zkuzdb] {
+    background-color: #1ABC9C !important;
+    transition: all 0.3s ease;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-a[b-xgxb53mb94] {
-  color: #0077cc;
+.navbar-brand[b-4dq3zkuzdb] {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #fff !important;
+    transition: color 0.3s ease;
 }
 
-.btn-primary[b-xgxb53mb94] {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.navbar-brand:hover[b-4dq3zkuzdb] {
+    color: #f0f0f0 !important;
 }
 
-.nav-pills .nav-link.active[b-xgxb53mb94], .nav-pills .show > .nav-link[b-xgxb53mb94] {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.nav-link[b-4dq3zkuzdb] {
+    color: #fff !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
 }
 
-.border-top[b-xgxb53mb94] {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom[b-xgxb53mb94] {
-  border-bottom: 1px solid #e5e5e5;
+.nav-link:hover[b-4dq3zkuzdb] {
+    background-color: blue;
+    border-radius: 5px;
 }
 
-.box-shadow[b-xgxb53mb94] {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+/* Style for the Login button */
+.nav-login[b-4dq3zkuzdb] {
+    background-color: #2c3e50 !important;
+    border-radius: 5px;
+    padding: 0.5rem 1.5rem !important;
+    margin-left: 1rem;
+    transition: all 0.3s ease;
 }
 
-button.accept-policy[b-xgxb53mb94] {
-  font-size: 1rem;
-  line-height: inherit;
+.nav-login:hover[b-4dq3zkuzdb] {
+    background-color: #34495e !important;
+    color: #fff !important;
 }
 
-.footer[b-xgxb53mb94] {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+/* Adjust navbar for smaller screens */
+@media (max-width: 991px) {
+    .navbar-nav[b-4dq3zkuzdb] {
+        text-align: center;
+    }
+    .nav-item[b-4dq3zkuzdb] {
+        margin: 0.5rem 0;
+    }
+    .nav-link[b-4dq3zkuzdb] {
+        padding: 0.75rem;
+    }
+    .nav-login[b-4dq3zkuzdb] {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        display: inline-block;
+    }
+}
+
+/* Ensure navbar toggler is styled */
+.navbar-toggler[b-4dq3zkuzdb] {
+    border: none;
+}
+
+.navbar-toggler-icon[b-4dq3zkuzdb] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.95%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Original styles from _Layout.cshtml.css */
+a.navbar-brand[b-4dq3zkuzdb] {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+a[b-4dq3zkuzdb] {
+    color: #0077cc;
+}
+
+.btn-primary[b-4dq3zkuzdb] {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active[b-4dq3zkuzdb], .nav-pills .show > .nav-link[b-4dq3zkuzdb] {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.border-top[b-4dq3zkuzdb] {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom[b-4dq3zkuzdb] {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow[b-4dq3zkuzdb] {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy[b-4dq3zkuzdb] {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.footer[b-4dq3zkuzdb] {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
 }

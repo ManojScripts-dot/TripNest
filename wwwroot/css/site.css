@@ -20,3 +20,17 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+@media (min-width: 992px) {
+    .navbar-toggler {
+        display: none;
+    }
+    .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .nav-item {
+        margin: 0 0.5rem;
+    }
+}

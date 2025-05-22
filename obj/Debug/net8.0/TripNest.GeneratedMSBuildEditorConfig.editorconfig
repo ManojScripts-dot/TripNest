@@ -24,6 +24,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBZ2VuY3lMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Dell/TripNest/Views/Account/ProfileDashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Dell/TripNest/Views/Account/UserLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxVc2VyTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -52,6 +56,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmN5XE1hbmFnZVRvdXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Dell/TripNest/Views/Booking/Confirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xDb25maXJtYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dell/TripNest/Views/Booking/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va2luZ1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Dell/TripNest/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -66,6 +78,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Dell/TripNest/Views/Shared/_AgencyDashboardLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZ2VuY3lEYXNoYm9hcmRMYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Dell/TripNest/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Dell/TripNest/Views/Shared/_ValidationScriptsPartial.cshtml]
@@ -95,7 +111,3 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/Dell/TripNest/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Dell/TripNest/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-xgxb53mb94

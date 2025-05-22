@@ -8,12 +8,16 @@ namespace TripNest.Models
 
         [Required]
         [EmailAddress]
-        public required string Email { get; set; }
+        public string Email { get; set; } = null!;
 
         [Required]
-        public required string Password { get; set; }
+        public string Password { get; set; } = null!;
 
-        [Required]
         public string Role { get; set; } = "User"; // Default role is "User"
+
+        [Required]
+        public UserProfile UserProfile { get; set; } = null!;
+
+        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

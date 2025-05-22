@@ -120,9 +120,7 @@ C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.MvcApplicationPartsAssemblyInfo
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.RazorAssemblyInfo.cache
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.RazorAssemblyInfo.cs
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.sourcelink.json
-C:\Users\Dell\TripNest\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\Dell\TripNest\obj\Debug\net8.0\scopedcss\bundle\TripNest.styles.css
-C:\Users\Dell\TripNest\obj\Debug\net8.0\scopedcss\projectbundle\TripNest.bundle.scp.css
 C:\Users\Dell\TripNest\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Dell\TripNest\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\Dell\TripNest\obj\Debug\net8.0\staticwebassets.development.json

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using TripNest.Data;
 
@@ -7,13 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add session support with a 30-minute timeout
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;   // Helps prevent client-side scripts from accessing the cookie
-    options.Cookie.IsEssential = true; // Required if GDPR or similar cookie policies are applied
-});
+// Add cookie authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";      // Redirect here if not authenticated
+        options.LogoutPath = "/Account/Logout";
+        options.AccessDeniedPath = "/Account/AccessDenied";  // You may create this page
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.SlidingExpiration = true;
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Cookies only over HTTPS (recommended for production)
+    });
 
 // Add MVC Controllers with Views
 builder.Services.AddControllersWithViews();
@@ -32,11 +39,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();  // Make sure Session is enabled BEFORE Authorization
-
-// If you add authentication middleware later, uncomment the following line
-// app.UseAuthentication();
-
+// Enable Authentication and Authorization middleware
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Default route configuration

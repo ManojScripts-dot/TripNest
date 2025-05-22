@@ -1,14 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authorization
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>@ViewData["Title"] - TripNest</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="@Url.Content("~/css/layout.css")" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">TripNest</a>
+            <a class="navbar-brand fw-bold" href="/">TripNest</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,9 +28,29 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/Package">Packages</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Account/Login">Login</a>
-                    </li>
+
+                    @* Using built-in authentication check instead of session *@
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle"></i> @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li><a class="dropdown-item" href="/Account/Profile">Profile</a></li>
+                                <li><a class="dropdown-item" href="/Account/Logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Account/Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Account/Register">Register</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -35,8 +60,10 @@
         @RenderBody()
     </div>
 
-    <footer class="bg-dark text-white mt-5 p-4 text-center">
-        <div class="container">
+    @* Optional footer *@
+    @* 
+    <footer class="footer bg-dark text-white mt-5 py-3">
+        <div class="container text-center">
             <p class="mb-1">© 2025 TripNest. All rights reserved.</p>
             <p class="mb-0">
                 <a href="/Home/Privacy" class="text-white text-decoration-underline">Privacy Policy</a> |
@@ -44,9 +71,9 @@
             </p>
         </div>
     </footer>
+    *@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

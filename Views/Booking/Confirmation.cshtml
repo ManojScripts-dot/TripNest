@@ -1,0 +1,17 @@
+@model TripNest.Models.Booking
+
+@{
+    ViewData["Title"] = "Booking Confirmation";
+}
+
+<h2>Booking Confirmed!</h2>
+
+<p>Thank you, <strong>@Model.CustomerName</strong>, for booking the tour: <strong>@Model.Tour?.Title ?? "Unknown Tour"</strong>.</p>
+
+<p>We have received your booking for <strong>@Model.NumberOfGuests</strong> guest(s) on <strong>@Model.PreferredTourDate.ToShortDateString()</strong>.</p>
+
+<p>Total amount to be paid: <strong>@Model.TotalAmount.ToString("C")</strong></p>
+
+<p>We will contact you shortly at <strong>@Model.Email</strong> or <strong>@Model.PhoneNumber</strong>.</p>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back to Home</a>

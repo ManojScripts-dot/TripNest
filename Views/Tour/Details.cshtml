@@ -16,7 +16,8 @@
             <p><strong>Duration:</strong> @Model.DurationDays days</p>
             <p><strong>Price:</strong> $@Model.Price</p>
             <p><strong>Rating:</strong> @Model.StarRating ★</p>
-            <a href="#" class="btn btn-primary mt-3">Book Now</a>
+            <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Book Now</a>
+
         </div>
     </div>
 </div>

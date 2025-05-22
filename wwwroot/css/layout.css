@@ -1,52 +1,181 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+/* Custom styles for the navbar */
+.navbar {
+    background-color: #faf8f5 !important;
+    transition: all 0.3s ease;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: medium;
+    color: #27AE60 !important;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #1abc9c !important;
+    transform: scale(1.05);
+}
+
+.navbar-logo {
+    height: 60px;
+    margin-right: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.nav-link {
+    color: #27AE60 !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.nav-link:hover {
+    border-bottom: 2px solid #27AE60;
+    padding-bottom: 4px;
+    color: #1abc9c !important;
+}
+
+.nav-login {
+    background-color: #27AE60 !important;
+    border-radius: 5px;
+    padding: 0.5rem 1.5rem !important;
+    margin-left: 1rem;
+    color: #faf8f5 !important;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-login:hover {
+    background-color: #1abc9c !important;
+    color: #faf8f5 !important;
+    transform: scale(1.05);
+}
+
+@media (min-width: 992px) {
+    .navbar .container-fluid {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+    .navbar-collapse {
+        display: block !important;
+    }
+    .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .nav-item {
+        margin: 0 0.5rem;
+    }
+    .dropdown-menu {
+        min-width: auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    .navbar .container-fluid {
+        margin-left: 6rem;
+        margin-right: 6rem;
+    }
+}
+
+@media (max-width: 991px) {
+    .navbar .container-fluid {
+        margin-left: 1rem;
+        margin-right: 1rem; 
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+    .nav-item {
+        margin: 0.5rem 0;
+    }
+    .nav-link {
+        padding: 0.75rem;
+    }
+    .nav-login {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        display: inline-block;
+    }
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2827, 174, 96, 0.95%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
-.navbar{
-background-color: #1b6ec2;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 a {
-  color: #0077cc;
+    color: #0077cc;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
+/* Updated footer styling */
 .footer {
-  background-color: #0a4075;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1 0 auto;
+    padding-bottom: 2rem; /* Space for footer */
 }

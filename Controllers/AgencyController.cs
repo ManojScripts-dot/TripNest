@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using TripNest.Data;
 using TripNest.Models;
+using Microsoft.AspNetCore.Http; // For CookieOptions
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace TripNest.Controllers
 {
@@ -21,17 +25,28 @@ namespace TripNest.Controllers
 
         // POST: /Agency/Login
         [HttpPost]
-        public IActionResult Login(string email, string password)
+        public IActionResult Login(AgencyLoginViewModel model)
         {
-            var agency = _context.Users.FirstOrDefault(u =>
-                u.Email == email &&
-                u.Password == password && // TODO: Use hashed passwords in production
-                u.Role == "Agency");
+            if (!ModelState.IsValid)
+            {
+                return View("AgencyLogin", model);
+            }
+
+            var agency = _context.Agencies.FirstOrDefault(a =>
+     a.Email == model.Email &&
+     a.Password == model.Password);
 
             if (agency != null)
             {
-                // ✅ Set cookie
                 Response.Cookies.Append("AgencyEmail", agency.Email, new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddHours(1),
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true
+                });
+
+                Response.Cookies.Append("AgencyId", agency.Id.ToString(), new CookieOptions
                 {
                     Expires = DateTimeOffset.UtcNow.AddHours(1),
                     HttpOnly = true,
@@ -43,17 +58,24 @@ namespace TripNest.Controllers
             }
 
             ViewBag.Error = "Invalid agency credentials";
-            return View("AgencyLogin");
+            return View("AgencyLogin", model);
         }
 
         // GET: /Agency/Dashboard
         public IActionResult Dashboard()
         {
             var agencyEmail = Request.Cookies["AgencyEmail"];
+            var agencyId = Request.Cookies["AgencyId"];
+
+            Console.WriteLine($"AgencyEmail cookie: {agencyEmail}");
+            Console.WriteLine($"AgencyId cookie: {agencyId}");
+
+
             if (string.IsNullOrEmpty(agencyEmail))
                 return RedirectToAction("Login");
 
-            var agency = _context.Users.FirstOrDefault(u => u.Email == agencyEmail && u.Role == "Agency");
+            var agency = _context.Agencies.FirstOrDefault(a => a.Email == agencyEmail);
+
             if (agency == null)
             {
                 Response.Cookies.Delete("AgencyEmail");
@@ -80,12 +102,59 @@ namespace TripNest.Controllers
         public IActionResult Bookings()
         {
             var agencyEmail = Request.Cookies["AgencyEmail"];
-            if (string.IsNullOrEmpty(agencyEmail))
+            var agencyIdCookie = Request.Cookies["AgencyId"];
+
+            if (string.IsNullOrEmpty(agencyEmail) || string.IsNullOrEmpty(agencyIdCookie) || !int.TryParse(agencyIdCookie, out int agencyId))
+            {
                 return RedirectToAction("Login");
+            }
+
+            // Get bookings for tours where Tour.AgencyId == agencyId, guarding against null Tour
+            var bookings = _context.Bookings
+                .Include(b => b.Tour)  // Include tour details
+                .Include(b => b.User)  // Include user details if needed
+                .Where(b => b.Tour != null && b.Tour.AgencyId == agencyId)
+                .ToList();
 
             ViewData["Title"] = "Bookings";
-            return View();
+            return View(bookings);
+
+
         }
+
+
+        // GET: /Agency/ViewBooking/5
+        public IActionResult ViewBooking(int id)
+        {
+            var booking = _context.Bookings
+                .Include(b => b.Tour)
+                .Include(b => b.User)
+                .FirstOrDefault(b => b.Id == id);
+
+            if (booking == null)
+                return NotFound();
+
+            return View(booking);
+        }
+
+        // POST: /Agency/ViewBooking/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ViewBooking(int id, string status)
+        {
+
+            
+            var booking = _context.Bookings.FirstOrDefault(b => b.Id == id);
+
+            if (booking == null)
+                return NotFound();
+
+            booking.Status = status;
+            _context.SaveChanges();
+
+            return RedirectToAction("Bookings");
+        }
+
 
         // GET: /Agency/Feedback
         public IActionResult Feedback()

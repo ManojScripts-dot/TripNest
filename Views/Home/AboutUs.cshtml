@@ -1,0 +1,85 @@
+@{
+    ViewBag.Title = "About Us";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="@Url.Content("/css/about-us.css")" />
+<link rel="stylesheet" href="@Url.Content("/css/index.css")" />
+
+<div style="margin-top: 80px;">
+    <h3 class="text-center mb-4" style="font-size: clamp(1.25rem, 4vw, 1.75rem); font-weight: 600; color: #2c3e50; margin-top: 0;">About Us</h3>
+    <div class="search-container about-us-content">
+        <p class="mb-5">
+            Welcome to TripNest! We are your trusted travel partner, dedicated to crafting seamless and unforgettable journeys across the globe. Founded with a passion for exploration, we specialize in curating unique travel experiences tailored to your desires. From pristine beaches to vibrant cityscapes and thrilling safaris, our mission is to connect you with the world’s most breathtaking destinations.
+        </p>
+        <p class="mb-5">
+            At TripNest, we pride ourselves on our commitment to excellence. Our team of certified local guides brings extensive knowledge and expertise, ensuring every trip is enriched with authentic insights. With a best price guarantee and flexible booking options, we make travel accessible and stress-free. Whether you're seeking relaxation or adventure, we’re here to turn your travel dreams into reality.
+        </p>
+        <p class="mb-5">
+            Since our inception, we’ve been driven by a vision to inspire wanderlust and create lasting memories. Join us on a journey where every detail is meticulously planned, and every moment is designed to exceed your expectations. Let TripNest be your gateway to the world!
+        </p>
+    </div>
+
+    <!-- Meet Our Team Section -->
+    <div class="search-container team-section">
+        <h3 class="text-center mb-4" style="font-size: clamp(1.25rem, 4vw, 1.75rem); font-weight: 600; color: #2c3e50; margin-top: 0;">Meet Our Team</h3>
+        <div class="row justify-content-center">
+            <div class="col-md-3 mb-4 text-center">
+                <div class="card team-card shadow-sm p-4">
+                    <div class="card-body">
+                        <img src="@Url.Content("~/images/aayusha.jpeg")" alt="Aayusha Bhurtel" class="team-image">
+                        <h5 class="card-title mb-2">Aayusha Bhurtel</h5>
+                        <p class="card-text mb-3">Lead Developer</p>
+                        <div class="d-flex justify-content-center gap-3 team-social-icons">
+                            <a href="https://facebook.com/aayusha" target="_blank" class="text-decoration-none"><i class="bi bi-facebook"></i></a>
+                            <a href="https://instagram.com/aayusha" target="_blank" class="text-decoration-none"><i class="bi bi-instagram"></i></a>
+                            <a href="https://linkedin.com/in/aayusha" target="_blank" class="text-decoration-none"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 text-center">
+                <div class="card team-card shadow-sm p-4">
+                    <div class="card-body">
+                        <img src="@Url.Content("~/images/eliza.jpeg")" alt="Eliza Shrestha" class="team-image">
+                        <h5 class="card-title mb-2">Eliza Shrestha</h5>
+                        <p class="card-text mb-3">UI/UX Designer</p>
+                        <div class="d-flex justify-content-center gap-3 team-social-icons">
+                            <a href="https://facebook.com/eliza" target="_blank" class="text-decoration-none"><i class="bi bi-facebook"></i></a>
+                            <a href="https://instagram.com/eliza" target="_blank" class="text-decoration-none"><i class="bi bi-instagram"></i></a>
+                            <a href="https://linkedin.com/in/eliza" target="_blank" class="text-decoration-none"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 text-center">
+                <div class="card team-card shadow-sm p-4">
+                    <div class="card-body">
+                        <img src="@Url.Content("~/images/nimi.jpeg")" alt="Nimi Thapa" class="team-image">
+                        <h5 class="card-title mb-2">Nimi Thapa</h5>
+                        <p class="card-text mb-3">Backend Developer</p>
+                        <div class="d-flex justify-content-center gap-3 team-social-icons">
+                            <a href="https://facebook.com/nimi" target="_blank" class="text-decoration-none"><i class="bi bi-facebook"></i></a>
+                            <a href="https://instagram.com/nimi" target="_blank" class="text-decoration-none"><i class="bi bi-instagram"></i></a>
+                            <a href="https://linkedin.com/in/nimi" target="_blank" class="text-decoration-none"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4 text-center">
+                <div class="card team-card shadow-sm p-4">
+                    <div class="card-body">
+                        <img src="@Url.Content("~/images/manish.jpeg")" alt="Manish Adhikari" class="team-image">
+                        <h5 class="card-title mb-2">Manish Adhikari</h5>
+                        <p class="card-text mb-3">Project Manager</p>
+                        <div class="d-flex justify-content-center gap-3 team-social-icons">
+                            <a href="https://facebook.com/manish" target="_blank" class="text-decoration-none"><i class="bi bi-facebook"></i></a>
+                            <a href="https://instagram.com/manish" target="_blank" class="text-decoration-none"><i class="bi bi-instagram"></i></a>
+                            <a href="https://linkedin.com/in/manish" target="_blank" class="text-decoration-none"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

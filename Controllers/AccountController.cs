@@ -42,7 +42,7 @@ namespace TripNest.Controllers
                 {
                     Email = model.Email,
                     Password = model.Password, // 🔐 Ideally hash this!
-                    Role = "User",
+                    
                     UserProfile = new UserProfile
                     {
                         FirstName = model.FirstName,
@@ -83,7 +83,7 @@ namespace TripNest.Controllers
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Email),
-            new Claim(ClaimTypes.Role, user.Role),
+            
             new Claim("UserId", user.Id.ToString())  // Added claim here
         };
 

@@ -1,0 +1,36 @@
+@model TripNest.Models.Booking
+
+@{
+    Layout = "~/Views/Shared/_AgencyDashboardLayout.cshtml";
+    ViewData["Title"] = "View Booking";
+}
+
+<h2>Booking Details</h2>
+
+<div class="mb-3">
+    <strong>Customer:</strong> @Model.CustomerName<br />
+    <strong>Email:</strong> @Model.Email<br />
+    <strong>Tour:</strong> @Model.Tour?.Title<br />
+    <strong>Date:</strong> @Model.PreferredTourDate.ToShortDateString()<br />
+    <strong>Guests:</strong> @Model.NumberOfGuests<br />
+    <strong>Special Requests:</strong> @Model.SpecialRequests<br />
+    <strong>Notes:</strong> @Model.AdditionalNotes<br />
+    <strong>Booking Date:</strong> @Model.BookingDate<br />
+    <strong>Total Amount:</strong> $@Model.TotalAmount<br />
+</div>
+
+<form asp-action="ViewBooking" method="post">
+     @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@Model.Id" />
+    <div class="form-group">
+        <label for="status">Update Status</label>
+        <select name="status" class="form-control" id="status">
+            <option value="Pending" selected="@Model.Status == "Pending"">Pending</option>
+            <option value="Confirmed" selected="@Model.Status == "Confirmed"">Confirmed</option>
+            <option value="Completed" selected="@Model.Status == "Completed"">Completed</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Update Status</button>
+</form>
+
+<a asp-action="Bookings" class="btn btn-secondary mt-2">Back to Bookings</a>

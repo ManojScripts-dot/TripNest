@@ -4,25 +4,265 @@
     ViewData["Title"] = "Explore Tours";
 }
 
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">Explore Our Popular Tours</h2>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="@Url.Content("/css/index.css")" />
+
+<!-- Promotional section with video background -->
+<div class="promo-section">
+    <video class="promo-video" id="video1" poster="@Url.Content("~/images/fallback.jpg")" muted preload="auto">
+        <source src="@Url.Content("~/videos/video1.mp4")" type="video/mp4">
+        Your browser does not support the video tag or the video failed to load.
+    </video>
+    <video class="promo-video hidden" id="video2" poster="@Url.Content("~/images/fallback.jpg")" muted preload="auto">
+        <source src="@Url.Content("~/videos/video2.mp4")" type="video/mp4">
+        Your browser does not support the video tag or the video failed to load.
+    </video>
+    <video class="promo-video hidden" id="video3" poster="@Url.Content("~/images/fallback.jpg")" muted preload="auto">
+        <source src="@Url.Content("~/videos/video3.mp4")" type="video/mp4">
+        Your browser does not support the video tag or the video failed to load.
+    </video>
+    <div class="promo-content">
+        <h1>Discover Your Perfect <br> <span class="highlight">Adventure</span></h1>
+        <p class="lead">Explore unique destinations with expert local guides</p>
+        <button class="btn btn-explore">Explore Tours</button>
+    </div>
+</div>
+
+<!-- Find Your Dream Tour form -->
+<div class="search-section">
+    <div class="search-container">
+        <form method="get" action="/Tour/Search" class="search-form">
+            <h3 class="mb-3">Find Your Dream Tour</h3>
+            <div class="row g-2">
+                <div class="col-12 col-md-4">
+                    <label for="destination" class="form-label">Destination</label>
+                    <input type="text" class="form-control" id="destination" name="destination"
+                        placeholder="Where do you want to go?" />
+                </div>
+                <div class="col-12 col-md-4">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="date" name="date" placeholder="dd/mm/yyyy" />
+                </div>
+                <div class="col-12 col-md-4">
+                    <label for="priceRange" class="form-label">Price Range</label>
+                    <select class="form-select" id="priceRange" name="priceRange">
+                        <option value="">Any price range</option>
+                        <option value="0-500">$0 - $500</option>
+                        <option value="501-1000">$501 - $1000</option>
+                        <option value="1001-2000">$1001 - $2000</option>
+                        <option value="2001+">$2001+</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-2 mt-3">
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-search">Search Tours</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tour cards section -->
+<div class="search-container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0 text-left flex-grow-1">Featured Tours</h2>
+        <a href="/Packages" class="text-decoration-none" style="color: #92d8ca;">View All</a>
+    </div>
     <div class="row">
         @foreach (var tour in Model)
         {
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="@tour.ImageUrl" class="card-img-top" alt="@tour.Title" style="height: 200px; object-fit: cover;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">@tour.Title</h5>
-                        <p class="card-text text-muted">@tour.Description?.Substring(0, Math.Min(100, tour.Description.Length))... </p>
-                        <div class="mt-auto">
-                            <p class="fw-bold mb-1">Duration: @tour.DurationDays days</p>
-                            <p class="fw-bold mb-2 text-primary">Price: $@tour.Price</p>
-                            <a href="/Tour/Details/@tour.Id" class="btn btn-dark w-100">View Details</a>
-                        </div>
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                        style="height: 150px; background-color: #e0e0e0;">
+                        <span class="text-muted" style="font-size: 1.5rem; opacity: 0.5;">@tour.Title</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase mb-2" style="font-size: 1rem; font-weight: 600;">@tour.Title
+                        </h5>
+                        <p class="card-text text-muted mb-3" style="font-size: 0.85rem;">@tour.Description?.Substring(0,
+                                                    Math.Min(100, tour.Description.Length))...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold" style="font-size: 1.25rem;">$@tour.Price</span>
+                        <a href="/Tour/Details/@tour.Id" class="btn btn-success" style="padding: 0.5rem 1rem;">Book
+                            Now</a>
                     </div>
                 </div>
             </div>
-        }
+        </div>
+                }
     </div>
 </div>
+
+<!-- Why Choose TravelHub section -->
+<div class="search-container mt-5">
+    <h2 class="mb-4 text-center">Why Choose TripNest</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <div class="d-flex justify-content-center mb-3">
+                    <span class="badge bg-success rounded-circle p-3 custom-badge custom-bg-success"><i
+                            class="bi bi-shield-check custom-icon custom-icon-success"></i></span>
+                </div>
+                <h5 class="card-title">Verified Local Guides</h5>
+                <p class="card-text text-muted">All our tour guides are certified professionals with extensive local
+                    knowledge.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <div class="d-flex justify-content-center mb-3">
+                    <span class="badge bg-warning rounded-circle p-3 custom-badge custom-bg-warning"><i
+                            class="bi bi-cash custom-icon custom-icon-warning"></i></span>
+                </div>
+                <h5 class="card-title">Best Price Guarantee</h5>
+                <p class="card-text text-muted">Find a lower price? We'll match it and give you an additional 10%
+                    discount.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <div class="d-flex justify-content-center mb-3">
+                    <span class="badge bg-success rounded-circle p-3 custom-badge custom-bg-success"><i
+                            class="bi bi-check-circle custom-icon custom-icon-success"></i></span>
+                </div>
+                <h5 class="card-title">Flexible Booking</h5>
+                <p class="card-text text-muted">Change your plans? No problem. Free cancellation up to 48 hours before
+                    your tour.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Our Team section -->
+<div class="search-container mt-5 mb-5">
+    <h2 class="mb-4 text-center">Our Team</h2>
+    <table class="table table-bordered shadow-sm custom-rounded-table">
+        <thead class="custom-table-head">
+            <tr>
+                <th scope="col">STUDENT ID</th>
+                <th scope="col">NAME</th>
+                <th scope="col">ROLE</th>
+            </tr>
+        </thead>
+        <tbody class="custom-table-body">
+            <tr>
+                <td>20026707</td>
+                <td>Aayusha Bhurtel</td>
+                <td>Lead Developer</td>
+            </tr>
+            <tr>
+                <td>20026706</td>
+                <td>Eliza Shrestha </td>
+                <td>UI/UX Designer</td>
+            </tr>
+            <tr>
+                <td>20027727</td>
+                <td>Nimi Thapa </td>
+                <td>Backend Developer</td>
+            </tr>
+            <tr>
+                <td>12300348</td>
+                <td>Manish Adhikari </td>
+                <td>Project Manager</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const videos = [
+        document.getElementById('video1'),
+        document.getElementById('video2'),
+        document.getElementById('video3')
+    ];
+    let currentVideoIndex = 0;
+    let timeoutId = null;
+
+    function playNextVideo() {
+        try {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+
+            console.log(Switching from video ${ currentVideoIndex + 1} to video ${ currentVideoIndex + 2 }.);
+
+        videos[currentVideoIndex].classList.add('hidden');
+        videos[currentVideoIndex].pause();
+        videos[currentVideoIndex].currentTime = 0;
+
+        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+
+        videos[currentVideoIndex].classList.remove('hidden');
+        const playPromise = videos[currentVideoIndex].play();
+
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log(Video ${ currentVideoIndex + 1} started playing.);
+            const duration = videos[currentVideoIndex].duration;
+            if (duration && !isNaN(duration)) {
+                timeoutId = setTimeout(() => {
+                    console.log(Timeout triggered for video ${ currentVideoIndex + 1}.);
+                playNextVideo();
+            }, duration * 1000 + 500);
+        } else {
+            console.warn(Duration not available for video ${ currentVideoIndex + 1}.);
+    }
+                    })
+                    .catch (error => {
+        console.error(Error playing video ${ currentVideoIndex + 1}:, error);
+    playNextVideo(); 
+                    });
+            }
+        } catch (error) {
+        console.error("Error in playNextVideo:", error);
+        playNextVideo();
+    }
+    }
+
+    videos.forEach((video, index) => {
+        video.addEventListener('ended', () => {
+            console.log(Ended event triggered for video ${ index + 1}.);
+        playNextVideo();
+    });
+
+    video.addEventListener('error', (e) => {
+        console.error(Error loading video ${ index + 1}:, e.target.error);
+    playNextVideo(); 
+        });
+
+    video.addEventListener('loadedmetadata', () => {
+        console.log(Metadata loaded for video ${ index + 1}.Duration: ${ video.duration }s);
+        });
+    });
+    try {
+        console.log("Starting playback of video 1.");
+        const playPromise = videos[currentVideoIndex].play();
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log("Video 1 started playing successfully.");
+
+                    const duration = videos[currentVideoIndex].duration;
+                    if (duration && !isNaN(duration)) {
+                        timeoutId = setTimeout(() => {
+                            console.log("Timeout triggered for video 1.");
+                            playNextVideo();
+                        }, duration * 1000 + 500);
+                    } else {
+                        console.warn("Duration not available for video 1.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error starting first video:", error);
+                    playNextVideo();
+                });
+        }
+    } catch (error) {
+        console.error("Error starting playback:", error);
+        playNextVideo();
+    }
+</script>

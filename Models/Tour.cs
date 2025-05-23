@@ -38,5 +38,12 @@ namespace TripNest.Models
         public string Status { get; set; } = "Active";  // e.g., Active, Draft, Inactive
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+        // Add this to create a foreign key to Agency:
+      
+        public int? AgencyId { get; set; }  // Foreign key property
+
+        [ForeignKey("AgencyId")]
+        public virtual Agency? Agency { get; set; } = null!;  // Navigation property
     }
 }

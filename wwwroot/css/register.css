@@ -1,0 +1,316 @@
+/* Register page container */
+.register-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Promotional section (left) */
+.register-promo {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Push content to top and bottom */
+    align-items: flex-start; /* Align content to the left */
+}
+
+.register-promo .promo-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.register-promo h3 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.register-promo .lead {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.benefits-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.benefits-list li {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.benefits-list li i {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+    color: #27AE60;
+}
+
+.promo-footer {
+    margin-top: auto; /* Push footer content to the bottom */
+}
+
+.trust-text {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    opacity: 0.7;
+}
+
+.rating-text {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    font-weight: 500;
+    margin-top: 1rem; /* Add spacing above rating */
+}
+
+.rating-text .bi-star-fill {
+    margin-right: 0.2rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    color: #E67E22;
+}
+
+.register-promo hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3); /* Increased opacity to 0.3 for better visibility, matching UserLogin perception */
+    margin: 2rem 0; /* Add spacing above and below the line */
+    width: 100%;
+}
+
+/* Registration form section (right) */
+.register-form {
+    background-color: #fff;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-form h2 {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.register-form .form-label {
+    font-weight: 500;
+    color: #333;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+.register-form .form-control {
+    border-radius: 5px;
+    padding: 0.75rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    min-height: 44px;
+}
+
+.register-form .form-check {
+    margin-bottom: 1.5rem;
+}
+
+.register-form .form-check-label {
+    font-size: clamp(0.85rem, 2vw, 0.9rem);
+}
+
+.register-form .form-text {
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
+}
+
+.btn-signin {
+    background-color: #27AE60;
+    color: #fff;
+    font-weight: 500;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    min-height: 44px;
+}
+
+.btn-signin:hover {
+    background-color: #219653;
+}
+
+.register-form a {
+    color: #27AE60;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: clamp(0.85rem, 2vw, 0.9rem);
+}
+
+.register-form a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+
+/* Mobile */
+@media (max-width: 767px) {
+    .register-container {
+        margin: 1rem;
+        max-width: 100%;
+    }
+
+    .register-promo, .register-form {
+        padding: 1.5rem;
+    }
+
+    .row.g-0 {
+        flex-direction: column;
+    }
+
+    .register-promo {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .register-form {
+        border-radius: 0 0 10px 10px;
+    }
+
+    .register-promo h3 {
+        font-size: clamp(1.25rem, 4.5vw, 1.5rem);
+    }
+
+    .register-promo .lead {
+        font-size: clamp(0.85rem, 3vw, 1rem);
+    }
+
+    .benefits-list li {
+        font-size: clamp(0.85rem, 2.5vw, 0.9rem);
+    }
+
+    .register-form h2 {
+        font-size: clamp(1.1rem, 4vw, 1.25rem);
+    }
+
+    .register-form .form-control, .btn-signin {
+        font-size: clamp(0.85rem, 2.5vw, 0.9rem);
+    }
+
+    .register-form .mb-3 {
+        margin-bottom: 1rem;
+    }
+
+    .register-form .form-check {
+        margin-bottom: 1rem;
+    }
+
+    .register-form .form-text {
+        font-size: clamp(0.7rem, 2vw, 0.8rem);
+    }
+
+    .register-form .row > div {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+    .register-container {
+        max-width: 850px;
+        margin: 1.5rem auto;
+    }
+
+    .register-promo, .register-form {
+        padding: 2rem;
+    }
+
+    .row.g-0 {
+        flex-direction: row;
+    }
+
+    .register-promo h3 {
+        font-size: clamp(1.4rem, 4vw, 1.6rem);
+    }
+
+    .register-promo .lead {
+        font-size: clamp(0.85rem, 2.5vw, 1rem);
+    }
+
+    .benefits-list li {
+        font-size: clamp(0.85rem, 2vw, 0.9rem);
+    }
+
+    .register-form h2 {
+        font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+    }
+
+    .register-form .form-control, .btn-signin {
+        font-size: clamp(0.85rem, 2vw, 0.9rem);
+    }
+
+    .register-form .mb-3 {
+        margin-bottom: 1.2rem;
+    }
+
+    .register-form .row > div {
+        margin-bottom: 0;
+    }
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+    .register-container {
+        max-width: 1200px;
+    }
+
+    .register-promo, .register-form {
+        padding: 3rem;
+    }
+
+    .register-promo h3 {
+        font-size: 2.2rem;
+    }
+
+    .register-promo .lead {
+        font-size: 1.2rem;
+    }
+
+    .register-form h2 {
+        font-size: 1.75rem;
+    }
+
+    .register-form .mb-3 {
+        margin-bottom: 1.5rem;
+    }
+
+    .register-form .row > div {
+        margin-bottom: 0;
+    }
+}
+
+/* Large screens */
+@media (min-width: 1400px) {
+    .register-container {
+        max-width: 1400px;
+    }
+
+    .register-promo, .register-form {
+        padding: 4rem;
+    }
+
+    .register-promo h3 {
+        font-size: 2.5rem;
+    }
+
+    .register-promo .lead {
+        font-size: 1.3rem;
+    }
+
+    .register-form h2 {
+        font-size: 2rem;
+    }
+
+    .register-form .row > div {
+        margin-bottom: 0;
+    }
+}

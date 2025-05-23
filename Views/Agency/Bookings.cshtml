@@ -1,6 +1,48 @@
+@model IEnumerable<TripNest.Models.Booking>
+
 @{
     Layout = "~/Views/Shared/_AgencyDashboardLayout.cshtml";
+    ViewData["Title"] = "Bookings";
 }
 
 <h2>Bookings</h2>
 <p>View and manage bookings here.</p>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Customer Name</th>
+            <th>Tour Name</th>
+            <th>Tour Date</th>
+            <th>Guests</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model.Any())
+    {
+        foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.CustomerName</td>
+                <td>@booking.Tour?.Title</td>
+                <td>@booking.PreferredTourDate.ToShortDateString()</td>
+                <td>@booking.NumberOfGuests</td>
+                <td>@booking.Status</td>
+                <td>
+                    <a asp-action="ViewBooking" asp-controller="Agency" asp-route-id="@booking.Id">View</a>
+
+
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="6" class="text-center">No bookings found.</td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TripNest.Models  // Replace with your actual namespace
+namespace TripNest.Models
 {
     public class AgencyLoginViewModel
     {
         [Required]
         [EmailAddress]
-        public required string Email { get; set; }
+        public string Email { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Password)]
-        public required string Password { get; set; }
+        public string Password { get; set; } = null!;
     }
 }

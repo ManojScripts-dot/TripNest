@@ -1,0 +1,107 @@
+/* Contact Us Section */
+.contact-us-content {
+  text-align: center;
+}
+
+.contact-us-content .lead {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: #7f8c8d;
+  font-weight: 400;
+}
+
+.contact-us-content p {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #2c3e50;
+}
+
+/* Contact Form and Info Section */
+.contact-section {
+  padding: 2rem 0;
+}
+
+.contact-card {
+  border: none;
+  border-radius: 10px;
+  background-color: #ffffff !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  min-height: 100%; 
+}
+
+.contact-section .form-card {
+  box-shadow: none !important;
+}
+
+.contact-section .search-form {
+  border: none;
+  box-shadow: none !important; 
+  padding: 0; 
+}
+
+.contact-card .card-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.contact-card p {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #2c3e50;
+}
+
+.contact-card .bi {
+  color: #27ae60;
+  margin-right: 0.5rem;
+}
+
+.contact-social-icons .bi {
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+  transition: opacity 0.3s ease;
+}
+
+.contact-social-icons .bi-facebook {
+  color: #3b5998;
+}
+
+.contact-social-icons .bi-instagram {
+  color: #e1306c;
+}
+
+.contact-social-icons .bi-linkedin {
+  color: #0077b5;
+}
+
+.contact-social-icons .bi:hover {
+  opacity: 0.8;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+  .contact-us-content .lead {
+    font-size: clamp(0.85rem, 3vw, 1rem);
+  }
+
+  .contact-us-content p {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+  }
+
+  .contact-card .card-title {
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+  }
+
+  .contact-card p {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .contact-us-content .lead {
+    font-size: clamp(0.9rem, 3vw, 1.2rem);
+  }
+
+  .contact-us-content p {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+  }
+}

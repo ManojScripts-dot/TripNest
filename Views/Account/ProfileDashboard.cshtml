@@ -9,7 +9,8 @@
 
     <div class="row mt-4">
         <div class="col-md-4">
-            <img src="@Model.Profile.ProfileImageUrl" alt="Profile Image" class="img-thumbnail" style="width: 100%; max-width: 200px;" />
+            <img src="@Model.Profile.ProfileImageUrl" alt="Profile Image" class="img-thumbnail"
+                style="width: 100%; max-width: 200px;" />
         </div>
         <div class="col-md-8">
             <ul class="list-group">
@@ -28,27 +29,70 @@
 
     @if (Model.Bookings != null && Model.Bookings.Any())
     {
-        <table class="table table-bordered table-hover mt-3">
+        <table class="table table-bordered table-hover mt-3 align-middle">
             <thead class="table-dark">
                 <tr>
+                    <th>Image</th>
                     <th>Tour</th>
                     <th>Booking Date</th>
+                    <th>Guests</th>
                     <th>Status</th>
-                    <th>Agency</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var booking in Model.Bookings)
                 {
                     <tr>
+                        <td style="width: 100px;">
+                            <img src="@booking.TourImageUrl" alt="@booking.TourName" class="img-thumbnail"
+                                style="max-width: 100px; height: auto;" />
+                        </td>
                         <td>@booking.TourName</td>
                         <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
-                        <td>@booking.Status</td>
-                        <td>@booking.AgencyId</td> <!-- Replace with AgencyName if available -->
+                        <td>@booking.NumberOfGuests</td>
+                        <td>
+                            @switch (booking.Status.ToLower())
+                            {
+                                case "confirmed":
+                                    <span class="badge bg-success">Confirmed</span>
+                                    break;
+                                case "pending":
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    break;
+                                case "completed":
+                                    <span class="badge bg-primary">Completed</span>
+                                    break;
+                                case "cancelled":
+                                    <span class="badge bg-danger">Cancelled</span>
+                                    break;
+                                default:
+                                    <span class="badge bg-secondary">@booking.Status</span>
+                                    break;
+                            }
+                        </td>
+                        <td style="white-space: nowrap;">
+                            <a asp-controller="Bookings" asp-action="Details" asp-route-id="@booking.Id"
+                                class="btn btn-sm btn-info me-1">
+                                View Details
+                            </a>
+
+                            <a href="mailto:@booking.AgencyContactEmail" class="btn btn-sm btn-primary me-1">
+                                Contact Agency
+                            </a>
+
+                            <form asp-controller="Bookings" asp-action="Cancel" asp-route-id="@booking.Id" method="post"
+                                class="d-inline" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    Cancel Booking
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
+
     }
     else
     {

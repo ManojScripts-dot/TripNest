@@ -16,6 +16,12 @@ namespace TripNest.Data
 
         public DbSet<UserProfile> UserProfiles { get; set; }
 
+        public DbSet<Feedback> Feedbacks { get; set; }
+
+        public DbSet<Agency> Agencies { get; set; }
+
+
+
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

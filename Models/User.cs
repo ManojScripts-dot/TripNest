@@ -13,7 +13,7 @@ namespace TripNest.Models
         [Required]
         public string Password { get; set; } = null!;
 
-        public string Role { get; set; } = "User"; // Default role is "User"
+        
 
         [Required]
         public UserProfile UserProfile { get; set; } = null!;

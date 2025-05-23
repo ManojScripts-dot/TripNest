@@ -1,4 +1,4 @@
-@model TripNest.Models.User
+@model TripNest.Models.Agency
 
 @{
     Layout = "~/Views/Shared/_AgencyDashboardLayout.cshtml";
@@ -7,6 +7,6 @@
 
 <h1>Welcome, @Model.Email!</h1>
 <p>This is your TripNest agency dashboard.</p>
-<p><strong>Role:</strong> @Model.Role</p>
+<p><strong>Name:</strong> @Model.Name</p>
 
 <a href="@Url.Action("Logout", "Agency")" class="btn btn-danger mt-3">Logout</a>

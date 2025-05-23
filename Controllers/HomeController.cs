@@ -24,6 +24,20 @@ namespace TripNest.Controllers
             return View(tours); // Pass the tours to the Index view
         }
 
+          public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+         public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+
+
+        
+
         public IActionResult Privacy()
         {
             return View();

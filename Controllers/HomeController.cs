@@ -20,23 +20,25 @@ namespace TripNest.Controllers
 
         public IActionResult Index()
         {
-            var tours = _context.Tours.ToList(); // You can filter by status if needed
-            return View(tours); // Pass the tours to the Index view
+            var tours = _context.Tours.Take(3).ToList(); // Limit to top 3 tours for Featured Tours
+            return View(tours);
         }
 
-          public IActionResult AboutUs()
+        public IActionResult Packages()
+        {
+            var tours = _context.Tours.ToList(); // Fetch all tours for Packages page
+            return View(tours);
+        }
+
+        public IActionResult AboutUs()
         {
             return View();
         }
 
-         public IActionResult ContactUs()
+        public IActionResult ContactUs()
         {
             return View();
         }
-
-
-
-        
 
         public IActionResult Privacy()
         {

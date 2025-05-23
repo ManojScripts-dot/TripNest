@@ -4,31 +4,66 @@
     ViewData["Title"] = "Agency Login";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-5">
+    <div class="card shadow-sm mb-5 mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center" style="color: #27ae60;">@ViewData["Title"]</h2>
 
-<form asp-action="Login" method="post">
-    @Html.AntiForgeryToken()
+            <form asp-action="Login" method="post">
+                @Html.AntiForgeryToken()
 
-    <div class="form-group mb-3">
-        <label asp-for="Email" class="form-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+                <div class="form-group mb-4">
+                    <label asp-for="Email" class="form-label fw-bold"></label>
+                    <input asp-for="Email" class="form-control rounded-3" placeholder="Enter your email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="Password" class="form-label fw-bold"></label>
+                    <input asp-for="Password" type="password" class="form-control rounded-3" placeholder="Enter your password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                @if(ViewBag.Error != null)
+                {
+                    <div class="text-danger mb-3">@ViewBag.Error</div>
+                }
+
+                <button type="submit" class="btn btn-custom d-block mx-auto">Login as Agency</button>
+            </form>
+        </div>
     </div>
-
-    <div class="form-group mb-3">
-        <label asp-for="Password" class="form-label"></label>
-        <input asp-for="Password" type="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    @if(ViewBag.Error != null)
-    {
-        <div class="text-danger">@ViewBag.Error</div>
-    }
-
-    <button type="submit" class="btn btn-success">Login as Agency</button>
-</form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<style>
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s;
+    }
+    .form-control, .form-control:focus {
+        border-color: #ced4da;
+        box-shadow: none;
+        transition: border-color 0.2s;
+    }
+    .form-control:focus {
+        border-color: #27ae60;
+    }
+    .btn-custom {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: white;
+        border-radius: 0.5rem !important;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-custom:hover {
+        background-color: #219653;
+        border-color: #219653;
+        color: white;
+        transform: scale(1.05);
+        text-decoration: none !important;
+    }
+</style>

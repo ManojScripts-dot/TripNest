@@ -20,14 +20,32 @@ namespace TripNest.Controllers
 
         public IActionResult Index()
         {
-            var tours = _context.Tours.Take(3).ToList(); // Limit to top 3 tours for Featured Tours
-            return View(tours);
+            try
+            {
+                var tours = _context.Tours.Where(t => t.Status == "Active").Take(3).ToList();
+                _logger.LogInformation($"Loaded {tours.Count} tours for Index page.");
+                return View(tours);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Index page.");
+                return View("Error");
+            }
         }
 
         public IActionResult Packages()
         {
-            var tours = _context.Tours.ToList(); // Fetch all tours for Packages page
-            return View(tours);
+            try
+            {
+                var tours = _context.Tours.Where(t => t.Status == "Active").ToList();
+                _logger.LogInformation($"Loaded {tours.Count} tours for Packages page.");
+                return View(tours);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Packages page.");
+                return View("Error");
+            }
         }
 
         public IActionResult AboutUs()

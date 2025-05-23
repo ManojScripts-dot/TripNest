@@ -5,7 +5,7 @@
 }
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<link rel="stylesheet" href="@Url.Content("/css/index.css")" />
+<link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
 
 <!-- Promotional section with video background -->
 <div class="promo-section">
@@ -25,6 +25,7 @@
         <h1>Discover Your Perfect <br> <span class="highlight">Adventure</span></h1>
         <p class="lead">Explore unique destinations with expert local guides</p>
         <button class="btn btn-explore">Explore Tours</button>
+        <button id="playButton" class="btn btn-explore" style="display: none; margin-top: 1rem;">Play Video</button>
     </div>
 </div>
 
@@ -74,24 +75,23 @@
         {
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
-                        style="height: 150px; background-color: #e0e0e0;">
-                        <span class="text-muted" style="font-size: 1.5rem; opacity: 0.5;">@tour.Title</span>
-                    </div>
+                    <img src="@Url.Content(tour.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top" alt="@tour.Title" style="height: 150px; object-fit: cover;" />
                     <div class="card-body">
-                        <h5 class="card-title text-uppercase mb-2" style="font-size: 1rem; font-weight: 600;">@tour.Title
-                        </h5>
-                        <p class="card-text text-muted mb-3" style="font-size: 0.85rem;">@tour.Description?.Substring(0,
-                                                    Math.Min(100, tour.Description.Length))...</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="fw-bold" style="font-size: 1.25rem;">$@tour.Price</span>
-                        <a href="/Tour/Details/@tour.Id" class="btn btn-success" style="padding: 0.5rem 1rem;">Book
-                            Now</a>
+                        <h5 class="card-title text-uppercase mb-2" style="font-size: 1rem; font-weight: 600;">@tour.Title</h5>
+                        @{
+                            string description = tour.Description != null && tour.Description.Length > 100
+                                ? tour.Description.Substring(0, 100) + "..."
+                                : tour.Description ?? "";
+                        }
+                        <p class="card-text text-muted mb-3" style="font-size: 0.85rem;">@description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold" style="font-size: 1.25rem;">$@tour.Price</span>
+                            <a href="/Tour/Details/@tour.Id" class="btn btn-success" style="padding: 0.5rem 1rem;">Book Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-                }
+        }
     </div>
 </div>
 
@@ -179,6 +179,17 @@
     ];
     let currentVideoIndex = 0;
     let timeoutId = null;
+    const defaultDuration = 10; // Default duration in seconds if video duration is unavailable
+    const playButton = document.getElementById('playButton');
+    let hasAutoplayFailed = false;
+
+    function showPlayButton() {
+        if (!hasAutoplayFailed) {
+            hasAutoplayFailed = true;
+            playButton.style.display = 'block';
+            console.log('Autoplay failed for all videos, showing play button.');
+        }
+    }
 
     function playNextVideo() {
         try {
@@ -187,82 +198,110 @@
                 timeoutId = null;
             }
 
-            console.log(Switching from video ${ currentVideoIndex + 1} to video ${ currentVideoIndex + 2 }.);
+            console.log(`Switching from video ${currentVideoIndex + 1} to video ${(currentVideoIndex + 1) % videos.length + 1}.`);
 
-        videos[currentVideoIndex].classList.add('hidden');
-        videos[currentVideoIndex].pause();
-        videos[currentVideoIndex].currentTime = 0;
+            videos[currentVideoIndex].classList.add('hidden');
+            videos[currentVideoIndex].pause();
+            videos[currentVideoIndex].currentTime = 0;
 
-        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
 
-        videos[currentVideoIndex].classList.remove('hidden');
-        const playPromise = videos[currentVideoIndex].play();
+            videos[currentVideoIndex].classList.remove('hidden');
+            const playPromise = videos[currentVideoIndex].play();
 
-        if (playPromise !== undefined) {
-            playPromise
-                .then(() => {
-                    console.log(Video ${ currentVideoIndex + 1} started playing.);
-            const duration = videos[currentVideoIndex].duration;
-            if (duration && !isNaN(duration)) {
-                timeoutId = setTimeout(() => {
-                    console.log(Timeout triggered for video ${ currentVideoIndex + 1}.);
-                playNextVideo();
-            }, duration * 1000 + 500);
-        } else {
-            console.warn(Duration not available for video ${ currentVideoIndex + 1}.);
-    }
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        console.log(`Video ${currentVideoIndex + 1} started playing.`);
+                        const duration = videos[currentVideoIndex].duration;
+                        if (duration && !isNaN(duration)) {
+                            timeoutId = setTimeout(() => {
+                                console.log(`Timeout triggered for video ${currentVideoIndex + 1}.`);
+                                playNextVideo();
+                            }, duration * 1000 + 500);
+                        } else {
+                            console.warn(`Duration not available for video ${currentVideoIndex + 1}, using default ${defaultDuration}s.`);
+                            timeoutId = setTimeout(() => {
+                                console.log(`Default timeout triggered for video ${currentVideoIndex + 1}.`);
+                                playNextVideo();
+                            }, defaultDuration * 1000);
+                        }
                     })
-                    .catch (error => {
-        console.error(Error playing video ${ currentVideoIndex + 1}:, error);
-    playNextVideo(); 
+                    .catch(error => {
+                        console.error(`Error playing video ${currentVideoIndex + 1}:`, error);
+                        if (error.name === 'NotAllowedError') {
+                            showPlayButton();
+                        }
+                        playNextVideo();
                     });
             }
         } catch (error) {
-        console.error("Error in playNextVideo:", error);
-        playNextVideo();
-    }
+            console.error('Error in playNextVideo:', error);
+            playNextVideo();
+        }
     }
 
     videos.forEach((video, index) => {
         video.addEventListener('ended', () => {
-            console.log(Ended event triggered for video ${ index + 1}.);
-        playNextVideo();
-    });
-
-    video.addEventListener('error', (e) => {
-        console.error(Error loading video ${ index + 1}:, e.target.error);
-    playNextVideo(); 
+            console.log(`Ended event triggered for video ${index + 1}.`);
+            playNextVideo();
         });
 
-    video.addEventListener('loadedmetadata', () => {
-        console.log(Metadata loaded for video ${ index + 1}.Duration: ${ video.duration }s);
+        video.addEventListener('error', (e) => {
+            console.error(`Error loading video ${index + 1}:`, e.target.error.message, `(Code: ${e.target.error.code})`);
+            playNextVideo();
+        });
+
+        video.addEventListener('canplay', () => {
+            console.log(`Video ${index + 1} is ready to play.`);
+        });
+
+        video.addEventListener('loadedmetadata', () => {
+            console.log(`Metadata loaded for video ${index + 1}. Duration: ${video.duration}s`);
+            console.log(`Video ${index + 1} source URL: ${video.currentSrc}`);
         });
     });
+
+    playButton.addEventListener('click', () => {
+        hasAutoplayFailed = false;
+        playButton.style.display = 'none';
+        videos[currentVideoIndex].play().catch(error => {
+            console.error(`Error playing video ${currentVideoIndex + 1} after button click:`, error);
+        });
+    });
+
     try {
-        console.log("Starting playback of video 1.");
+        console.log('Starting playback of video 1.');
+        console.log('Video 1 source URL:', videos[0].currentSrc);
         const playPromise = videos[currentVideoIndex].play();
         if (playPromise !== undefined) {
             playPromise
                 .then(() => {
-                    console.log("Video 1 started playing successfully.");
-
+                    console.log('Video 1 started playing successfully.');
                     const duration = videos[currentVideoIndex].duration;
                     if (duration && !isNaN(duration)) {
                         timeoutId = setTimeout(() => {
-                            console.log("Timeout triggered for video 1.");
+                            console.log('Timeout triggered for video 1.');
                             playNextVideo();
                         }, duration * 1000 + 500);
                     } else {
-                        console.warn("Duration not available for video 1.");
+                        console.warn(`Duration not available for video 1, using default ${defaultDuration}s.`);
+                        timeoutId = setTimeout(() => {
+                            console.log('Default timeout triggered for video 1.');
+                            playNextVideo();
+                        }, defaultDuration * 1000);
                     }
                 })
                 .catch(error => {
-                    console.error("Error starting first video:", error);
+                    console.error('Error starting first video:', error);
+                    if (error.name === 'NotAllowedError') {
+                        showPlayButton();
+                    }
                     playNextVideo();
                 });
         }
     } catch (error) {
-        console.error("Error starting playback:", error);
+        console.error('Error starting playback:', error);
         playNextVideo();
     }
 </script>

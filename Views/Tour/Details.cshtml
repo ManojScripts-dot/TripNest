@@ -4,20 +4,30 @@
     ViewData["Title"] = "Tour Details";
 }
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-6">
-            <img src="@Model.ImageUrl" class="img-fluid rounded shadow" alt="@Model.Title">
-        </div>
-        <div class="col-md-6">
-            <h2>@Model.Title</h2>
-            <p class="text-muted">@Model.Destination</p>
-            <p>@Model.Description</p>
-            <p><strong>Duration:</strong> @Model.DurationDays days</p>
-            <p><strong>Price:</strong> $@Model.Price</p>
-            <p><strong>Rating:</strong> @Model.StarRating ★</p>
-            <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Book Now</a>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
 
+<div class="search-container mt-5 mb-5">
+    <h2 class="mb-4 text-center">@Model.Title</h2>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card h-100 shadow-sm">
+                <img src="@Url.Content(Model.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top img-fluid rounded" alt="@Model.Title" style="height: 300px; object-fit: cover;" />
+                <div class="card-body">
+                    <h5 class="card-title text-uppercase mb-2">@Model.Title</h5>
+                    <p class="card-text text-muted"><strong>Destination:</strong> @Model.Destination</p>
+                    <p class="card-text"><strong>Description:</strong> @Model.Description</p>
+                    <p class="card-text"><strong>Price:</strong> $@Model.Price</p>
+                    <p class="card-text"><strong>Duration:</strong> @Model.DurationDays day(s)</p>
+                    <p class="card-text"><strong>Rating:</strong> @Model.StarRating ★</p>
+                    <p class="card-text"><strong>Status:</strong> @Model.Status</p>
+                    <p class="card-text"><strong>Created:</strong> @Model.CreatedDate.ToString("d MMM yyyy")</p>
+                    <div class="d-flex justify-content-end">
+                        <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Book Now</a>
+                        <a href="/Packages" class="btn btn-secondary ms-2">Back to Packages</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

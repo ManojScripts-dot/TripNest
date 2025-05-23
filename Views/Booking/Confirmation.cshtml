@@ -4,14 +4,44 @@
     ViewData["Title"] = "Booking Confirmation";
 }
 
-<h2>Booking Confirmed!</h2>
+<div class="container mt-5">
+    <div class="card shadow-sm mb-5 mx-auto" style="max-width: 800px;">
+        <div class="card-body text-center">
+            <h2 class="card-title mb-4" style="color: #27ae60;">Booking Confirmed!</h2>
 
-<p>Thank you, <strong>@Model.CustomerName</strong>, for booking the tour: <strong>@Model.Tour?.Title ?? "Unknown Tour"</strong>.</p>
+            <p class="mb-3">Thank you, <strong>@Model.CustomerName</strong>, for booking the tour: <strong>@Model.Tour?.Title</strong>.</p>
 
-<p>We have received your booking for <strong>@Model.NumberOfGuests</strong> guest(s) on <strong>@Model.PreferredTourDate.ToShortDateString()</strong>.</p>
+            <p class="mb-3">We have received your booking for <strong>@Model.NumberOfGuests</strong> guest(s) on <strong>@Model.PreferredTourDate.ToShortDateString()</strong>.</p>
 
-<p>Total amount to be paid: <strong>@Model.TotalAmount.ToString("C")</strong></p>
+            <p class="mb-3">Total amount to be paid: <strong>@Model.TotalAmount.ToString("C")</strong></p>
 
-<p>We will contact you shortly at <strong>@Model.Email</strong> or <strong>@Model.PhoneNumber</strong>.</p>
+            <p class="mb-4">We will contact you shortly at <strong>@Model.Email</strong> or <strong>@Model.PhoneNumber</strong>.</p>
 
-<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back to Home</a>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-custom btn-lg rounded-pill">Back to Home</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .btn-custom {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: #faf8f5;
+        border-radius: 0.5rem !important;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-custom:hover {
+        background-color: #1abc9c;
+        border-color: #219653;
+        color: #faf8f5;
+        transform: scale(1.05);
+        text-decoration: none !important;
+    }
+</style>

@@ -29,7 +29,7 @@ namespace TripNest.Models
         public decimal Price { get; set; }    // Tour price
 
         [StringLength(255)]
-        public string ImageUrl { get; set; } = null!;  // URL or relative path to image
+        public string? ImagePath { get; set; }  // Relative path to image (e.g., images/tour1.jpg), nullable
 
         [StringLength(100)]
         public string Destination { get; set; } = null!;  // e.g., Bali, Indonesia
@@ -39,8 +39,6 @@ namespace TripNest.Models
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        // Add this to create a foreign key to Agency:
-      
         public int? AgencyId { get; set; }  // Foreign key property
 
         [ForeignKey("AgencyId")]

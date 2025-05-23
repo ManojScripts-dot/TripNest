@@ -5,8 +5,26 @@
     ViewData["Title"] = "Agency Dashboard";
 }
 
-<h1>Welcome, @Model.Email!</h1>
-<p>This is your TripNest agency dashboard.</p>
-<p><strong>Name:</strong> @Model.Name</p>
+<div class="container mt-4 d-flex flex-column justify-content-center align-items-center text-center min-vh-80">
+    <h1 class="mb-4 " style="color: #27ae60;">Welcome, @Model.Name!</h1>
+    <p class="mb-3">This is your TripNest agency dashboard.</p>
+    <p class="mb-3">@Model.Email</p>
+</div>
 
-<a href="@Url.Action("Logout", "Agency")" class="btn btn-danger mt-3">Logout</a>
+<style>
+    main {
+        min-height: 100vh;
+    }
+    .min-vh-80 {
+        min-height: 80vh; /* Ensures content area takes most of the main height */
+    }
+    h1 {
+        font-size: 3.5rem; /* Larger heading */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        color: #27ae60;
+    }
+    p {
+        font-size: 1.5rem; /* Larger paragraph text */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+</style>

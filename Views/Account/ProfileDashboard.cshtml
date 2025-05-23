@@ -4,100 +4,138 @@
     ViewData["Title"] = "My Profile";
 }
 
-<div class="container mt-4">
-    <h2>@Model.Profile.FirstName @Model.Profile.LastName's Dashboard</h2>
-
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <img src="@Model.Profile.ProfileImageUrl" alt="Profile Image" class="img-thumbnail"
-                style="width: 100%; max-width: 200px;" />
-        </div>
-        <div class="col-md-8">
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Email:</strong> @Model.Profile.Email</li>
-                <li class="list-group-item"><strong>Phone:</strong> @Model.Profile.PhoneNumber</li>
-                <li class="list-group-item"><strong>Address:</strong> @Model.Profile.Address</li>
-                <li class="list-group-item"><strong>Country:</strong> @Model.Profile.Country</li>
-                <li class="list-group-item"><strong>Language:</strong> @Model.Profile.PreferredLanguage</li>
-            </ul>
+<div class="container mt-5">
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h2 class="card-title mb-4">@Model.Profile.FirstName @Model.Profile.LastName's Dashboard</h2>
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center">
+                    <img src="@Model.Profile.ProfileImageUrl" alt="Profile Image" class="img-thumbnail rounded-circle"
+                         style="width: 100%; max-width: 180px; height: auto;" />
+                </div>
+                <div class="col-md-8">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <strong class="me-2">Email:</strong> <span>@Model.Profile.Email</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <strong class="me-2">Phone:</strong> <span>@Model.Profile.PhoneNumber</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <strong class="me-2">Address:</strong> <span>@Model.Profile.Address</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <strong class="me-2">Country:</strong> <span>@Model.Profile.Country</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <strong class="me-2">Language:</strong> <span>@Model.Profile.PreferredLanguage</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
     <hr class="my-5" />
 
-    <h3>Your Bookings</h3>
+    <h3 class=" mb-4">Your Bookings</h3>
 
     @if (Model.Bookings != null && Model.Bookings.Any())
     {
-        <table class="table table-bordered table-hover mt-3 align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th>Image</th>
-                    <th>Tour</th>
-                    <th>Booking Date</th>
-                    <th>Guests</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var booking in Model.Bookings)
-                {
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered mt-3 align-middle">
+                <thead class="table-dark">
                     <tr>
-                        <td style="width: 100px;">
-                            <img src="@booking.TourImageUrl" alt="@booking.TourName" class="img-thumbnail"
-                                style="max-width: 100px; height: auto;" />
-                        </td>
-                        <td>@booking.TourName</td>
-                        <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
-                        <td>@booking.NumberOfGuests</td>
-                        <td>
-                            @switch (booking.Status.ToLower())
-                            {
-                                case "confirmed":
-                                    <span class="badge bg-success">Confirmed</span>
-                                    break;
-                                case "pending":
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                    break;
-                                case "completed":
-                                    <span class="badge bg-primary">Completed</span>
-                                    break;
-                                case "cancelled":
-                                    <span class="badge bg-danger">Cancelled</span>
-                                    break;
-                                default:
-                                    <span class="badge bg-secondary">@booking.Status</span>
-                                    break;
-                            }
-                        </td>
-                        <td style="white-space: nowrap;">
-                            <a asp-controller="Bookings" asp-action="Details" asp-route-id="@booking.Id"
-                                class="btn btn-sm btn-info me-1">
-                                View Details
-                            </a>
-
-                            <a href="mailto:@booking.AgencyContactEmail" class="btn btn-sm btn-primary me-1">
-                                Contact Agency
-                            </a>
-
-                            <form asp-controller="Bookings" asp-action="Cancel" asp-route-id="@booking.Id" method="post"
-                                class="d-inline" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    Cancel Booking
-                                </button>
-                            </form>
-                        </td>
+                        <th scope="col">Image</th>
+                        <th scope="col">Tour</th>
+                        <th scope="col">Booking Date</th>
+                        <th scope="col">Guests</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model.Bookings)
+                    {
+                        <tr>
+                            <td style="width: 120px;">
+                                <img src="@booking.TourImageUrl" alt="@booking.TourName" class="img-thumbnail"
+                                     style="max-width: 100px; height: auto; border-radius: 8px;" />
+                            </td>
+                            <td>@booking.TourName</td>
+                            <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                            <td>@booking.NumberOfGuests</td>
+                            <td>
+                                @switch (booking.Status.ToLower())
+                                {
+                                    case "confirmed":
+                                        <span class="badge bg-success rounded-pill">Confirmed</span>
+                                        break;
+                                    case "pending":
+                                        <span class="badge bg-warning text-dark rounded-pill">Pending</span>
+                                        break;
+                                    case "completed":
+                                        <span class="badge bg-primary rounded-pill">Completed</span>
+                                        break;
+                                    case "cancelled":
+                                        <span class="badge bg-danger rounded-pill">Cancelled</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-secondary rounded-pill">@booking.Status</span>
+                                        break;
+                                }
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <a asp-controller="Bookings" asp-action="Details" asp-route-id="@booking.Id"
+                                   class="btn btn-sm btn-outline-info me-2">
+                                    View Details
+                                </a>
+                                <a href="mailto:@booking.AgencyContactEmail" class="btn btn-sm btn-outline-primary me-2">
+                                    Contact Agency
+                                </a>
+                                <form asp-controller="Bookings" asp-action="Cancel" asp-route-id="@booking.Id" method="post"
+                                      class="d-inline" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        Cancel Booking
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
     else
     {
-        <div class="alert alert-info mt-3">
-            You have no bookings yet.
+        <div class="alert alert-info mt-3 rounded-3">
+            You have no bookings yet. <a asp-controller="Tours" asp-action="Index" class="alert-link">Explore Tours</a>
         </div>
     }
 </div>
+
+<style>
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .list-group-item {
+        border: none;
+        padding: 0.5rem 0;
+    }
+    .list-group-item strong {
+        min-width: 80px; /* Fixed width for labels to align content */
+    }
+    .table th, .table td {
+        vertical-align: middle;
+    }
+    .btn-outline-info, .btn-outline-primary, .btn-outline-danger {
+        transition: background-color 0.2s, color 0.2s;
+    }
+    .btn-outline-info:hover, .btn-outline-primary:hover, .btn-outline-danger:hover {
+        color: white;
+    }
+</style>

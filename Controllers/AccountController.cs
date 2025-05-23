@@ -41,7 +41,7 @@ namespace TripNest.Controllers
                 var user = new User
                 {
                     Email = model.Email,
-                    Password = model.Password, // 🔐 Ideally hash this!
+                    Password = model.Password, 
                     
                     UserProfile = new UserProfile
                     {

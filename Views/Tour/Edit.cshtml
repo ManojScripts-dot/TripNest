@@ -1,66 +1,76 @@
 @model TripNest.Models.Tour
 
-<h2>Edit Tour</h2>
+@{
+    Layout = "~/Views/Shared/_AgencyDashboardLayout.cshtml";
+    ViewData["Title"] = "Edit Tour";
+}
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
+<link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
 
-    <div class="mb-3">
-        <label asp-for="Title" class="form-label">Title</label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label">Description</label>
-        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Destination" class="form-label">Destination</label>
-        <input asp-for="Destination" class="form-control" />
-        <span asp-validation-for="Destination" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="DurationDays" class="form-label">Duration (Days)</label>
-        <input asp-for="DurationDays" type="number" class="form-control" min="1" />
-        <span asp-validation-for="DurationDays" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label">Image URL</label>
-        <input asp-for="ImageUrl" class="form-control" />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
-        <small class="form-text text-muted">Example: /images/eiffel.jpeg</small>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Price" class="form-label">Price (USD)</label>
-        <input asp-for="Price" type="number" step="0.01" class="form-control" min="0" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="StarRating" class="form-label">Star Rating (1 to 5)</label>
-        <input asp-for="StarRating" type="number" class="form-control" min="1" max="5" />
-        <span asp-validation-for="StarRating" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Status" class="form-label">Status</label>
-        <select asp-for="Status" class="form-select">
-            <option value="Active" selected>Active</option>
-            <option value="Inactive">Inactive</option>
-            <option value="Cancelled">Cancelled</option>
-        </select>
-        <span asp-validation-for="Status" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
+<div class="search-container mt-5">
+    <h2 class="mb-4 text-center">Edit Tour</h2>
+    <form asp-action="Edit" method="post" enctype="multipart/form-data" class="search-form">
+        <input type="hidden" asp-for="Id" />
+        <div class="row g-2">
+            <div class="col-12 col-md-6">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" placeholder="Enter tour title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Price" class="form-label"></label>
+                <input asp-for="Price" class="form-control" type="number" step="0.01" placeholder="Enter price" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter tour description"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="DurationDays" class="form-label"></label>
+                <input asp-for="DurationDays" class="form-control" type="number" placeholder="Enter duration (days)" />
+                <span asp-validation-for="DurationDays" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="StarRating" class="form-label"></label>
+                <input asp-for="StarRating" class="form-control" type="number" min="1" max="5" placeholder="Enter star rating (1-5)" />
+                <span asp-validation-for="StarRating" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Destination" class="form-label"></label>
+                <input asp-for="Destination" class="form-control" placeholder="Enter destination" />
+                <span asp-validation-for="Destination" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Status" class="form-label"></label>
+                <select asp-for="Status" class="form-select">
+                    <option value="Active">Active</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                <label for="imageFile" class="form-label">Tour Image</label>
+                <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <div class="mt-2">
+                        <p>Current Image:</p>
+                        <img src="@Url.Content(Model.ImagePath)" alt="Current tour image" style="max-width: 200px; height: auto;" />
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row g-2 mt-3">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="btn btn-search">Update Tour</button>
+                <a href="@Url.Action("ManageTours", "Agency")" class="btn btn-secondary ms-2">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

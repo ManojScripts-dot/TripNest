@@ -42,12 +42,6 @@
                             </a>
                         </li>
                     </ul>
-                    @if (User.Identity?.IsAuthenticated ?? false)
-                    {
-                        <div class="text-white text-center mt-4">
-                            <span>Welcome, @(User.Identity?.Name ?? "Agency")</span>
-                        </div>
-                    }
                 </div>
             </nav>
 

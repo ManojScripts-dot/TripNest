@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bHissPYjMDtglImyXpTQiTQosUjL3ZQhtskJQRPHNjg=",
+  "Hash": "uWuAdit8f68KVjq9d44SppoCHA7GD1HVsKKVxm6yLPM=",
   "Source": "TripNest",
   "BasePath": "_content/TripNest",
   "Mode": "Default",
@@ -359,6 +359,25 @@
       "OriginalItemSpec": "wwwroot/images/gmail.png"
     },
     {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/iceland_39f0473b-32db-46c5-a141-f56dc7947cc8.jpg",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/iceland_39f0473b-32db-46c5-a141-f56dc7947cc8.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/iceland_39f0473b-32db-46c5-a141-f56dc7947cc8.jpg"
+    },
+    {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/instagram.png",
       "SourceId": "TripNest",
       "SourceType": "Discovered",
@@ -376,6 +395,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/instagram.png"
+    },
+    {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/kenys_168d63bc-2743-4b42-b932-1ec78ff6eee0.webp",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/kenys_168d63bc-2743-4b42-b932-1ec78ff6eee0.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/kenys_168d63bc-2743-4b42-b932-1ec78ff6eee0.webp"
     },
     {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/logo.png",

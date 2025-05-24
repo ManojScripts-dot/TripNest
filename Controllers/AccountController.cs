@@ -77,13 +77,16 @@ namespace TripNest.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string email, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            var user = await _context.Users
+                .Include(u => u.UserProfile)
+                .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
             if (user != null)
             {
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.Email),
-                    new Claim("UserId", user.Id.ToString())
+                    new Claim("UserId", user.Id.ToString()),
+                    new Claim("FirstName", user.UserProfile?.FirstName ?? "User")
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -193,6 +196,20 @@ namespace TripNest.Controllers
                 userEntity.UserProfile.ProfileImageUrl = model.ProfileImageUrl;
 
                 await _context.SaveChangesAsync();
+
+                // Update the claims with the new first name
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, userEntity.Email),
+                    new Claim("UserId", userEntity.Id.ToString()),
+                    new Claim("FirstName", userEntity.UserProfile.FirstName)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
 
                 ViewBag.Message = "Profile updated successfully!";
 

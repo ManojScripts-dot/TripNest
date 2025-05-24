@@ -12,21 +12,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login"; // Adjust if needed
+        options.LoginPath = "/Account/Login"; 
         options.LogoutPath = "/Account/Logout";
         options.AccessDeniedPath = "/Account/AccessDenied";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.ExpireTimeSpan = TimeSpan.FromHours(2); 
         options.SlidingExpiration = true;
         options.Cookie.HttpOnly = true;
         options.Cookie.IsEssential = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Set to None if not using HTTPS in dev
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
     });
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Error handling and HTTPS
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -38,7 +37,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ Use Authentication & Authorization (NOT session)
 app.UseAuthentication();
 app.UseAuthorization();
 

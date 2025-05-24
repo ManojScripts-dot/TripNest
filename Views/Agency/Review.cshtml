@@ -1,0 +1,29 @@
+@model IEnumerable<TripNest.Models.ViewModels.ReviewViewModel>
+
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<h2 class="mb-4">Customer Reviews</h2>
+
+@if (!Model.Any())
+{
+    <p>No reviews available.</p>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var review in Model)
+        {
+            <div class="list-group-item mb-3">
+                <h5>@review.TourTitle</h5>
+                <p><strong>Destination:</strong> @review.TourDestination</p>
+                <p>@review.Content</p>
+                <p>
+                    <strong>Rating:</strong> @review.Rating / 5 <br />
+                    <small class="text-muted">Posted on @review.CreatedAt.ToString("MMMM dd, yyyy")</small>
+                </p>
+            </div>
+        }
+    </div>
+}

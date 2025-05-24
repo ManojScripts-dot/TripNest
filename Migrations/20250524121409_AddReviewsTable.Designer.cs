@@ -12,8 +12,8 @@ using TripNest.Data;
 namespace TripNest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250523073710_AddFeedbackTable")]
-    partial class AddFeedbackTable
+    [Migration("20250524121409_AddReviewsTable")]
+    partial class AddReviewsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,35 @@ namespace TripNest.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("TripNest.Models.Agency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Agencies");
+                });
 
             modelBuilder.Entity("TripNest.Models.Booking", b =>
                 {
@@ -88,7 +117,7 @@ namespace TripNest.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("TripNest.Models.Feedback", b =>
+            modelBuilder.Entity("TripNest.Models.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,14 +128,14 @@ namespace TripNest.Migrations
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Comments")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Rating")
+                    b.Property<string>("Message")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Stars")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -118,7 +147,7 @@ namespace TripNest.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("TripNest.Models.Tour", b =>
@@ -128,6 +157,9 @@ namespace TripNest.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AgencyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -145,8 +177,7 @@ namespace TripNest.Migrations
                     b.Property<int>("DurationDays")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
+                    b.Property<string>("ImagePath")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -168,6 +199,8 @@ namespace TripNest.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AgencyId");
+
                     b.ToTable("Tours");
                 });
 
@@ -184,10 +217,6 @@ namespace TripNest.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -263,7 +292,7 @@ namespace TripNest.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TripNest.Models.Feedback", b =>
+            modelBuilder.Entity("TripNest.Models.Review", b =>
                 {
                     b.HasOne("TripNest.Models.Booking", "Booking")
                         .WithMany()
@@ -272,7 +301,7 @@ namespace TripNest.Migrations
                         .IsRequired();
 
                     b.HasOne("TripNest.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -280,6 +309,15 @@ namespace TripNest.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TripNest.Models.Tour", b =>
+                {
+                    b.HasOne("TripNest.Models.Agency", "Agency")
+                        .WithMany("Tours")
+                        .HasForeignKey("AgencyId");
+
+                    b.Navigation("Agency");
                 });
 
             modelBuilder.Entity("TripNest.Models.UserProfile", b =>
@@ -293,9 +331,16 @@ namespace TripNest.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TripNest.Models.Agency", b =>
+                {
+                    b.Navigation("Tours");
+                });
+
             modelBuilder.Entity("TripNest.Models.User", b =>
                 {
                     b.Navigation("Bookings");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("UserProfile")
                         .IsRequired();

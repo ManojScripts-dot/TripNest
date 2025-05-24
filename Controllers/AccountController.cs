@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TripNest.Data;
 using TripNest.Models;
 using TripNest.Models.ViewModels;
@@ -41,8 +42,7 @@ namespace TripNest.Controllers
                 var user = new User
                 {
                     Email = model.Email,
-                    Password = model.Password, 
-                    
+                    Password = model.Password,
                     UserProfile = new UserProfile
                     {
                         FirstName = model.FirstName,
@@ -75,30 +75,29 @@ namespace TripNest.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-       public async Task<IActionResult> Login(string email, string password)
-{
-    var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
-    if (user != null)
-    {
-        var claims = new List<Claim>
+        public async Task<IActionResult> Login(string email, string password)
         {
-            new Claim(ClaimTypes.Name, user.Email),
-            
-            new Claim("UserId", user.Id.ToString())  // Added claim here
-        };
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            if (user != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim("UserId", user.Id.ToString())
+                };
 
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-        await HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            new ClaimsPrincipal(claimsIdentity));
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
 
-        return RedirectToAction("Index", "Home");
-    }
+                return RedirectToAction("Index", "Home");
+            }
 
-    ViewBag.Error = "Invalid email or password";
-    return View("UserLogin");
-}
+            ViewBag.Error = "Invalid email or password";
+            return View("UserLogin");
+        }
 
         // GET: /Account/Logout
         [Authorize]
@@ -110,20 +109,32 @@ namespace TripNest.Controllers
 
         // GET: /Account/Profile
         [Authorize]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
             var userEmail = User.Identity?.Name;
 
-            var userEntity = _context.Users
+            var userEntity = await _context.Users
                 .Include(u => u.UserProfile)
                 .Include(u => u.Bookings)
                     .ThenInclude(b => b.Tour)
-                .FirstOrDefault(u => u.Email == userEmail);
+                .FirstOrDefaultAsync(u => u.Email == userEmail);
 
             if (userEntity == null || userEntity.UserProfile == null)
             {
                 return RedirectToAction("Login");
             }
+
+            var userReviews = await _context.Reviews
+                .Include(r => r.Booking)
+                    .ThenInclude(b => b.Tour)
+                .Where(r => r.UserId == userEntity.Id)
+                .Select(r => new ReviewViewModel
+                {
+                    TourTitle = r.Booking != null && r.Booking.Tour != null ? r.Booking.Tour.Title : "Unknown Tour",
+                    Content = r.Message ?? string.Empty,
+                    Rating = r.Stars,
+                    CreatedAt = r.CreatedAt
+                }).ToListAsync();
 
             var model = new ProfileDashboardViewModel
             {
@@ -144,8 +155,9 @@ namespace TripNest.Controllers
                     Id = b.Id,
                     BookingDate = b.BookingDate,
                     Status = b.Status,
-                    TourName = b.Tour?.Title ?? "Unknown"
-                }).ToList()
+                    TourName = b.Tour != null ? b.Tour.Title : "Unknown"
+                }).ToList(),
+                Reviews = userReviews
             };
 
             return View("ProfileDashboard", model);
@@ -155,17 +167,17 @@ namespace TripNest.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Profile(RegisterViewModel model)
+        public async Task<IActionResult> Profile(RegisterViewModel model)
         {
             var userEmail = User.Identity?.Name;
 
             if (ModelState.IsValid)
             {
-                var userEntity = _context.Users
+                var userEntity = await _context.Users
                     .Include(u => u.UserProfile)
                     .Include(u => u.Bookings)
                         .ThenInclude(b => b.Tour)
-                    .FirstOrDefault(u => u.Email == userEmail);
+                    .FirstOrDefaultAsync(u => u.Email == userEmail);
 
                 if (userEntity == null || userEntity.UserProfile == null)
                 {
@@ -180,9 +192,21 @@ namespace TripNest.Controllers
                 userEntity.UserProfile.PreferredLanguage = model.PreferredLanguage;
                 userEntity.UserProfile.ProfileImageUrl = model.ProfileImageUrl;
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 ViewBag.Message = "Profile updated successfully!";
+
+                var userReviews = await _context.Reviews
+                    .Include(r => r.Booking)
+                        .ThenInclude(b => b.Tour)
+                    .Where(r => r.UserId == userEntity.Id)
+                    .Select(r => new ReviewViewModel
+                    {
+                        TourTitle = r.Booking != null && r.Booking.Tour != null ? r.Booking.Tour.Title : "Unknown Tour",
+                        Content = r.Message ?? string.Empty,
+                        Rating = r.Stars,
+                        CreatedAt = r.CreatedAt
+                    }).ToListAsync();
 
                 var updatedModel = new ProfileDashboardViewModel
                 {
@@ -192,17 +216,33 @@ namespace TripNest.Controllers
                         Id = b.Id,
                         BookingDate = b.BookingDate,
                         Status = b.Status,
-                        TourName = b.Tour?.Title ?? "Unknown"
-                    }).ToList()
+                        TourName = b.Tour != null ? b.Tour.Title : "Unknown"
+                    }).ToList(),
+                    Reviews = userReviews
                 };
 
                 return View("ProfileDashboard", updatedModel);
             }
 
+            var fallbackReviews = await _context.Users
+                .Where(u => u.Email == userEmail)
+                .SelectMany(u => _context.Reviews
+                    .Include(r => r.Booking)
+                        .ThenInclude(b => b.Tour)
+                    .Where(r => r.UserId == u.Id)
+                    .Select(r => new ReviewViewModel
+                    {
+                        TourTitle = r.Booking != null && r.Booking.Tour != null ? r.Booking.Tour.Title : "Unknown Tour",
+                        Content = r.Message ?? string.Empty,
+                        Rating = r.Stars,
+                        CreatedAt = r.CreatedAt
+                    })).ToListAsync();
+
             return View("ProfileDashboard", new ProfileDashboardViewModel
             {
                 Profile = model,
-                Bookings = new List<BookingViewModel>()
+                Bookings = new List<BookingViewModel>(),
+                Reviews = fallbackReviews
             });
         }
     }

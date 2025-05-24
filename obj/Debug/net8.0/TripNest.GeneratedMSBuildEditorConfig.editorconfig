@@ -42,12 +42,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWdlbmN5L0Rhc2hib2FyZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/manojshrestha/TripNest/Views/Agency/Feedback.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWdlbmN5L0ZlZWRiYWNrLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [/Users/manojshrestha/TripNest/Views/Agency/ManageTours.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWdlbmN5L01hbmFnZVRvdXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/manojshrestha/TripNest/Views/Agency/Review.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWdlbmN5L1Jldmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/manojshrestha/TripNest/Views/Agency/ViewBooking.cshtml]
@@ -82,6 +82,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/manojshrestha/TripNest/Views/Review/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmV2aWV3L0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/manojshrestha/TripNest/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -112,6 +116,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/manojshrestha/TripNest/Views/Tour/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVG91ci9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/manojshrestha/TripNest/Views/Tour/SearchResults.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVG91ci9TZWFyY2hSZXN1bHRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/manojshrestha/TripNest/Views/_ViewImports.cshtml]

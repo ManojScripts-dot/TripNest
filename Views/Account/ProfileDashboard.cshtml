@@ -103,6 +103,13 @@
                                 <a asp-controller="Home" asp-action="ContactUs" class="btn btn-sm btn-outline-primary me-2">
                                     <i class="bi bi-envelope-fill me-1"></i> Contact Agency
                                 </a>
+                                @if (booking.Status.ToLower() == "completed")
+                                {
+                                    <a asp-controller="Review" asp-action="Create" asp-route-bookingId="@booking.Id"
+                                       class="btn btn-sm btn-outline-success me-2">
+                                        <i class="bi bi-star-fill me-1"></i> Add Review
+                                    </a>
+                                }
                                 <form asp-controller="Bookings" asp-action="Cancel" asp-route-id="@booking.Id" method="post"
                                       class="d-inline" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -120,6 +127,48 @@
     {
         <div class="alert alert-info mt-3 rounded-3">
             You have no bookings yet. <a asp-controller="Home" asp-action="Packages" class="alert-link text-success">Explore Tours</a>
+        </div>
+    }
+
+    <hr class="my-5" />
+
+    <h3 class="mb-4" style="color: #27ae60;">Your Reviews</h3>
+
+    @if (Model.Reviews != null && Model.Reviews.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered mt-3 align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Tour</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Review</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <tr>
+                            <td>@review.TourTitle</td>
+                            <td>
+                                @for (int i = 0; i < review.Rating; i++)
+                                {
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                }
+                            </td>
+                            <td>@review.Content</td>
+                            <td>@review.CreatedAt.ToString("yyyy-MM-dd")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info mt-3 rounded-3">
+            You have not submitted any reviews yet.
         </div>
     }
 </div>
@@ -168,12 +217,12 @@
         color: white;
         transform: scale(1.05);
     }
-    .btn-outline-primary, .btn-outline-danger {
+    .btn-outline-primary, .btn-outline-danger, .btn-outline-success {
         border-radius: 0.5rem;
         padding: 0.5rem 1rem;
         transition: background-color 0.2s, color 0.2s, transform 0.3s ease;
     }
-    .btn-outline-primary:hover, .btn-outline-danger:hover {
+    .btn-outline-primary:hover, .btn-outline-danger:hover, .btn-outline-success:hover {
         color: white;
         transform: scale(1.05);
     }

@@ -20,23 +20,43 @@ namespace TripNest.Controllers
 
         public IActionResult Index()
         {
-            var tours = _context.Tours.ToList(); // You can filter by status if needed
-            return View(tours); // Pass the tours to the Index view
+            try
+            {
+                var tours = _context.Tours.Where(t => t.Status == "Active").Take(3).ToList();
+                _logger.LogInformation($"Loaded {tours.Count} tours for Index page.");
+                return View(tours);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Index page.");
+                return View("Error");
+            }
         }
 
-          public IActionResult AboutUs()
+        public IActionResult Packages()
+        {
+            try
+            {
+                var tours = _context.Tours.Where(t => t.Status == "Active").ToList();
+                _logger.LogInformation($"Loaded {tours.Count} tours for Packages page.");
+                return View(tours);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Packages page.");
+                return View("Error");
+            }
+        }
+
+        public IActionResult AboutUs()
         {
             return View();
         }
 
-         public IActionResult ContactUs()
+        public IActionResult ContactUs()
         {
             return View();
         }
-
-
-
-        
 
         public IActionResult Privacy()
         {

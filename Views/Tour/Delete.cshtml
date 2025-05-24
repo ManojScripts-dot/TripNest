@@ -1,18 +1,145 @@
 @model TripNest.Models.Tour
 
-<h2>Delete Tour</h2>
+@{
+    Layout = "~/Views/Shared/_AgencyDashboardLayout.cshtml";
+    ViewData["Title"] = "Delete Tour";
+}
 
-<h4>Are you sure you want to delete this tour?</h4>
-<div>
-    <h5>@Model.Title</h5>
-    <p>@Model.Description</p>
-    <p>Destination: @Model.Destination</p>
-    <p>Duration: @Model.DurationDays days</p>
-    <!-- Add any other details you want to show -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="Id" />
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a asp-action="Dashboard" asp-controller="Agency" class="btn btn-secondary">Cancel</a>
-    </form>
+<div class="tour-container">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center" style="color: #27ae60;">
+                <i class="bi bi-trash-fill me-2"></i>Delete Tour
+            </h2>
+            <h4 class="text-center mb-4">Are you sure you want to delete this tour?</h4>
+            @if (!string.IsNullOrEmpty(ViewBag.Error))
+            {
+                <div class="alert alert-danger rounded-3" role="alert">
+                    @ViewBag.Error
+                </div>
+            }
+            <div class="tour-details">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-4 text-center">
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <img src="@Url.Content(Model.ImagePath)" alt="@Model.Title" class="img-thumbnail rounded-3"
+                                 style="max-width: 200px; height: auto; border: 2px solid #27ae60;" />
+                        }
+                        else
+                        {
+                            <img src="/images/default-tour.png" alt="Default Tour Image" class="img-thumbnail rounded-3"
+                                 style="max-width: 200px; height: auto; border: 2px solid #27ae60;" />
+                        }
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="bi bi-bookmark-fill text-success me-3"></i>
+                                <strong class="me-2">Title:</strong> <span>@Model.Title</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="bi bi-text-paragraph text-success me-3"></i>
+                                <strong class="me-2">Description:</strong> <span>@(Model.Description ?? "N/A")</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="bi bi-geo-alt-fill text-success me-3"></i>
+                                <strong class="me-2">Destination:</strong> <span>@(Model.Destination ?? "N/A")</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="bi bi-calendar3 text-success me-3"></i>
+                                <strong class="me-2">Duration:</strong> <span>@(Model.DurationDays > 0 ? Model.DurationDays + " days" : "N/A")</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="bi bi-star-fill text-success me-3"></i>
+                                <strong class="me-2">Star Rating:</strong> <span>@(Model.StarRating > 0 ? Model.StarRating + "/5" : "N/A")</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="bi bi-currency-dollar text-success me-3"></i>
+                                <strong class="me-2">Price:</strong> <span>@(Model.Price > 0 ? Model.Price.ToString("C") : "N/A")</span>
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="bi bi-toggle-on text-success me-3"></i>
+                                <strong class="me-2">Status:</strong> <span>@(Model.Status ?? "N/A")</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <form asp-action="Delete" method="post" class="mt-4">
+                <input type="hidden" asp-for="Id" />
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-custom me-2" onclick="return confirm('Are you sure you want to delete this tour?');">
+                        <i class="bi bi-trash-fill me-1"></i>Delete Tour
+                    </button>
+                    <a asp-action="ManageTours" asp-controller="Agency" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle-fill me-1"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    .tour-container {
+        max-width: 960px;
+        margin: auto;
+        padding: 20px;
+    }
+    .card {
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .list-group-item {
+        border: none;
+        padding: 0.75rem 0;
+        font-size: 1.1em;
+        color: #333;
+    }
+    .list-group-item strong {
+        min-width: 100px;
+        color: #27ae60;
+    }
+    .btn-custom {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: white;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-custom:hover {
+        background-color: #219653;
+        border-color: #219653;
+        color: white;
+        transform: scale(1.05);
+    }
+    .btn-outline-secondary {
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        transition: background-color 0.2s, color 0.2s, transform 0.3s ease;
+    }
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: white;
+        transform: scale(1.05);
+    }
+    .text-success {
+        color: #27ae60 !important;
+    }
+    .text-success:hover {
+        color: #219653 !important;
+    }
+    .alert-danger {
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+    }
+</style>

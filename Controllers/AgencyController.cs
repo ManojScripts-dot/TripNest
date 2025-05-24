@@ -4,6 +4,8 @@ using TripNest.Models;
 using Microsoft.AspNetCore.Http; // For CookieOptions
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TripNest.Models.ViewModels;
+
 
 
 namespace TripNest.Controllers
@@ -143,7 +145,7 @@ namespace TripNest.Controllers
         public IActionResult ViewBooking(int id, string status)
         {
 
-            
+
             var booking = _context.Bookings.FirstOrDefault(b => b.Id == id);
 
             if (booking == null)
@@ -156,16 +158,45 @@ namespace TripNest.Controllers
         }
 
 
-        // GET: /Agency/Feedback
-        public IActionResult Feedback()
-        {
-            var agencyEmail = Request.Cookies["AgencyEmail"];
-            if (string.IsNullOrEmpty(agencyEmail))
-                return RedirectToAction("Login");
+       public IActionResult Review()
+{
+    var agencyEmail = Request.Cookies["AgencyEmail"];
+    if (string.IsNullOrEmpty(agencyEmail))
+        return RedirectToAction("Login");
 
-            ViewData["Title"] = "Feedback";
-            return View();
-        }
+    var agency = _context.Agencies.FirstOrDefault(a => a.Email == agencyEmail);
+    if (agency == null)
+    {
+        Response.Cookies.Delete("AgencyEmail");
+        return RedirectToAction("Login");
+    }
+
+    // 🔽 This is the correct place for your code
+    var reviews = _context.Reviews
+        .Include(r => r.Booking)
+            .ThenInclude(b => b.Tour)
+        .Where(r => r.Booking.Tour != null && r.Booking.Tour.AgencyId == agency.Id)
+        .Select(r => new ReviewViewModel
+        {
+             TourTitle = r.Booking.Tour!.Title, 
+            TourDestination = r.Booking.Tour.Destination,
+            Content = r.Message ?? "",
+            Rating = r.Stars,
+            CreatedAt = r.CreatedAt
+        })
+        .ToList();
+
+        foreach (var r in reviews)
+{
+    Console.WriteLine($"DEBUG: Title={r.TourTitle}, Destination={r.TourDestination}");
+}
+
+
+    ViewData["Title"] = "Reviews";
+    return View(reviews); // ← Pass the list to your Razor View
+}
+
+
 
         // GET: /Agency/Logout
         public IActionResult Logout()

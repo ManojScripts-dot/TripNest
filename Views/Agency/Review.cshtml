@@ -1,0 +1,99 @@
+@model IEnumerable<TripNest.Models.ViewModels.ReviewViewModel>
+
+@{
+    Layout = "~/Views/Shared/_AgencyDashboardLayout.cshtml";
+    ViewData["Title"] = "Reviews";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TripNest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .review-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            border-radius: 10px;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .star-rating .fa-star {
+            color: #ffc107;
+        }
+        .star-rating .fa-star-o {
+            color: #e4e5e6;
+        }
+        .review-header {
+            background: linear-gradient(135deg, #128e47, #1ABC9C);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+        .review-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body>
+    <div class="review-container">
+        <div class="review-header">
+            <h2 class="mb-0">Customer Reviews for TripNest Adventures</h2>
+            <p class="mt-2">Discover what our travelers have to say about their journeys!</p>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info mt-4" role="alert">
+                No reviews available yet. Be the first to share your experience!
+            </div>
+        }
+        else
+        {
+            <div class="mt-4">
+                @foreach (var review in Model)
+                {
+                    <div class="review-card p-4 mb-4">
+                        <h5 class="fw-bold text-primary">@review.TourTitle</h5>
+                        <p class="mb-2"><strong>Destination:</strong> @review.TourDestination</p>
+                        <p class="text-muted">@review.Content</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="star-rating">
+                                <strong>Rating:</strong>
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= review.Rating)
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-star-o"></i>
+                                    }
+                                }
+                            </div>
+                            <small class="text-muted">Posted on @review.CreatedAt.ToString("MMMM dd, yyyy")</small>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

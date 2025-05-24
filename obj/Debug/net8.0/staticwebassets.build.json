@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XLLbg6El2qZITYPiRBMJ1DH9/3N7zxA1/6CaB5SFrv8=",
+  "Hash": "cLNj53bbhW3PTZuHDkUDs/odjUGqr5HDFJ8AdHW8EEo=",
   "Source": "TripNest",
   "BasePath": "_content/TripNest",
   "Mode": "Default",
@@ -395,6 +395,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/acrylic1_4a32db6b-3963-4605-9be7-d070cf050680.heic"
+    },
+    {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/ChatGPT Image May 19, 2025, 10_46_52 PM_c1b13bfd-4d46-4b1b-8180-f9d90ba41ed3.png",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/ChatGPT Image May 19, 2025, 10_46_52 PM_c1b13bfd-4d46-4b1b-8180-f9d90ba41ed3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/ChatGPT Image May 19, 2025, 10_46_52 PM_c1b13bfd-4d46-4b1b-8180-f9d90ba41ed3.png"
     },
     {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/ChatGPT Image May 21, 2025, 12_13_12 PM_23d76e66-fd09-4c1b-8047-28ff9bb4a3b0.png",

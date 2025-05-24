@@ -67,11 +67,11 @@ namespace TripNest.Controllers
                             await imageFile.CopyToAsync(stream);
                         }
 
-                        tour.ImagePath = $"images/{fileName}";
+                        tour.ImagePath = $"/images/{fileName}"; // Added leading slash
                     }
                     else
                     {
-                        tour.ImagePath = "images/default-tour.jpg";
+                        tour.ImagePath = "/images/default-tour.jpg"; // Added leading slash
                     }
 
                     _context.Tours.Add(tour);
@@ -147,7 +147,7 @@ namespace TripNest.Controllers
                             await imageFile.CopyToAsync(stream);
                         }
 
-                        existingTour.ImagePath = $"images/{fileName}";
+                        existingTour.ImagePath = $"/images/{fileName}"; // Added leading slash
                     }
 
                     _context.Tours.Update(existingTour);

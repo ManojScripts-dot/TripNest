@@ -75,7 +75,7 @@
         {
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="@Url.Content(tour.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top" alt="@tour.Title" style="height: 150px; object-fit: cover;" />
+                    <img src="@Url.Content(tour.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top" alt="@tour.Title" style="height: 250px; object-fit: cover;" />
                     <div class="card-body">
                         <h5 class="card-title text-uppercase mb-2" style="font-size: 1rem; font-weight: 600;">@tour.Title</h5>
                         @{
@@ -179,7 +179,7 @@
     ];
     let currentVideoIndex = 0;
     let timeoutId = null;
-    const defaultDuration = 10; // Default duration in seconds if video duration is unavailable
+    const defaultDuration = 10; 
     const playButton = document.getElementById('playButton');
     let hasAutoplayFailed = false;
 

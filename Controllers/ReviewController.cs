@@ -20,7 +20,7 @@ namespace TripNest.Controllers
         {
             var booking = _context.Bookings.FirstOrDefault(b => b.Id == bookingId);
             if (booking == null || !booking.Status.Equals("completed", StringComparison.OrdinalIgnoreCase))
-                return BadRequest("Invalid booking.");
+                return View("Error", new ErrorViewModel { ErrorMessage = "Invalid booking. The booking does not exist or is not completed." });
 
             var userIdClaim = User.FindFirst("UserId");
             if (userIdClaim == null)
@@ -30,7 +30,7 @@ namespace TripNest.Controllers
 
             bool exists = _context.Reviews.Any(r => r.BookingId == bookingId && r.UserId == userId);
             if (exists)
-                return BadRequest("You’ve already submitted a review.");
+                return View("Error", new ErrorViewModel { ErrorMessage = "You've already submitted a review for this booking." });
 
             var review = new Review { BookingId = bookingId, UserId = userId };
             return View(review);
@@ -42,14 +42,12 @@ namespace TripNest.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Optionally log or inspect validation errors here:
-                // var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
                 return View(model);
             }
 
             var booking = _context.Bookings.FirstOrDefault(b => b.Id == model.BookingId);
             if (booking == null || !booking.Status.Equals("completed", StringComparison.OrdinalIgnoreCase))
-                return BadRequest("Invalid booking.");
+                return View("Error", new ErrorViewModel { ErrorMessage = "Invalid booking. The booking does not exist or is not completed." });
 
             var userIdClaim = User.FindFirst("UserId");
             if (userIdClaim == null)
@@ -59,7 +57,7 @@ namespace TripNest.Controllers
 
             bool exists = _context.Reviews.Any(r => r.BookingId == model.BookingId && r.UserId == userId);
             if (exists)
-                return BadRequest("Review already submitted.");
+                return View("Error", new ErrorViewModel { ErrorMessage = "Review already submitted for this booking." });
 
             model.UserId = userId;
             model.CreatedAt = DateTime.Now;
@@ -69,5 +67,12 @@ namespace TripNest.Controllers
 
             return RedirectToAction("Profile", "Account");
         }
+    }
+
+    public class ErrorViewModel
+    {
+        public string ErrorMessage { get; set; }
+        public string RequestId { get; set; }
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }

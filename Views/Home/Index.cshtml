@@ -74,26 +74,27 @@
         {
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
-                        style="height: 150px; background-color: #e0e0e0;">
-                        <span class="text-muted" style="font-size: 1.5rem; opacity: 0.5;">@tour.Title</span>
+                    <div class="card-img-top bg-light"
+                        style="height: 150px; background-color: #e0e0e0; overflow: hidden;">
+                        <img src="@tour.ImageUrl" alt="@tour.Title" style="width: 100%; height: 100%; object-fit: cover;" />
                     </div>
                     <div class="card-body">
                         <h5 class="card-title text-uppercase mb-2" style="font-size: 1rem; font-weight: 600;">@tour.Title
                         </h5>
-                        <p class="card-text text-muted mb-3" style="font-size: 0.85rem;">@tour.Description?.Substring(0,
-                                                    Math.Min(100, tour.Description.Length))...</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="fw-bold" style="font-size: 1.25rem;">$@tour.Price</span>
-                        <a href="/Tour/Details/@tour.Id" class="btn btn-success" style="padding: 0.5rem 1rem;">Book
-                            Now</a>
+                        <p class="card-text text-muted mb-3" style="font-size: 0.85rem;">
+                            @tour.Description?.Substring(0, Math.Min(100, tour.Description.Length))...
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold" style="font-size: 1.25rem;">$@tour.Price</span>
+                            <a href="/Tour/Details/@tour.Id" class="btn btn-success" style="padding: 0.5rem 1rem;">Book Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-                }
+        }
     </div>
 </div>
+
 
 <!-- Why Choose TravelHub section -->
 <div class="search-container mt-5">

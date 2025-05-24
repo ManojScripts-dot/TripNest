@@ -13,11 +13,13 @@ namespace TripNest.Models
         [Required]
         public string Password { get; set; } = null!;
 
-        
+
 
         [Required]
         public UserProfile UserProfile { get; set; } = null!;
 
         public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        
+            public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

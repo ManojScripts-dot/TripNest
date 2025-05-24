@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TripNest.Data;
 
@@ -11,9 +12,11 @@ using TripNest.Data;
 namespace TripNest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250524042810_CreateReviews")]
+    partial class CreateReviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,7 +302,7 @@ namespace TripNest.Migrations
                         .IsRequired();
 
                     b.HasOne("TripNest.Models.User", "User")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -337,8 +340,6 @@ namespace TripNest.Migrations
             modelBuilder.Entity("TripNest.Models.User", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("Reviews");
 
                     b.Navigation("UserProfile")
                         .IsRequired();

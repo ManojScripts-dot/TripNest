@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TripNest.Data;
 using TripNest.Models;
+using System.Globalization;
 
 namespace TripNest.Controllers
 {
-     // Only authenticated Agency users can access these actions
+    // Only authenticated Agency users can access these actions
     public class TourController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -111,5 +112,37 @@ namespace TripNest.Controllers
 
             return View(tour);
         }
+
+
+        public IActionResult Search(string destination, string date, string priceRange)
+        {
+            var tours = _context.Tours.AsQueryable();
+
+            if (!string.IsNullOrEmpty(destination))
+            {
+                tours = tours.Where(t => t.Destination.Contains(destination));
+            }
+
+            // If you have no date property, you can skip this or handle differently.
+            // For now, skip date filtering or implement if you add it.
+
+            if (!string.IsNullOrEmpty(priceRange))
+            {
+                if (priceRange == "0-500")
+                    tours = tours.Where(t => t.Price >= 0 && t.Price <= 500);
+                else if (priceRange == "501-1000")
+                    tours = tours.Where(t => t.Price >= 501 && t.Price <= 1000);
+                else if (priceRange == "1001-2000")
+                    tours = tours.Where(t => t.Price >= 1001 && t.Price <= 2000);
+                else if (priceRange == "2001+")
+                    tours = tours.Where(t => t.Price >= 2001);
+            }
+
+            var result = tours.ToList();
+
+            return View("SearchResults", result);
+        }
+
+
     }
 }

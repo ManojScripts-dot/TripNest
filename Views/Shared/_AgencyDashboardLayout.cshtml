@@ -45,7 +45,8 @@
         <a href="@Url.Action("Dashboard", "Agency")" class="@(ViewContext.RouteData.Values["action"].ToString() == "Dashboard" ? "active" : "")">Dashboard</a>
         <a href="@Url.Action("ManageTours", "Agency")" class="@(ViewContext.RouteData.Values["action"].ToString() == "ManageTours" ? "active" : "")">Manage Tours</a>
         <a href="@Url.Action("Bookings", "Agency")" class="@(ViewContext.RouteData.Values["action"].ToString() == "Bookings" ? "active" : "")">Bookings</a>
-        <a href="@Url.Action("Feedback", "Agency")" class="@(ViewContext.RouteData.Values["action"].ToString() == "Feedback" ? "active" : "")">Feedback</a>
+        <a href="@Url.Action("Review", "Agency")" class="@(ViewContext.RouteData.Values["action"].ToString() == "Review" ? "active" : "")">Review</a>
+
         <a href="@Url.Action("Logout", "Agency")" class="mt-auto btn btn-danger text-center mx-3 mb-3">Logout</a>
     </div>
 

@@ -1,0 +1,38 @@
+@model TripNest.Models.Review
+
+@{
+    ViewData["Title"] = "Leave a Review";
+}
+
+<h2>Leave a Review for Booking #@Model.BookingId</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="BookingId" />
+    <!-- Removed UserId hidden input -->
+
+    <div class="mb-3">
+        <label asp-for="Stars" class="form-label">Rating</label>
+        <select asp-for="Stars" class="form-select">
+            <option value="">Select stars</option>
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+        <span asp-validation-for="Stars" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Message" class="form-label">Review</label>
+        <textarea asp-for="Message" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Message" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

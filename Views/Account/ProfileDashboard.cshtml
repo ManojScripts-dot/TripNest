@@ -7,10 +7,11 @@
 <div class="container mt-4">
     <h2>@Model.Profile.FirstName @Model.Profile.LastName's Dashboard</h2>
 
+    <!-- Profile Info Section -->
     <div class="row mt-4">
         <div class="col-md-4">
             <img src="@Model.Profile.ProfileImageUrl" alt="Profile Image" class="img-thumbnail"
-                style="width: 100%; max-width: 200px;" />
+                 style="width: 100%; max-width: 200px;" />
         </div>
         <div class="col-md-8">
             <ul class="list-group">
@@ -25,6 +26,7 @@
 
     <hr class="my-5" />
 
+    <!-- Bookings Section -->
     <h3>Your Bookings</h3>
 
     @if (Model.Bookings != null && Model.Bookings.Any())
@@ -45,12 +47,13 @@
                 {
                     <tr>
                         <td style="width: 100px;">
+                            @* If TourImageUrl property exists in BookingViewModel, otherwise remove this *@
                             <img src="@booking.TourImageUrl" alt="@booking.TourName" class="img-thumbnail"
-                                style="max-width: 100px; height: auto;" />
+                                 style="max-width: 100px; height: auto;" />
                         </td>
                         <td>@booking.TourName</td>
                         <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
-                        <td>@booking.NumberOfGuests</td>
+                        <td>@booking.NumberOfGuests</td>  @* Make sure NumberOfGuests exists or remove *@
                         <td>
                             @switch (booking.Status.ToLower())
                             {
@@ -73,7 +76,7 @@
                         </td>
                         <td style="white-space: nowrap;">
                             <a asp-controller="Bookings" asp-action="Details" asp-route-id="@booking.Id"
-                                class="btn btn-sm btn-info me-1">
+                               class="btn btn-sm btn-info me-1">
                                 View Details
                             </a>
 
@@ -81,23 +84,51 @@
                                 Contact Agency
                             </a>
 
-                            <form asp-controller="Bookings" asp-action="Cancel" asp-route-id="@booking.Id" method="post"
-                                class="d-inline" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    Cancel Booking
-                                </button>
-                            </form>
+                            @if (booking.Status.ToLower() == "completed")
+                            {
+                                <a asp-controller="Review" asp-action="Create" asp-route-bookingId="@booking.Id"
+                                   class="btn btn-sm btn-success me-1">
+                                    Leave a Review
+                                </a>
+                            }
+
+                           
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-
     }
     else
     {
         <div class="alert alert-info mt-3">
             You have no bookings yet.
+        </div>
+    }
+
+    <hr class="my-5" />
+
+    <!-- Reviews Section -->
+    <h3>Your Reviews</h3>
+
+    @if (Model.Reviews != null && Model.Reviews.Any())
+    {
+        <div class="list-group mt-3">
+            @foreach (var review in Model.Reviews)
+            {
+                <div class="list-group-item">
+                    <h5 class="mb-1">@review.TourTitle</h5>  @* corrected from @review.Tour.Title *@
+                    <p class="mb-1">@review.Content</p>
+                    <small>Rating: @review.Rating/5</small><br />
+                    <small>Reviewed on: @review.CreatedAt.ToString("yyyy-MM-dd")</small>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info mt-3">
+            You haven't submitted any reviews yet.
         </div>
     }
 </div>

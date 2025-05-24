@@ -1,33 +1,130 @@
 @model TripNest.Models.Tour
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Tour Details";
 }
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
 
-<div class="search-container mt-5 mb-5">
-    <h2 class="mb-4 text-center">@Model.Title</h2>
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card h-100 shadow-sm">
-                <img src="@Url.Content(Model.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top img-fluid rounded" alt="@Model.Title" style="height: 300px; object-fit: cover;" />
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase mb-2">@Model.Title</h5>
-                    <p class="card-text text-muted"><strong>Destination:</strong> @Model.Destination</p>
-                    <p class="card-text"><strong>Description:</strong> @Model.Description</p>
-                    <p class="card-text"><strong>Price:</strong> $@Model.Price</p>
-                    <p class="card-text"><strong>Duration:</strong> @Model.DurationDays day(s)</p>
-                    <p class="card-text"><strong>Rating:</strong> @Model.StarRating ★</p>
-                    <p class="card-text"><strong>Status:</strong> @Model.Status</p>
-                    <p class="card-text"><strong>Created:</strong> @Model.CreatedDate.ToString("d MMM yyyy")</p>
-                    <div class="d-flex justify-content-end">
-                        <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id" class="btn btn-success">Book Now</a>
-                        <a href="/Packages" class="btn btn-secondary ms-2">Back to Packages</a>
+<div class="tour-container">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center" style="color: #27ae60;">
+                <i class="bi bi-compass-fill me-2"></i>@Model.Title
+            </h2>
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 text-center">
+                    <img src="@Url.Content(Model.ImagePath ?? "/images/default-tour.png")" alt="@Model.Title"
+                         class="img-fluid rounded-3 img-thumbnail"
+                         style="max-height: 400px; width: 100%; object-fit: cover; border: 2px solid #27ae60;" />
+                </div>
+                <div class="col-12 col-md-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-geo-alt-fill text-success me-3"></i>
+                            <strong class="me-2">Destination:</strong>
+                            <span>@(Model.Destination ?? "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-text-paragraph text-success me-3"></i>
+                            <strong class="me-2">Description:</strong>
+                            <span>@(Model.Description ?? "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-currency-dollar text-success me-3"></i>
+                            <strong class="me-2">Price:</strong>
+                            <span>@(Model.Price > 0 ? Model.Price.ToString("C") : "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-calendar3 text-success me-3"></i>
+                            <strong class="me-2">Duration:</strong>
+                            <span>@(Model.DurationDays > 0 ? Model.DurationDays + " day(s)" : "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-star-fill text-success me-3"></i>
+                            <strong class="me-2">Rating:</strong>
+                            <span>@(Model.StarRating > 0 ? Model.StarRating + "/5" : "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-toggle-on text-success me-3"></i>
+                            <strong class="me-2">Status:</strong>
+                            <span>@(Model.Status ?? "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-calendar-check-fill text-success me-3"></i>
+                            <strong class="me-2">Created:</strong>
+                            <span>@(Model.CreatedDate != default ? Model.CreatedDate.ToString("d MMM yyyy") : "N/A")</span>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-end mt-4">
+                        <a asp-controller="Booking" asp-action="Create" asp-route-tourId="@Model.Id"
+                           class="btn btn-custom me-2">
+                            <i class="bi bi-bookmark-check-fill me-1"></i>Book Now
+                        </a>
+                        <a asp-controller="Tours" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left-circle-fill me-1"></i>Back to Packages
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+}
+
+<style>
+    .tour-container {
+        max-width: 960px;
+        margin: auto;
+        padding: 20px;
+    }
+    .card {
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .list-group-item {
+        border: none;
+        padding: 0.75rem 0;
+        font-size: 1.1em;
+        color: #333;
+    }
+    .list-group-item strong {
+        min-width: 100px;
+        color: #27ae60;
+    }
+    .btn-custom {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: white;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-custom:hover {
+        background-color: #219653;
+        border-color: #219653;
+        color: white;
+        transform: scale(1.05);
+    }
+    .btn-outline-secondary {
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        transition: background-color 0.2s, color 0.2s, transform 0.3s ease;
+    }
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: white;
+        transform: scale(1.05);
+    }
+    .text-success {
+        color: #27ae60 !important;
+    }
+    .text-success:hover {
+        color: #219653 !important;
+    }
+</style>

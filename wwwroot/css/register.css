@@ -57,7 +57,7 @@
 }
 
 .promo-footer {
-    margin-top: auto; /* Push footer content to the bottom */
+    margin-top: auto; 
 }
 
 .trust-text {
@@ -68,7 +68,7 @@
 .rating-text {
     font-size: clamp(0.9rem, 2.5vw, 1rem);
     font-weight: 500;
-    margin-top: 1rem; /* Add spacing above rating */
+    margin-top: 1rem; 
 }
 
 .rating-text .bi-star-fill {
@@ -79,8 +79,8 @@
 
 .register-promo hr {
     border: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.3); /* Increased opacity to 0.3 for better visibility, matching UserLogin perception */
-    margin: 2rem 0; /* Add spacing above and below the line */
+    border-top: 1px solid rgba(255, 255, 255, 0.3); 
+    margin: 2rem 0; 
     width: 100%;
 }
 
@@ -138,6 +138,7 @@
 
 .btn-signin:hover {
     background-color: #219653;
+    color: #fff;
 }
 
 .register-form a {

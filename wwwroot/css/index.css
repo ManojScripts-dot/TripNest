@@ -63,7 +63,7 @@ body {
 }
 
 .btn-success:hover {
-  background-color: #1abc9c;
+  background-color: #219653;
   color: #fff;
   transform: scale(1.05);
   transition: color 0.3s ease, transform 0.3s ease;
@@ -81,7 +81,7 @@ body {
 }
 
 .btn-explore:hover {
-  background-color: #1abc9c;
+  background-color: #219653;
   color: #fff;
   transform: scale(1.05);
   transition: color 0.3s ease, transform 0.3s ease;
@@ -159,7 +159,7 @@ body {
 }
 
 .btn-search:hover {
-  background-color: #1abc9c;
+  background-color: #219653;
   color: #fff;
   transform: scale(1.05);
   transition: color 0.3s ease, transform 0.3s ease;

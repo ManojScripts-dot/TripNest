@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:/Users/Dell/TripNest/bin/Debug/net8.0/appsettings.json
 C:/Users/Dell/TripNest/bin/Debug/net8.0/TripNest.staticwebassets.runtime.json
 C:/Users/Dell/TripNest/bin/Debug/net8.0/TripNest.staticwebassets.endpoints.json
@@ -266,3 +267,5 @@ C:/Users/Dell/TripNest/bin/Debug/net8.0/appsettings.Development.json
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/TripNest.pdb
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/TripNest.genruntimeconfig.cache
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/ref/TripNest.dll
+=======
+>>>>>>> 250447d9cc61faa72bb4c5b81c9aad65ca9b049d

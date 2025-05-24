@@ -5,7 +5,7 @@
 namespace TripNest.Migrations
 {
     /// <inheritdoc />
-    public partial class AddFeedbackTable : Migration
+    public partial class UpdateSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

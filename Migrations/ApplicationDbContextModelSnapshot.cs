@@ -114,7 +114,7 @@ namespace TripNest.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("TripNest.Models.Feedback", b =>
+            modelBuilder.Entity("TripNest.Models.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,14 +125,14 @@ namespace TripNest.Migrations
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Comments")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Rating")
+                    b.Property<string>("Message")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Stars")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -144,7 +144,7 @@ namespace TripNest.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("TripNest.Models.Tour", b =>
@@ -289,7 +289,7 @@ namespace TripNest.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TripNest.Models.Feedback", b =>
+            modelBuilder.Entity("TripNest.Models.Review", b =>
                 {
                     b.HasOne("TripNest.Models.Booking", "Booking")
                         .WithMany()
@@ -298,7 +298,7 @@ namespace TripNest.Migrations
                         .IsRequired();
 
                     b.HasOne("TripNest.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -336,6 +336,8 @@ namespace TripNest.Migrations
             modelBuilder.Entity("TripNest.Models.User", b =>
                 {
                     b.Navigation("Bookings");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("UserProfile")
                         .IsRequired();

@@ -5,32 +5,196 @@
     ViewData["Title"] = "View Booking";
 }
 
-<h2>Booking Details</h2>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-<div class="mb-3">
-    <strong>Customer:</strong> @Model.CustomerName<br />
-    <strong>Email:</strong> @Model.Email<br />
-    <strong>Tour:</strong> @Model.Tour?.Title<br />
-    <strong>Date:</strong> @Model.PreferredTourDate.ToShortDateString()<br />
-    <strong>Guests:</strong> @Model.NumberOfGuests<br />
-    <strong>Special Requests:</strong> @Model.SpecialRequests<br />
-    <strong>Notes:</strong> @Model.AdditionalNotes<br />
-    <strong>Booking Date:</strong> @Model.BookingDate<br />
-    <strong>Total Amount:</strong> $@Model.TotalAmount<br />
+<div class="tour-container">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center" style="color: #27ae60;">
+                <i class="bi bi-bookmark-fill me-2"></i>Booking Details
+            </h2>
+            @if (!string.IsNullOrEmpty(ViewBag.Error))
+            {
+                <div class="alert alert-danger rounded-3" role="alert">
+                    @ViewBag.Error
+                </div>
+            }
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-person-fill text-success me-3"></i>
+                            <strong class="me-2">Customer:</strong>
+                            <span>@(Model.CustomerName ?? "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-envelope-fill text-success me-3"></i>
+                            <strong class="me-2">Email:</strong>
+                            <span>@(Model.Email ?? "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-compass-fill text-success me-3"></i>
+                            <strong class="me-2">Tour:</strong>
+                            <span>@(Model.Tour?.Title ?? "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-currency-dollar text-success me-3"></i>
+                            <strong class="me-2">Total Amount:</strong>
+                            <span>@(Model.TotalAmount > 0 ? Model.TotalAmount.ToString("C") : "N/A")</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-calendar3 text-success me-3"></i>
+                            <strong class="me-2">Tour Date:</strong>
+                            <span>@(Model.PreferredTourDate != default ? Model.PreferredTourDate.ToString("d MMM yyyy") : "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-people-fill text-success me-3"></i>
+                            <strong class="me-2">Guests:</strong>
+                            <span>@(Model.NumberOfGuests > 0 ? Model.NumberOfGuests : "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-calendar-check-fill text-success me-3"></i>
+                            <strong class="me-2">Booking Date:</strong>
+                            <span>@(Model.BookingDate != default ? Model.BookingDate.ToString("d MMM yyyy") : "N/A")</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-toggle-on text-success me-3"></i>
+                            <strong class="me-2">Status:</strong>
+                            @switch (Model.Status?.ToLower())
+                            {
+                                case "confirmed":
+                                    <span class="badge bg-success rounded-pill">Confirmed</span>
+                                    break;
+                                case "pending":
+                                    <span class="badge bg-warning text-dark rounded-pill">Pending</span>
+                                    break;
+                                case "completed":
+                                    <span class="badge bg-primary rounded-pill">Completed</span>
+                                    break;
+                                default:
+                                    <span class="badge bg-secondary rounded-pill">@(Model.Status ?? "N/A")</span>
+                                    break;
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div class="mb-3">
+                    <strong><i class="bi bi-chat-text-fill text-success me-2"></i>Special Requests:</strong>
+                    <p class="ms-4">@(Model.SpecialRequests ?? "None")</p>
+                </div>
+                <div class="mb-3">
+                    <strong><i class="bi bi-sticky-fill text-success me-2"></i>Additional Notes:</strong>
+                    <p class="ms-4">@(Model.AdditionalNotes ?? "None")</p>
+                </div>
+            </div>
+            <form asp-action="ViewBooking" method="post" class="mt-4">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <label asp-for="Status" class="form-label fw-bold">
+                            <i class="bi bi-toggle-on text-success me-2"></i>Update Status
+                        </label>
+                        <select asp-for="Status" class="form-select rounded-3" id="status">
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <button type="submit" class="btn btn-custom me-2">
+                            <i class="bi bi-save-fill me-1"></i>Update Status
+                        </button>
+                        <a asp-action="Bookings" asp-controller="Agency" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left-circle-fill me-1"></i>Back to Bookings
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
-<form asp-action="ViewBooking" method="post">
-     @Html.AntiForgeryToken()
-    <input type="hidden" name="id" value="@Model.Id" />
-    <div class="form-group">
-        <label for="status">Update Status</label>
-        <select name="status" class="form-control" id="status">
-            <option value="Pending" selected="@Model.Status == "Pending"">Pending</option>
-            <option value="Confirmed" selected="@Model.Status == "Confirmed"">Confirmed</option>
-            <option value="Completed" selected="@Model.Status == "Completed"">Completed</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary mt-2">Update Status</button>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
-<a asp-action="Bookings" class="btn btn-secondary mt-2">Back to Bookings</a>
+<style>
+    .tour-container {
+        max-width: 960px;
+        margin: auto;
+        padding: 20px;
+    }
+    .card {
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .list-group-item {
+        border: none;
+        padding: 0.75rem 0;
+        font-size: 1.1em;
+        color: #333;
+    }
+    .list-group-item strong {
+        min-width: 100px;
+        color: #27ae60;
+    }
+    .form-label {
+        color: #333;
+    }
+    .form-select {
+        border-color: #ced4da;
+        box-shadow: none;
+        transition: border-color 0.2s;
+        border-radius: 0.5rem;
+    }
+    .form-select:focus {
+        border-color: #27ae60;
+        box-shadow: 0 0 0 0.2rem rgba(39, 174, 96, 0.25);
+    }
+    .btn-custom {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: white;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-custom:hover {
+        background-color: #219653;
+        border-color: #219653;
+        color: white;
+        transform: scale(1.05);
+    }
+    .btn-outline-secondary {
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        transition: background-color 0.2s, color 0.2s, transform 0.3s ease;
+    }
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: white;
+        transform: scale(1.05);
+    }
+    .text-success {
+        color: #27ae60 !important;
+    }
+    .text-success:hover {
+        color: #219653 !important;
+    }
+    .alert-danger {
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+    }
+    .badge {
+        font-size: 0.9em;
+        padding: 0.5em 1em;
+    }
+</style>

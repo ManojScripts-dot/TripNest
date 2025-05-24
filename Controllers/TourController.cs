@@ -67,11 +67,11 @@ namespace TripNest.Controllers
                             await imageFile.CopyToAsync(stream);
                         }
 
-                        tour.ImagePath = $"images/{fileName}";
+                        tour.ImagePath = $"/images/{fileName}"; 
                     }
                     else
                     {
-                        tour.ImagePath = "images/default-tour.jpg";
+                        tour.ImagePath = "/images/default-tour.jpg";
                     }
 
                     _context.Tours.Add(tour);
@@ -147,7 +147,7 @@ namespace TripNest.Controllers
                             await imageFile.CopyToAsync(stream);
                         }
 
-                        existingTour.ImagePath = $"images/{fileName}";
+                        existingTour.ImagePath = $"/images/{fileName}"; // Added leading slash
                     }
 
                     _context.Tours.Update(existingTour);
@@ -199,40 +199,33 @@ namespace TripNest.Controllers
             return View(tour);
         }
 
-        public IActionResult Search(string destination, string date, string priceRange)
+ public IActionResult Search(string destination, string date, string priceRange)
         {
             var tours = _context.Tours.AsQueryable();
 
             if (!string.IsNullOrEmpty(destination))
             {
-                tours = tours.Where(t => t.Destination.Contains(destination) || t.Title.Contains(destination));
+                tours = tours.Where(t => t.Destination.Contains(destination));
             }
 
-            if (!string.IsNullOrEmpty(date))
-            {
-                if (DateTime.TryParse(date, out var parsedDate))
-                {
-                    tours = tours.Where(t => t.CreatedDate.Date >= parsedDate.Date);
-                }
-            }
+            // If you have no date property, you can skip this or handle differently.
+            // For now, skip date filtering or implement if you add it.
 
             if (!string.IsNullOrEmpty(priceRange))
             {
-                var range = priceRange.Split('-');
-                if (range.Length == 2 && decimal.TryParse(range[0], out var minPrice))
-                {
-                    if (range[1] == "+")
-                    {
-                        tours = tours.Where(t => t.Price >= minPrice);
-                    }
-                    else if (decimal.TryParse(range[1], out var maxPrice))
-                    {
-                        tours = tours.Where(t => t.Price >= minPrice && t.Price <= maxPrice);
-                    }
-                }
+                if (priceRange == "0-500")
+                    tours = tours.Where(t => t.Price >= 0 && t.Price <= 500);
+                else if (priceRange == "501-1000")
+                    tours = tours.Where(t => t.Price >= 501 && t.Price <= 1000);
+                else if (priceRange == "1001-2000")
+                    tours = tours.Where(t => t.Price >= 1001 && t.Price <= 2000);
+                else if (priceRange == "2001+")
+                    tours = tours.Where(t => t.Price >= 2001);
             }
 
-            return View("Index", tours.ToList());
+            var result = tours.ToList();
+
+            return View("SearchResults", result);
         }
     }
 }

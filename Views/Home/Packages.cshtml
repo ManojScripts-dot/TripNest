@@ -16,9 +16,11 @@
         {
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="@Url.Content(tour.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top" alt="@tour.Title" style="height: 150px; object-fit: cover;" />
+                    <!-- Enhanced Debug Information -->
+                    <img src="@Url.Content(tour.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top" alt="@tour.Title" style="height: 250px; object-fit: cover;" />
                     <div class="card-body">
                         <h5 class="card-title text-uppercase mb-2" style="font-size: 1rem; font-weight: 600;">@tour.Title</h5>
+                        <p class="text-muted mb-1" style="font-size: 0.85rem;"><i class="bi bi-geo-alt-fill me-1"></i>@tour.Destination</p>
                         @{
                             string description = tour.Description != null && tour.Description.Length > 100
                                 ? tour.Description.Substring(0, 100) + "..."

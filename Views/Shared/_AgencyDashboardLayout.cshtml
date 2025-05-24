@@ -32,7 +32,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-controller="Agency" asp-action="Feedback">
+                            <a class="nav-link text-white" asp-controller="Agency" asp-action="Review">
                                 <i class="fas fa-comment me-2"></i> Feedback
                             </a>
                         </li>
@@ -42,12 +42,6 @@
                             </a>
                         </li>
                     </ul>
-                    @if (User.Identity?.IsAuthenticated ?? false)
-                    {
-                        <div class="text-white text-center mt-4">
-                            <span>Welcome, @(User.Identity?.Name ?? "Agency")</span>
-                        </div>
-                    }
                 </div>
             </nav>
 

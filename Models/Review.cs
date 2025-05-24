@@ -10,7 +10,8 @@ namespace TripNest.Models
 
         [Required]
         public int BookingId { get; set; }
-        public virtual Booking Booking { get; set; } = null!;
+        public virtual Booking? Booking { get; set; }
+
 
         [Required]
         public int UserId { get; set; }

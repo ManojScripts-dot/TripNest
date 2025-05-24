@@ -42,6 +42,11 @@ namespace TripNest.Controllers
         {
             if (!ModelState.IsValid)
             {
+
+                 foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+    {
+        Console.WriteLine("Validation error: " + error.ErrorMessage);
+    }
                 // Optionally log or inspect validation errors here:
                 // var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
                 return View(model);
@@ -63,6 +68,8 @@ namespace TripNest.Controllers
 
             model.UserId = userId;
             model.CreatedAt = DateTime.Now;
+
+            Console.WriteLine($"Posted Review - BookingId: {model.BookingId}, Stars: {model.Stars}, Message: {model.Message}");
 
             _context.Reviews.Add(model);
             _context.SaveChanges();

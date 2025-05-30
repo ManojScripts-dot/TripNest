@@ -269,3 +269,8 @@ C:/Users/Dell/TripNest/bin/Debug/net8.0/appsettings.Development.json
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/ref/TripNest.dll
 =======
 >>>>>>> 250447d9cc61faa72bb4c5b81c9aad65ca9b049d
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/web.config
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/appsettings.Development.json
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/appsettings.json
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/TripNest.deps.json
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/TripNest.runtimeconfig.json

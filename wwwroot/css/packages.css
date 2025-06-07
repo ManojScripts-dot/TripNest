@@ -1,0 +1,26 @@
+/* Tour Card Styles */
+.tour-image {
+    height: 250px;
+    object-fit: cover;
+}
+
+.tour-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.tour-destination {
+    font-size: 0.85rem;
+}
+
+.tour-description {
+    font-size: 0.85rem;
+}
+
+.tour-price {
+    font-size: 1.25rem;
+}
+
+.book-now-btn {
+    padding: 0.5rem 1rem;
+}

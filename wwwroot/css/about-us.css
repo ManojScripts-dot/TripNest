@@ -1,4 +1,19 @@
-/* About Us Section */
+/* About Us Container */
+.about-us-container {
+  margin-top: 80px;
+}
+
+/* Section Titles */
+.section-title {
+  text-align: center;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 600;
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* About Us Content */
 .about-us-content {
   text-align: center;
 }
@@ -95,6 +110,10 @@
   .team-card .card-text {
     font-size: clamp(0.8rem, 2vw, 0.85rem);
   }
+
+  .section-title {
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -109,5 +128,9 @@
   .team-image {
     width: 130px;
     height: 130px;
+  }
+
+  .section-title {
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
   }
 }

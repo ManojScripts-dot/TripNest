@@ -6,6 +6,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
+<link rel="stylesheet" href="@Url.Content("~/css/packages.css")" />
 
 <div class="search-container mt-5 mb-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -17,19 +18,19 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <!-- Enhanced Debug Information -->
-                    <img src="@Url.Content(tour.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top" alt="@tour.Title" style="height: 250px; object-fit: cover;" />
+                    <img src="@Url.Content(tour.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top tour-image" alt="@tour.Title" />
                     <div class="card-body">
-                        <h5 class="card-title text-uppercase mb-2" style="font-size: 1rem; font-weight: 600;">@tour.Title</h5>
-                        <p class="text-muted mb-1" style="font-size: 0.85rem;"><i class="bi bi-geo-alt-fill me-1"></i>@tour.Destination</p>
+                        <h5 class="card-title text-uppercase mb-2 tour-title">@tour.Title</h5>
+                        <p class="text-muted mb-1 tour-destination"><i class="bi bi-geo-alt-fill me-1"></i>@tour.Destination</p>
                         @{
                             string description = tour.Description != null && tour.Description.Length > 100
                                 ? tour.Description.Substring(0, 100) + "..."
                                 : tour.Description ?? "";
                         }
-                        <p class="card-text text-muted mb-3" style="font-size: 0.85rem;">@description</p>
+                        <p class="card-text text-muted mb-3 tour-description">@description</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="fw-bold" style="font-size: 1.25rem;">$@tour.Price</span>
-                            <a href="/Tour/Details/@tour.Id" class="btn btn-success" style="padding: 0.5rem 1rem;">Book Now</a>
+                            <span class="fw-bold tour-price">$@tour.Price</span>
+                            <a href="/Tour/Details/@tour.Id" class="btn btn-success book-now-btn">Book Now</a>
                         </div>
                     </div>
                 </div>

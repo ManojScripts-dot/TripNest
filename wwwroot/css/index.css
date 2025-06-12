@@ -93,7 +93,7 @@ body {
 
 /* Search section */
 .search-section {
-  background-color: #f8f9fa;
+  background-color: #faf8f5;
   padding: 2rem 0;
 }
 
@@ -101,6 +101,9 @@ body {
   max-width: 93%;
   margin: 0 auto;
   padding: 0 2rem;
+  background-color: #faf8f5;
+  border-radius: 12px;
+  padding: 2rem;
 }
 
 .search-form {
@@ -307,6 +310,10 @@ body {
 
 .custom-rounded-table tbody tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
+}
+
+.dream-tour-bg {
+    background-color: #faf8f5;
 }
 
 /* Responsive adjustments */

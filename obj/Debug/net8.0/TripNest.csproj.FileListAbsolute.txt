@@ -274,6 +274,7 @@ C:/Users/Dell/TripNest/bin/Debug/net8.0/appsettings.Development.json
 /Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/appsettings.json
 /Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/TripNest.deps.json
 /Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/TripNest.runtimeconfig.json
+<<<<<<< HEAD
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.csproj.AssemblyReference.cache
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.AssemblyInfoInputs.cache
@@ -286,6 +287,8 @@ C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.sourcelink.json
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.dll
 C:\Users\Dell\TripNest\obj\Debug\net8.0\refint\TripNest.dll
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.pdb
+=======
+>>>>>>> ae9712c4a6604a7b6cd43a0bcfcbdb9ff729caed
 C:\Users\Dell\TripNest\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Dell\TripNest\bin\Debug\net8.0\appsettings.json
 C:\Users\Dell\TripNest\bin\Debug\net8.0\TripNest.staticwebassets.runtime.json
@@ -399,11 +402,29 @@ C:\Users\Dell\TripNest\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.C
 C:\Users\Dell\TripNest\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\Dell\TripNest\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Dell\TripNest\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+<<<<<<< HEAD
+=======
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.csproj.AssemblyReference.cache
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.AssemblyInfoInputs.cache
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.AssemblyInfo.cs
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.csproj.CoreCompileInputs.cache
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.RazorAssemblyInfo.cache
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.RazorAssemblyInfo.cs
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.sourcelink.json
+>>>>>>> ae9712c4a6604a7b6cd43a0bcfcbdb9ff729caed
 C:\Users\Dell\TripNest\obj\Debug\net8.0\scopedcss\bundle\TripNest.styles.css
 C:\Users\Dell\TripNest\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Dell\TripNest\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\Dell\TripNest\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Dell\TripNest\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.csproj.Up2Date
+<<<<<<< HEAD
+=======
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.dll
+C:\Users\Dell\TripNest\obj\Debug\net8.0\refint\TripNest.dll
+C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.pdb
+>>>>>>> ae9712c4a6604a7b6cd43a0bcfcbdb9ff729caed
 C:\Users\Dell\TripNest\obj\Debug\net8.0\TripNest.genruntimeconfig.cache
 C:\Users\Dell\TripNest\obj\Debug\net8.0\ref\TripNest.dll

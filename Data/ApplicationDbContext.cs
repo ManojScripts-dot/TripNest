@@ -17,6 +17,7 @@ namespace TripNest.Data
         public DbSet<UserProfile> UserProfiles { get; set; }
 
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<ContactMessage> ContactMessages { get; set; }
         
 
 

@@ -21,7 +21,8 @@
             <div class="col-md-6 mb-4">
                 <div class="card contact-card form-card p-4">
                     <h5 class="card-title text-center mb-4">Send Us a Message</h5>
-                    <form id="contact-form" class="search-form">
+                   <form id="contact-form" class="search-form" method="post" asp-controller="Contact" asp-action="Submit">
+                     @Html.AntiForgeryToken()
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required />

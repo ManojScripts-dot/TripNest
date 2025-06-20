@@ -158,43 +158,58 @@ namespace TripNest.Controllers
         }
 
 
-       public IActionResult Review()
-{
-    var agencyEmail = Request.Cookies["AgencyEmail"];
-    if (string.IsNullOrEmpty(agencyEmail))
-        return RedirectToAction("Login");
-
-    var agency = _context.Agencies.FirstOrDefault(a => a.Email == agencyEmail);
-    if (agency == null)
-    {
-        Response.Cookies.Delete("AgencyEmail");
-        return RedirectToAction("Login");
-    }
-
-    // 🔽 This is the correct place for your code
-    var reviews = _context.Reviews
-        .Include(r => r.Booking)
-            .ThenInclude(b => b.Tour)
-        .Where(r => r.Booking.Tour != null && r.Booking.Tour.AgencyId == agency.Id)
-        .Select(r => new ReviewViewModel
+        public IActionResult Review()
         {
-             TourTitle = r.Booking.Tour!.Title, 
-            TourDestination = r.Booking.Tour.Destination,
-            Content = r.Message ?? "",
-            Rating = r.Stars,
-            CreatedAt = r.CreatedAt
-        })
-        .ToList();
+            var agencyEmail = Request.Cookies["AgencyEmail"];
+            if (string.IsNullOrEmpty(agencyEmail))
+                return RedirectToAction("Login");
 
-        foreach (var r in reviews)
-{
-    Console.WriteLine($"DEBUG: Title={r.TourTitle}, Destination={r.TourDestination}");
-}
+            var agency = _context.Agencies.FirstOrDefault(a => a.Email == agencyEmail);
+            if (agency == null)
+            {
+                Response.Cookies.Delete("AgencyEmail");
+                return RedirectToAction("Login");
+            }
+
+            // 🔽 This is the correct place for your code
+            var reviews = _context.Reviews
+                .Include(r => r.Booking)
+                    .ThenInclude(b => b.Tour)
+                .Where(r => r.Booking.Tour != null && r.Booking.Tour.AgencyId == agency.Id)
+                .Select(r => new ReviewViewModel
+                {
+                    TourTitle = r.Booking.Tour!.Title,
+                    TourDestination = r.Booking.Tour.Destination,
+                    Content = r.Message ?? "",
+                    Rating = r.Stars,
+                    CreatedAt = r.CreatedAt
+                })
+                .ToList();
+
+            foreach (var r in reviews)
+            {
+                Console.WriteLine($"DEBUG: Title={r.TourTitle}, Destination={r.TourDestination}");
+            }
 
 
-    ViewData["Title"] = "Reviews";
-    return View(reviews); // ← Pass the list to your Razor View
-}
+            ViewData["Title"] = "Reviews";
+            return View(reviews); // ← Pass the list to your Razor View
+        }
+
+
+        public IActionResult ContactMessages()
+        {
+            var agencyEmail = Request.Cookies["AgencyEmail"];
+            if (string.IsNullOrEmpty(agencyEmail))
+                return RedirectToAction("Login");
+
+            var messages = _context.ContactMessages
+                .OrderByDescending(m => m.SubmittedAt)
+                .ToList();
+
+            ViewData["Title"] = "Contact Messages";
+            return View(messages);
+        }
 
 
 

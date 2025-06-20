@@ -1,0 +1,43 @@
+@model List<TripNest.Models.ContactMessage>
+
+@{
+    Layout = "~/Views/Shared/_AgencyDashboardLayout.cshtml";
+    ViewData["Title"] = "Contact Messages";
+}
+
+<h2 class="mb-4">Contact Messages</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Submitted At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            int index = 1;
+            foreach (var message in Model)
+            {
+                <tr>
+                    <td>@index</td>
+                    <td>@message.Name</td>
+                    <td>@message.Email</td>
+                    <td>@message.Message</td>
+                    <td>@message.SubmittedAt.ToString("g")</td>
+                </tr>
+                index++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No messages found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

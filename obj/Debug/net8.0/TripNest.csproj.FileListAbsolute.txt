@@ -277,3 +277,8 @@ C:/Users/Dell/TripNest/obj/Debug/net8.0/ref/TripNest.dll
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/TripNest.pdb
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/TripNest.genruntimeconfig.cache
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/ref/TripNest.dll
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/publish/web.config
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/publish/appsettings.Development.json
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/publish/appsettings.json
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/publish/TripNest.deps.json
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/publish/publish/TripNest.runtimeconfig.json

@@ -1,0 +1,20 @@
+# render.yaml
+
+services:
+  - type: web
+    name: tripnest-web
+    env: docker
+    plan: free
+    envVars:
+      - key: ConnectionStrings__Default
+        fromDatabase:
+          name: tripnest-db
+          property: connectionString
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+
+databases:
+  - name: tripnest-db
+    plan: free
+    databaseName: tripnest
+    user: tripnest_user

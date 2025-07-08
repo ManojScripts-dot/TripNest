@@ -6,7 +6,7 @@ services:
     env: docker
     plan: free
     envVars:
-      - key: ConnectionStrings__Default
+      - key: ConnectionStrings__DefaultConnection
         fromDatabase:
           name: tripnest-db
           property: connectionString

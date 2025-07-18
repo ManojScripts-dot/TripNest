@@ -402,3 +402,6 @@ FodyWeavers.xsd
 
 # Ignore local app settings with sensitive data or developer-specific configs
 appsettings.Development.json
+
+
+.env

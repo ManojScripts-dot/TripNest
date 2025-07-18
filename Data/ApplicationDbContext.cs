@@ -28,14 +28,13 @@ namespace TripNest.Data
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+{
+    base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Booking>()
-                .Property(b => b.TotalAmount)
-                .HasColumnType("decimal(18,2)");  // specify precision and scale for TotalAmount
+    modelBuilder.Entity<Booking>()
+        .Property(b => b.TotalAmount)
+        .HasColumnType("numeric(18,2)");
+}
 
-            // Add other model configurations here if needed
-        }
     }
 }

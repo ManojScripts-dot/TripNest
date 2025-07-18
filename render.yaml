@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: TripNest
+    env: dotnet
+    branch: main
+    buildCommand: dotnet publish -c Release -o out
+    startCommand: dotnet out/TripNest.dll
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        fromSecret: DATABASE_URL

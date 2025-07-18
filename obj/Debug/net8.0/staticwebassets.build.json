@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rZIrZyox+NOFQ7cEUumnUApXQ67uYf4YlKIwUohEfu4=",
+  "Hash": "4ZaKLOcyKOvtIYB74aR+lPFrXYvim8X6Mb60SDL8LvI=",
   "Source": "TripNest",
   "BasePath": "_content/TripNest",
   "Mode": "Default",
@@ -226,6 +226,25 @@
       "OriginalItemSpec": "wwwroot/images/cherryBlossm.jpeg"
     },
     {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/default-tour_03e5b9f4-07dd-446f-94fe-d975674c921d.jpg",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/default-tour_03e5b9f4-07dd-446f-94fe-d975674c921d.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/default-tour_03e5b9f4-07dd-446f-94fe-d975674c921d.jpg"
+    },
+    {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/default-tour_799fe2a3-3cf4-4e9e-81de-e7233788e5b0.jpg",
       "SourceId": "TripNest",
       "SourceType": "Discovered",
@@ -281,6 +300,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/eiffel_5cc28d1f-48ff-43de-93a2-91bd4c9e194a.jpeg"
+    },
+    {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/eiffel_9a231458-5bc1-4a28-b265-ea90c6f96cc8.jpeg",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/eiffel_9a231458-5bc1-4a28-b265-ea90c6f96cc8.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/eiffel_9a231458-5bc1-4a28-b265-ea90c6f96cc8.jpeg"
     },
     {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/eiffel.jpeg",
@@ -340,6 +378,25 @@
       "OriginalItemSpec": "wwwroot/images/gmail.png"
     },
     {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/iceland_39f0473b-32db-46c5-a141-f56dc7947cc8_ccdde129-4d30-4433-b0cf-cd6dde2a10ed.jpg",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/iceland_39f0473b-32db-46c5-a141-f56dc7947cc8_ccdde129-4d30-4433-b0cf-cd6dde2a10ed.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/iceland_39f0473b-32db-46c5-a141-f56dc7947cc8_ccdde129-4d30-4433-b0cf-cd6dde2a10ed.jpg"
+    },
+    {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/iceland_39f0473b-32db-46c5-a141-f56dc7947cc8.jpg",
       "SourceId": "TripNest",
       "SourceType": "Discovered",
@@ -376,6 +433,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/instagram.png"
+    },
+    {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/kenys_168d63bc-2743-4b42-b932-1ec78ff6eee0_1ce12752-803b-4a1f-b1eb-a30ada606f6a.webp",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/kenys_168d63bc-2743-4b42-b932-1ec78ff6eee0_1ce12752-803b-4a1f-b1eb-a30ada606f6a.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/kenys_168d63bc-2743-4b42-b932-1ec78ff6eee0_1ce12752-803b-4a1f-b1eb-a30ada606f6a.webp"
     },
     {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/kenys_168d63bc-2743-4b42-b932-1ec78ff6eee0.webp",
@@ -452,6 +528,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/images/peru_0a11d4e6-df70-487e-ae66-48b273c8f3da.webp"
+    },
+    {
+      "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/peru_7c894d26-eb74-4eeb-b0c4-7e508b3500ff.webp",
+      "SourceId": "TripNest",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/manojshrestha/TripNest/wwwroot/",
+      "BasePath": "_content/TripNest",
+      "RelativePath": "images/peru_7c894d26-eb74-4eeb-b0c4-7e508b3500ff.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/peru_7c894d26-eb74-4eeb-b0c4-7e508b3500ff.webp"
     },
     {
       "Identity": "/Users/manojshrestha/TripNest/wwwroot/images/peru.webp",

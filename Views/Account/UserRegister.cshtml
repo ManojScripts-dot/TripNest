@@ -43,7 +43,7 @@
                     @ViewBag.Error
                 </div>
             }
-            <form asp-action="Register" method="post">
+            <form asp-action="Register" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -93,9 +93,12 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="ProfileImageUrl" class="form-label"></label>
-                    <input asp-for="ProfileImageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
-                    <span asp-validation-for="ProfileImageUrl" class="text-danger"></span>
+                    <label asp-for="ProfileImage" class="form-label">
+                        <i class="bi bi-image-fill me-2"></i>Profile Image
+                    </label>
+                    <input asp-for="ProfileImage" type="file" class="form-control" accept="image/*" />
+                    <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                    <small class="form-text text-muted">Upload a profile picture (optional). Supported formats: JPG, PNG, GIF, WebP. Max size: 10MB.</small>
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="terms" name="terms" required />
@@ -115,4 +118,19 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    
+    <script>
+        // Optional: Preview selected image
+        document.querySelector('input[name="ProfileImage"]').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // You can add image preview functionality here if needed
+                    console.log('Image selected:', file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 }

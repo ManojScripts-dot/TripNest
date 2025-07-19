@@ -75,7 +75,15 @@
         {
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="@Url.Content(tour.ImagePath ?? "~/images/default-tour.jpg")" class="card-img-top tour-image" alt="@tour.Title" />
+                    @{
+                        string imageUrl = tour.ImagePath;
+                        if (string.IsNullOrEmpty(imageUrl) || imageUrl.Contains("/images/default-tour.jpg"))
+                        {
+                            imageUrl = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
+                        }
+                    }
+                    <img src="@imageUrl" class="card-img-top tour-image" alt="@tour.Title" 
+                         onerror="this.src='https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg'" />
                     <div class="card-body">
                         <h5 class="card-title text-uppercase mb-2 tour-title">@tour.Title</h5>
                         <p class="text-muted mb-1 tour-destination"><i class="bi bi-geo-alt-fill me-1"></i>@tour.Destination</p>

@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TripNest.Data;
 using TripNest.Models;
-using Microsoft.AspNetCore.Http;
-using System.IO;
+using TripNest.Services;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
@@ -12,10 +11,14 @@ namespace TripNest.Controllers
     public class TourController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICloudinaryService _cloudinaryService;
+        private readonly ILogger<TourController> _logger;
 
-        public TourController(ApplicationDbContext context)
+        public TourController(ApplicationDbContext context, ICloudinaryService cloudinaryService, ILogger<TourController> logger)
         {
             _context = context;
+            _cloudinaryService = cloudinaryService;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -46,40 +49,42 @@ namespace TripNest.Controllers
             {
                 try
                 {
+                    // Handle image upload to Cloudinary
                     if (imageFile != null && imageFile.Length > 0)
                     {
-                        if (imageFile.Length > 10 * 1024 * 1024)
+                        try
                         {
-                            ModelState.AddModelError("imageFile", "Image file size must be less than 10MB.");
+                            var imageUrl = await _cloudinaryService.UploadImageAsync(imageFile, "tours");
+                            tour.ImagePath = imageUrl;
+                            _logger.LogInformation("Image uploaded successfully for tour: {TourTitle}", tour.Title);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            ModelState.AddModelError("imageFile", ex.Message);
                             return View(tour);
                         }
-                        if (!imageFile.ContentType.StartsWith("image/"))
+                        catch (Exception ex)
                         {
-                            ModelState.AddModelError("imageFile", "Please upload a valid image file (e.g., .jpg, .png).");
+                            _logger.LogError(ex, "Error uploading image for tour: {TourTitle}", tour.Title);
+                            ModelState.AddModelError("imageFile", "Failed to upload image. Please try again.");
                             return View(tour);
                         }
-
-                        var fileName = Path.GetFileNameWithoutExtension(imageFile.FileName) + "_" + Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await imageFile.CopyToAsync(stream);
-                        }
-
-                        tour.ImagePath = $"/images/{fileName}"; 
                     }
                     else
                     {
-                        tour.ImagePath = "/images/default-tour.jpg";
+                        // Use default image URL from Cloudinary
+                        tour.ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
                     }
 
                     _context.Tours.Add(tour);
                     await _context.SaveChangesAsync();
+                    
+                    _logger.LogInformation("Tour created successfully: {TourId} - {TourTitle}", tour.Id, tour.Title);
                     return RedirectToAction("Dashboard", "Agency");
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Error saving tour: {TourTitle}", tour.Title);
                     ModelState.AddModelError("", $"An error occurred while saving the tour: {ex.Message}");
                     return View(tour);
                 }
@@ -118,6 +123,10 @@ namespace TripNest.Controllers
                     if (existingTour == null)
                         return NotFound();
 
+                    // Store old image path for potential cleanup
+                    var oldImagePath = existingTour.ImagePath;
+
+                    // Update tour properties
                     existingTour.Title = tour.Title;
                     existingTour.Description = tour.Description;
                     existingTour.DurationDays = tour.DurationDays;
@@ -126,36 +135,51 @@ namespace TripNest.Controllers
                     existingTour.Destination = tour.Destination;
                     existingTour.Status = tour.Status;
 
+                    // Handle new image upload
                     if (imageFile != null && imageFile.Length > 0)
                     {
-                        if (imageFile.Length > 10 * 1024 * 1024)
+                        try
                         {
-                            ModelState.AddModelError("imageFile", "Image file size must be less than 10MB.");
+                            var imageUrl = await _cloudinaryService.UploadImageAsync(imageFile, "tours");
+                            existingTour.ImagePath = imageUrl;
+
+                            // Delete old image from Cloudinary if it exists and is not the default
+                            if (!string.IsNullOrEmpty(oldImagePath) && 
+                                !oldImagePath.Contains("default-tour") &&
+                                oldImagePath.Contains("cloudinary.com"))
+                            {
+                                var publicId = _cloudinaryService.ExtractPublicIdFromUrl(oldImagePath);
+                                if (!string.IsNullOrEmpty(publicId))
+                                {
+                                    await _cloudinaryService.DeleteImageAsync(publicId);
+                                    _logger.LogInformation("Old image deleted from Cloudinary: {PublicId}", publicId);
+                                }
+                            }
+
+                            _logger.LogInformation("Image updated successfully for tour: {TourTitle}", existingTour.Title);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            ModelState.AddModelError("imageFile", ex.Message);
                             return View(tour);
                         }
-                        if (!imageFile.ContentType.StartsWith("image/"))
+                        catch (Exception ex)
                         {
-                            ModelState.AddModelError("imageFile", "Please upload a valid image file (e.g., .jpg, .png).");
+                            _logger.LogError(ex, "Error uploading new image for tour: {TourTitle}", existingTour.Title);
+                            ModelState.AddModelError("imageFile", "Failed to upload image. Please try again.");
                             return View(tour);
                         }
-
-                        var fileName = Path.GetFileNameWithoutExtension(imageFile.FileName) + "_" + Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
-
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await imageFile.CopyToAsync(stream);
-                        }
-
-                        existingTour.ImagePath = $"/images/{fileName}"; // Added leading slash
                     }
 
                     _context.Tours.Update(existingTour);
                     await _context.SaveChangesAsync();
+                    
+                    _logger.LogInformation("Tour updated successfully: {TourId} - {TourTitle}", existingTour.Id, existingTour.Title);
                     return RedirectToAction("Dashboard", "Agency");
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Error updating tour: {TourId}", id);
                     ModelState.AddModelError("", $"An error occurred while updating the tour: {ex.Message}");
                     return View(tour);
                 }
@@ -178,14 +202,39 @@ namespace TripNest.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var tour = _context.Tours.Find(id);
             if (tour == null)
                 return NotFound();
 
-            _context.Tours.Remove(tour);
-            _context.SaveChanges();
+            try
+            {
+                // Delete image from Cloudinary if it exists and is not the default
+                if (!string.IsNullOrEmpty(tour.ImagePath) && 
+                    !tour.ImagePath.Contains("default-tour") &&
+                    tour.ImagePath.Contains("cloudinary.com"))
+                {
+                    var publicId = _cloudinaryService.ExtractPublicIdFromUrl(tour.ImagePath);
+                    if (!string.IsNullOrEmpty(publicId))
+                    {
+                        await _cloudinaryService.DeleteImageAsync(publicId);
+                        _logger.LogInformation("Image deleted from Cloudinary: {PublicId}", publicId);
+                    }
+                }
+
+                _context.Tours.Remove(tour);
+                await _context.SaveChangesAsync();
+                
+                _logger.LogInformation("Tour deleted successfully: {TourId} - {TourTitle}", tour.Id, tour.Title);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting tour: {TourId}", id);
+                // Continue with tour deletion even if image deletion fails
+                _context.Tours.Remove(tour);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToAction("Dashboard", "Agency");
         }
@@ -199,7 +248,7 @@ namespace TripNest.Controllers
             return View(tour);
         }
 
- public IActionResult Search(string destination, string date, string priceRange)
+        public IActionResult Search(string destination, string date, string priceRange)
         {
             var tours = _context.Tours.AsQueryable();
 

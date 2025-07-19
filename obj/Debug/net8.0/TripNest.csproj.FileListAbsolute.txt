@@ -250,3 +250,4 @@ C:/Users/Dell/TripNest/obj/Debug/net8.0/ref/TripNest.dll
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/TripNest.genruntimeconfig.cache
 /Users/manojshrestha/TripNest/obj/Debug/net8.0/ref/TripNest.dll
 /Users/manojshrestha/TripNest/bin/Debug/net8.0/CloudinaryDotNet.dll
+/Users/manojshrestha/TripNest/bin/Debug/net8.0/appsettings.Development.json

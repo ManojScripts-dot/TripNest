@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TripNest.Data;
 using TripNest.Models;
 using TripNest.Models.ViewModels;
+using TripNest.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
@@ -17,10 +18,14 @@ namespace TripNest.Controllers
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICloudinaryService _cloudinaryService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(ApplicationDbContext context)
+        public AccountController(ApplicationDbContext context, ICloudinaryService cloudinaryService, ILogger<AccountController> logger)
         {
             _context = context;
+            _cloudinaryService = cloudinaryService;
+            _logger = logger;
         }
 
         // GET: /Account/Register
@@ -35,30 +40,67 @@ namespace TripNest.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new User
+                try
                 {
-                    Email = model.Email,
-                    Password = model.Password,
-                    UserProfile = new UserProfile
+                    // Handle profile image upload if provided
+                    string profileImageUrl = null;
+                    if (model.ProfileImage != null && model.ProfileImage.Length > 0)
                     {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        PhoneNumber = model.PhoneNumber,
-                        Address = model.Address,
-                        Country = model.Country,
-                        PreferredLanguage = model.PreferredLanguage,
-                        ProfileImageUrl = model.ProfileImageUrl
+                        try
+                        {
+                            profileImageUrl = await _cloudinaryService.UploadImageAsync(model.ProfileImage, "profiles");
+                            _logger.LogInformation("Profile image uploaded successfully for user: {Email}", model.Email);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            ModelState.AddModelError("ProfileImage", ex.Message);
+                            return View("UserRegister", model);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Error uploading profile image for user: {Email}", model.Email);
+                            // Don't fail registration for image upload issues, use default instead
+                            profileImageUrl = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-profile_clzafv.jpg";
+                        }
                     }
-                };
+                    else
+                    {
+                        // Use default profile image
+                        profileImageUrl = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-profile_clzafv.jpg";
+                    }
 
-                _context.Users.Add(user);
-                _context.SaveChanges();
+                    var user = new User
+                    {
+                        Email = model.Email,
+                        Password = model.Password,
+                        UserProfile = new UserProfile
+                        {
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            PhoneNumber = model.PhoneNumber,
+                            Address = model.Address,
+                            Country = model.Country,
+                            PreferredLanguage = model.PreferredLanguage,
+                            ProfileImageUrl = profileImageUrl
+                        }
+                    };
 
-                return RedirectToAction("Login");
+                    _context.Users.Add(user);
+                    await _context.SaveChangesAsync();
+
+                    _logger.LogInformation("User registered successfully: {Email}", model.Email);
+                    return RedirectToAction("Login");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error during user registration: {Email}", model.Email);
+                    ModelState.AddModelError("", "An error occurred while creating your account. Please try again.");
+                    return View("UserRegister", model);
+                }
             }
 
             return View("UserRegister", model);
@@ -187,13 +229,45 @@ namespace TripNest.Controllers
                     return RedirectToAction("Login");
                 }
 
+                // Handle profile image update if new image is provided
+                if (model.ProfileImage != null && model.ProfileImage.Length > 0)
+                {
+                    try
+                    {
+                        var oldImagePath = userEntity.UserProfile.ProfileImageUrl;
+                        var newImageUrl = await _cloudinaryService.UploadImageAsync(model.ProfileImage, "profiles");
+                        
+                        userEntity.UserProfile.ProfileImageUrl = newImageUrl;
+
+                        // Delete old image if it's not the default
+                        if (!string.IsNullOrEmpty(oldImagePath) && 
+                            !oldImagePath.Contains("default-profile") &&
+                            oldImagePath.Contains("cloudinary.com"))
+                        {
+                            var publicId = _cloudinaryService.ExtractPublicIdFromUrl(oldImagePath);
+                            if (!string.IsNullOrEmpty(publicId))
+                            {
+                                await _cloudinaryService.DeleteImageAsync(publicId);
+                                _logger.LogInformation("Old profile image deleted: {PublicId}", publicId);
+                            }
+                        }
+
+                        _logger.LogInformation("Profile image updated successfully for user: {Email}", userEmail);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Error updating profile image for user: {Email}", userEmail);
+                        ModelState.AddModelError("ProfileImage", "Failed to update profile image. Please try again.");
+                        // Don't return here, continue with other profile updates
+                    }
+                }
+
                 userEntity.UserProfile.FirstName = model.FirstName;
                 userEntity.UserProfile.LastName = model.LastName;
                 userEntity.UserProfile.PhoneNumber = model.PhoneNumber;
                 userEntity.UserProfile.Address = model.Address;
                 userEntity.UserProfile.Country = model.Country;
                 userEntity.UserProfile.PreferredLanguage = model.PreferredLanguage;
-                userEntity.UserProfile.ProfileImageUrl = model.ProfileImageUrl;
 
                 await _context.SaveChangesAsync();
 
@@ -227,7 +301,18 @@ namespace TripNest.Controllers
 
                 var updatedModel = new ProfileDashboardViewModel
                 {
-                    Profile = model,
+                    Profile = new RegisterViewModel
+                    {
+                        Email = userEntity.Email,
+                        Password = string.Empty,
+                        FirstName = userEntity.UserProfile.FirstName,
+                        LastName = userEntity.UserProfile.LastName,
+                        PhoneNumber = userEntity.UserProfile.PhoneNumber,
+                        Address = userEntity.UserProfile.Address,
+                        Country = userEntity.UserProfile.Country,
+                        PreferredLanguage = userEntity.UserProfile.PreferredLanguage,
+                        ProfileImageUrl = userEntity.UserProfile.ProfileImageUrl
+                    },
                     Bookings = userEntity.Bookings.Select(b => new BookingViewModel
                     {
                         Id = b.Id,

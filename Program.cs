@@ -1,12 +1,44 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using TripNest.Data;
+using TripNest.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load environment variables from .env file in development
+if (builder.Environment.IsDevelopment())
+{
+    var envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+    if (File.Exists(envPath))
+    {
+        var envVars = File.ReadAllLines(envPath)
+            .Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith("#"))
+            .Select(line => line.Split('=', 2))
+            .Where(parts => parts.Length == 2)
+            .ToDictionary(parts => parts[0], parts => parts[1].Trim('"'));
+
+        foreach (var envVar in envVars)
+        {
+            Environment.SetEnvironmentVariable(envVar.Key, envVar.Value);
+        }
+    }
+}
+
+// Get connection string from environment variables
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") 
+                      ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("Database connection string not found. Please set ConnectionStrings__DefaultConnection environment variable.");
+}
+
 // Register DbContext with PostgreSQL provider
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
+
+// Register Cloudinary service
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
 // Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -25,6 +57,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Log configuration on startup (without exposing sensitive data)
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+logger.LogInformation("Application starting up...");
+logger.LogInformation("Environment: {Environment}", app.Environment.EnvironmentName);
+
+var cloudName = Environment.GetEnvironmentVariable("Cloudinary__CloudName") 
+               ?? builder.Configuration["Cloudinary:CloudName"];
+logger.LogInformation("Cloudinary configured: {IsConfigured}", !string.IsNullOrEmpty(cloudName));
 
 if (!app.Environment.IsDevelopment())
 {

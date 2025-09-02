@@ -1,25 +1,77 @@
-﻿@model ErrorViewModel
+﻿@model TripNest.Controllers.ErrorViewModel
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment Environment
+
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "Error - TripNest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
-
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .error-container {
+            max-width: 600px;
+            margin: 100px auto;
+            text-align: center;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .error-container h1 {
+            color: #dc3545;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .error-container p {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .btn-tripnest {
+            background-color: #27AE60;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+        }
+        .btn-tripnest:hover {
+            background-color: #219653;
+            color: #fff;
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+        .request-id {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>Oops! Something Went Wrong</h1>
+        <p>@(Model?.ErrorMessage ?? "An error occurred while processing your request.")</p>
+        @if (Environment.IsDevelopment() && Model?.ShowRequestId == true)
+        {
+            <p class="request-id">
+                <strong>Request ID:</strong> <code>@Model.RequestId</code>
+            </p>
+        }
+        <a href="@Url.Action("Index", "Home")" class="btn-tripnest">Return to Home</a>
+        <a href="@Url.Action("Profile", "Account")" class="btn-tripnest ml-3">Go to Profile</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+@model IEnumerable<TripNest.Models.Tour>
+@{
+    Layout = "~/Views/Shared/_AgencyDashboardLayout.cshtml";
+    ViewData["Title"] = "Manage Tours";
+}
+
+<h2 class="mb-4">Your Tours</h2>
+
+<a href="@Url.Action("Create", "Tour")" class="btn btn-success mb-3">+ Add New Tour</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th>Tour Name</th>
+            <th>Destination</th>
+            <th>Duration</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tour in Model)
+        {
+            <tr>
+                <td>@tour.Title</td>
+                <td>@tour.Destination</td>
+                <td>@tour.DurationDays days</td>
+                <td>@string.Format("{0:C0}", tour.Price)</td>
+                <td>
+                    <span class="badge 
+                        @(tour.Status == "Active" ? "bg-success" : 
+                          tour.Status == "Draft" ? "bg-warning text-dark" : 
+                          "bg-secondary")">
+                        @tour.Status
+                    </span>
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Tour", new { id = tour.Id })" class="text-primary me-2">Edit</a>
+                    <a href="@Url.Action("Delete", "Tour", new { id = tour.Id })" class="text-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: TripNest
+    env: dotnet
+    branch: main
+    buildCommand: dotnet publish -c Release -o out
+    startCommand: dotnet out/TripNest.dll
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        fromSecret: DATABASE_URL
+      - key: Cloudinary__CloudName
+        fromSecret: CLOUDINARY_CLOUD_NAME
+      - key: Cloudinary__ApiKey
+        fromSecret: CLOUDINARY_API_KEY
+      - key: Cloudinary__ApiSecret
+        fromSecret: CLOUDINARY_API_SECRET
+      - key: Logging__LogLevel__Default
+        value: Information
+      - key: Logging__LogLevel__Microsoft_AspNetCore
+        value: Warning
+      - key: AllowedHosts
+        value: "*"

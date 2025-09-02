@@ -58,6 +58,21 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// Auto-apply migrations on startup
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    try
+    {
+        context.Database.Migrate();
+        app.Logger.LogInformation("Database migrations applied successfully");
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "Error applying database migrations: {Error}", ex.Message);
+    }
+}
+
 // Log configuration on startup (without exposing sensitive data)
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 logger.LogInformation("Application starting up...");

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TripNest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0ea55e1562b3c267782dc0f3196e32c6c065064")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12dab58be257aaf6abaa7b7d0539c5fb9afdeef9")]
 [assembly: System.Reflection.AssemblyProductAttribute("TripNest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TripNest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -4,11 +4,11 @@ WORKDIR /app
 
 # Copy csproj and restore dependencies
 COPY TripNest.csproj ./
-RUN dotnet restore TripNest.csproj
+RUN dotnet restore TripNest.csproj --verbosity normal
 
 # Copy everything else and build the app
 COPY . ./
-RUN dotnet publish TripNest.csproj -c Release -o out --no-restore
+RUN dotnet publish TripNest.csproj -c Release -o out --no-restore --verbosity normal
 
 # Use the official ASP.NET runtime image to run the app
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime

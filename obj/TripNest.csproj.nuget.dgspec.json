@@ -14,6 +14,7 @@
         "outputPath": "/Users/manojshrestha/TripNest/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+          "/Users/manojshrestha/TripNest/NuGet.Config",
           "/Users/manojshrestha/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -42,21 +43,27 @@
               "target": "Package",
               "version": "[1.27.6, )"
             },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.8, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[8.0.5, )"
+              "version": "[8.0.8, )"
             },
             "SendGrid": {
               "target": "Package",

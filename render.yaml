@@ -5,7 +5,7 @@ services:
     branch: main
     envVars:
       - key: ConnectionStrings__DefaultConnection
-        fromSecret: DATABASE_URL
+        fromSecret: SUPABASE_DATABASE_URL
       - key: Cloudinary__CloudName
         fromSecret: CLOUDINARY_CLOUD_NAME
       - key: Cloudinary__ApiKey

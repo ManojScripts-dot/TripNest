@@ -3,20 +3,16 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copy csproj and restore dependencies
-COPY *.csproj ./
-RUN dotnet restore
+COPY TripNest.csproj ./
+RUN dotnet restore TripNest.csproj
 
 # Copy everything else and build the app
 COPY . ./
-RUN dotnet publish -c Release -o out --no-restore
+RUN dotnet publish TripNest.csproj -c Release -o out --no-restore
 
 # Use the official ASP.NET runtime image to run the app
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-
-# Create a non-root user for security
-RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
-USER appuser
 
 # Copy the published app from build stage
 COPY --from=build /app/out .

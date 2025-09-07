@@ -1,10 +1,9 @@
 services:
   - type: web
     name: TripNest
-    env: dotnet
+    runtime: docker        
     branch: main
-    buildCommand: dotnet publish -c Release -o out
-    startCommand: dotnet out/TripNest.dll
+
     envVars:
       - key: ConnectionStrings__DefaultConnection
         fromSecret: DATABASE_URL
@@ -14,9 +13,14 @@ services:
         fromSecret: CLOUDINARY_API_KEY
       - key: Cloudinary__ApiSecret
         fromSecret: CLOUDINARY_API_SECRET
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:8080
       - key: Logging__LogLevel__Default
         value: Information
       - key: Logging__LogLevel__Microsoft_AspNetCore
         value: Warning
       - key: AllowedHosts
         value: "*"
+    autoDeploy: true

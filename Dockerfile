@@ -2,9 +2,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Copy csproj and restore dependencies
+# Copy csproj and restore dependencies with full clean
 COPY TripNest.csproj ./
-RUN dotnet restore TripNest.csproj --verbosity normal
+RUN dotnet nuget locals all --clear
+RUN dotnet restore TripNest.csproj --force --no-cache --verbosity normal
 
 # Copy everything else and build the app
 COPY . ./

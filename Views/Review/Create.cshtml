@@ -1,0 +1,104 @@
+@model TripNest.Models.Review
+
+@{
+    ViewData["Title"] = "Leave a Review - TripNest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="review-container">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center" style="color: #27ae60;">
+                <i class="bi bi-star-fill me-2"></i>Leave a Review for Booking #@Model.BookingId
+            </h2>
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="BookingId" />
+
+                <div class="mb-3">
+                    <label asp-for="Stars" class="form-label" style="color: #27ae60;">
+                        <i class="bi bi-star-fill me-2 text-success"></i>Rating
+                    </label>
+                    <select asp-for="Stars" class="form-select" style="border-color: #27ae60;">
+                        <option value="">Select stars</option>
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <option value="@i">@i Star@(i == 1 ? "" : "s")</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Stars" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Message" class="form-label" style="color: #27ae60;">
+                        <i class="bi bi-chat-left-text-fill me-2 text-success"></i>Review
+                    </label>
+                    <textarea asp-for="Message" class="form-control" rows="5" style="border-color: #27ae60;"></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-tripnest">
+                        <i class="bi bi-check-circle-fill me-1"></i>Submit Review
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    .review-container {
+        max-width: 600px;
+        margin: 100px auto;
+        padding: 20px;
+    }
+    .card {
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+    .form-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+    .form-select, .form-control {
+        font-size: 1rem;
+        border-radius: 5px;
+    }
+    .form-select:focus, .form-control:focus {
+        border-color: #219653;
+        box-shadow: 0 0 0 0.2rem rgba(33, 150, 83, 0.25);
+    }
+    .btn-tripnest {
+        background-color: #27ae60;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-tripnest:hover {
+        background-color: #219653;
+        color: #fff;
+        transform: scale(1.05);
+        text-decoration: none;
+    }
+    .text-success {
+        color: #27ae60 !important;
+    }
+    .text-success:hover {
+        color: #219653 !important;
+    }
+    .text-danger {
+        font-size: 0.9rem;
+    }
+</style>

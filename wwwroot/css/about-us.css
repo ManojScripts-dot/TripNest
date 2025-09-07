@@ -1,0 +1,136 @@
+/* About Us Container */
+.about-us-container {
+  margin-top: 80px;
+}
+
+/* Section Titles */
+.section-title {
+  text-align: center;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 600;
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* About Us Content */
+.about-us-content {
+  text-align: center;
+}
+
+.about-us-content .lead {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: #7f8c8d;
+  font-weight: 400;
+}
+
+.about-us-content p {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #2c3e50;
+}
+
+/* Meet Our Team Section */
+.team-section {
+  padding: 2rem 0;
+}
+
+.team-card {
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  text-align: center;
+  background-color: #ffffff !important;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+}
+
+.team-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+}
+
+.team-card .card-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.team-card .card-text {
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  color: #7f8c8d;
+  margin-bottom: 1rem;
+}
+
+.team-social-icons .bi {
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.team-social-icons .bi-facebook {
+  color: #3b5998;
+}
+
+.team-social-icons .bi-instagram {
+  color: #e1306c;
+}
+
+.team-social-icons .bi-linkedin {
+  color: #0077b5;
+}
+
+.team-social-icons .bi:hover {
+  opacity: 0.8;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+  .about-us-content .lead {
+    font-size: clamp(0.85rem, 3vw, 1rem);
+  }
+
+  .about-us-content p {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+  }
+
+  .team-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .team-card .card-title {
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+  }
+
+  .team-card .card-text {
+    font-size: clamp(0.8rem, 2vw, 0.85rem);
+  }
+
+  .section-title {
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .about-us-content .lead {
+    font-size: clamp(0.9rem, 3vw, 1.2rem);
+  }
+
+  .about-us-content p {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+  }
+
+  .team-image {
+    width: 130px;
+    height: 130px;
+  }
+
+  .section-title {
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+  }
+}

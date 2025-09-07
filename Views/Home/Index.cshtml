@@ -1,8 +1,145 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<TripNest.Models.Tour>
+
+@{
+    ViewData["Title"] = "Explore Tours";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
+<script src="@Url.Content("~/js/index.js")" defer></script>
+
+<!-- Promotional section with video background -->
+<div class="promo-section">
+    <video class="promo-video" id="video1" poster="@Url.Content("~/images/fallback.jpg")" muted preload="auto">
+        <source src="@Url.Content("~/videos/video1.mp4")" type="video/mp4">
+        Your browser does not support the video tag or the video failed to load.
+    </video>
+    <video class="promo-video hidden" id="video2" poster="@Url.Content("~/images/fallback.jpg")" muted preload="auto">
+        <source src="@Url.Content("~/videos/video2.mp4")" type="video/mp4">
+        Your browser does not support the video tag or the video failed to load.
+    </video>
+    <video class="promo-video hidden" id="video3" poster="@Url.Content("~/images/fallback.jpg")" muted preload="auto">
+        <source src="@Url.Content("~/videos/video3.mp4")" type="video/mp4">
+        Your browser does not support the video tag or the video failed to load.
+    </video>
+    <div class="promo-content">
+        <h1>Discover Your Perfect <br> <span class="highlight">Adventure</span></h1>
+        <p class="lead">Explore unique destinations with expert local guides</p>
+        <a href="/Home/Packages" class="btn btn-explore">Explore Tours</a>
+    </div>
+</div>
+
+<!-- Find Your Dream Tour form -->
+<div class="search-section dream-tour-bg">
+    <div class="search-container">
+        <form method="get" action="/Tour/Search" class="search-form">
+            <h3 class="mb-3">Find Your Dream Tour</h3>
+            <div class="row g-2">
+                <div class="col-12 col-md-4">
+                    <label for="destination" class="form-label">Destination</label>
+                    <input type="text" class="form-control" id="destination" name="destination"
+                        placeholder="Where do you want to go?" />
+                </div>
+                <div class="col-12 col-md-4">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="date" name="date" placeholder="dd/mm/yyyy" />
+                </div>
+                <div class="col-12 col-md-4">
+                    <label for="priceRange" class="form-label">Price Range</label>
+                    <select class="form-select" id="priceRange" name="priceRange">
+                        <option value="">Any price range</option>
+                        <option value="0-500">$0 - $500</option>
+                        <option value="501-1000">$501 - $1000</option>
+                        <option value="1001-2000">$1001 - $2000</option>
+                        <option value="2001+">$2001+</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-2 mt-3">
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-search">Search Tours</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tour cards section -->
+<div class="search-container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0 text-left flex-grow-1">Featured Tours</h2>
+        <a href="/Home/Packages" class="text-decoration-none view-all-link">View All</a>
+    </div>
+    <div class="row">
+        @foreach (var tour in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    @{
+                        string imageUrl = tour.ImagePath;
+                        if (string.IsNullOrEmpty(imageUrl) || imageUrl.Contains("/images/default-tour.jpg"))
+                        {
+                            imageUrl = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
+                        }
+                    }
+                    <img src="@imageUrl" class="card-img-top tour-image" alt="@tour.Title" 
+                         onerror="this.src='https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg'" />
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase mb-2 tour-title">@tour.Title</h5>
+                        <p class="text-muted mb-1 tour-destination"><i class="bi bi-geo-alt-fill me-1"></i>@tour.Destination</p>
+                        @{
+                            string description = tour.Description != null && tour.Description.Length > 100
+                                ? tour.Description.Substring(0, 100) + "..."
+                                : tour.Description ?? "";
+                        }
+                        <p class="card-text text-muted mb-3 tour-description">@description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold tour-price">$@tour.Price</span>
+                            <a href="/Tour/Details/@tour.Id" class="btn btn-success book-now-btn">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Why Choose TravelHub section -->
+<div class="search-container mt-5">
+    <h2 class="mb-4 text-center">Why Choose TripNest</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <div class="d-flex justify-content-center mb-3">
+                    <span class="badge bg-success rounded-circle p-3 custom-badge custom-bg-success"><i
+                            class="bi bi-shield-check custom-icon custom-icon-success"></i></span>
+                </div>
+                <h5 class="card-title">Verified Local Guides</h5>
+                <p class="card-text text-muted">All our tour guides are certified professionals with extensive local
+                    knowledge.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <div class="d-flex justify-content-center mb-3">
+                    <span class="badge bg-warning rounded-circle p-3 custom-badge custom-bg-warning"><i
+                            class="bi bi-cash custom-icon custom-icon-warning"></i></span>
+                </div>
+                <h5 class="card-title">Best Price Guarantee</h5>
+                <p class="card-text text-muted">Find a lower price? We'll match it and give you an additional 10%
+                    discount.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center p-4">
+                <div class="d-flex justify-content-center mb-3">
+                    <span class="badge bg-success rounded-circle p-3 custom-badge custom-bg-success"><i
+                            class="bi bi-check-circle custom-icon custom-icon-success"></i></span>
+                </div>
+                <h5 class="card-title">Flexible Booking</h5>
+                <p class="card-text text-muted">Change your plans? No problem. Free cancellation up to 48 hours before
+                    your tour.</p>
+            </div>
+        </div>
+    </div>
 </div>

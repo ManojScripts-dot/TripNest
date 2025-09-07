@@ -1,0 +1,47 @@
+@model IEnumerable<TripNest.Models.Tour>
+
+@{
+    ViewData["Title"] = "All Tour Packages";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
+<link rel="stylesheet" href="@Url.Content("~/css/packages.css")" />
+
+<div class="search-container mt-5 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0 text-left flex-grow-1 text-center">All Tour Packages</h2>
+    </div>
+    <div class="row">
+        @foreach (var tour in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    @{
+                        string imageUrl = tour.ImagePath;
+                        if (string.IsNullOrEmpty(imageUrl) || imageUrl.Contains("/images/default-tour.jpg"))
+                        {
+                            imageUrl = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
+                        }
+                    }
+                    <img src="@imageUrl" class="card-img-top tour-image" alt="@tour.Title" 
+                         onerror="this.src='https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg'" />
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase mb-2 tour-title">@tour.Title</h5>
+                        <p class="text-muted mb-1 tour-destination"><i class="bi bi-geo-alt-fill me-1"></i>@tour.Destination</p>
+                        @{
+                            string description = tour.Description != null && tour.Description.Length > 100
+                                ? tour.Description.Substring(0, 100) + "..."
+                                : tour.Description ?? "";
+                        }
+                        <p class="card-text text-muted mb-3 tour-description">@description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold tour-price">$@tour.Price</span>
+                            <a href="/Tour/Details/@tour.Id" class="btn btn-success book-now-btn">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

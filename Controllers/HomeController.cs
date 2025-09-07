@@ -1,31 +1,72 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TripNest.Models;
+using TripNest.Data;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 
-namespace TripNest.Controllers;
-
-public class HomeController : Controller
+namespace TripNest.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        public IActionResult Index()
+        {
+            try
+            {
+                var tours = _context.Tours.Where(t => t.Status == "Active").Take(3).ToList();
+                _logger.LogInformation($"Loaded {tours.Count} tours for Index page.");
+                return View(tours);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Index page.");
+                return View("Error");
+            }
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Packages()
+        {
+            try
+            {
+                var tours = _context.Tours.Where(t => t.Status == "Active").ToList();
+                _logger.LogInformation($"Loaded {tours.Count} tours for Packages page.");
+                return View(tours);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Packages page.");
+                return View("Error");
+            }
+        }
+
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

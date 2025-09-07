@@ -5,7 +5,7 @@ services:
     branch: main
     envVars:
       - key: ConnectionStrings__DefaultConnection
-        fromSecret: SUPABASE_DATABASE_URL
+        value: postgresql://postgres:ygtkkaGlHhPEddOZ@db.tslsmdmrfoympaektgea.supabase.co:5432/postgres
       - key: Cloudinary__CloudName
         fromSecret: CLOUDINARY_CLOUD_NAME
       - key: Cloudinary__ApiKey

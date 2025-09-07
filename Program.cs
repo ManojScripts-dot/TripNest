@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using TripNest.Data;
 using TripNest.Services;
+using TripNest.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,6 +67,72 @@ using (var scope = app.Services.CreateScope())
     {
         context.Database.Migrate();
         app.Logger.LogInformation("Database migrations applied successfully");
+        
+        // Seed sample data if database is empty
+        if (!context.Tours.Any())
+        {
+            app.Logger.LogInformation("Seeding sample data...");
+            
+            // Create sample agency
+            var sampleAgency = new Agency
+            {
+                Name = "Adventure Tours Nepal",
+                Email = "info@adventuretours.com",
+                PhoneNumber = "+977-1-1234567",
+                Password = "sample_password" // In production, this should be hashed
+            };
+            context.Agencies.Add(sampleAgency);
+            await context.SaveChangesAsync();
+            
+            // Create sample tours
+            var sampleTours = new List<Tour>
+            {
+                new Tour
+                {
+                    Title = "Everest Base Camp Trek",
+                    Description = "Experience the ultimate adventure with our 14-day trek to Everest Base Camp. Witness breathtaking mountain views, Sherpa culture, and the world's highest peak.",
+                    DurationDays = 14,
+                    StarRating = 5,
+                    Price = 1200.00m,
+                    ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg",
+                    Destination = "Everest Region, Nepal",
+                    Status = "Active",
+                    CreatedDate = DateTime.UtcNow,
+                    AgencyId = sampleAgency.Id
+                },
+                new Tour
+                {
+                    Title = "Annapurna Circuit Trek",
+                    Description = "Discover the diverse landscapes of the Annapurna region on this 12-day trek. From lush valleys to high mountain passes, experience Nepal's natural beauty.",
+                    DurationDays = 12,
+                    StarRating = 4,
+                    Price = 950.00m,
+                    ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg",
+                    Destination = "Annapurna Region, Nepal",
+                    Status = "Active",
+                    CreatedDate = DateTime.UtcNow,
+                    AgencyId = sampleAgency.Id
+                },
+                new Tour
+                {
+                    Title = "Kathmandu Cultural Tour",
+                    Description = "Explore the rich cultural heritage of Kathmandu Valley. Visit UNESCO World Heritage sites, ancient temples, and traditional markets.",
+                    DurationDays = 3,
+                    StarRating = 4,
+                    Price = 250.00m,
+                    ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg",
+                    Destination = "Kathmandu, Nepal",
+                    Status = "Active",
+                    CreatedDate = DateTime.UtcNow,
+                    AgencyId = sampleAgency.Id
+                }
+            };
+            
+            context.Tours.AddRange(sampleTours);
+            await context.SaveChangesAsync();
+            
+            app.Logger.LogInformation("Sample data seeded successfully");
+        }
     }
     catch (Exception ex)
     {

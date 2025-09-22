@@ -5,7 +5,7 @@ services:
     branch: main
     envVars:
       - key: ConnectionStrings__DefaultConnection
-        value: postgresql://postgres:ygtkkaGlHhPEddOZ@db.tslsmdmrfoympaektgea.supabase.co:5432/postgres
+        value: Host=aws-1-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ggukzsqytnqexvlmvvgu;Password=Tripnest123;SSL Mode=Require;
       - key: Cloudinary__CloudName
         fromSecret: CLOUDINARY_CLOUD_NAME
       - key: Cloudinary__ApiKey

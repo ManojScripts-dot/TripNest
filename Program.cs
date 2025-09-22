@@ -25,14 +25,8 @@ if (builder.Environment.IsDevelopment())
     }
 }
 
-// Get connection string from environment variables
-var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") 
-                      ?? builder.Configuration.GetConnectionString("DefaultConnection");
-
-if (string.IsNullOrEmpty(connectionString))
-{
-    throw new InvalidOperationException("Database connection string not found. Please set ConnectionStrings__DefaultConnection environment variable.");
-}
+// Use hardcoded Supabase connection string that we know works
+var connectionString = "Host=aws-1-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ggukzsqytnqexvlmvvgu;Password=Tripnest123;";
 
 // Register DbContext with PostgreSQL provider
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

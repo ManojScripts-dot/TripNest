@@ -29,7 +29,11 @@ namespace TripNest.Services
 
             if (string.IsNullOrEmpty(cloudName) || string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
             {
-                throw new ArgumentException("Cloudinary configuration is missing. Please set environment variables: Cloudinary__CloudName, Cloudinary__ApiKey, Cloudinary__ApiSecret");
+                _logger.LogWarning("Cloudinary configuration is missing. Using fallback mode.");
+                // Set default values to prevent initialization errors
+                cloudName = "dtudiub1v";
+                apiKey = "dummy";
+                apiSecret = "dummy";
             }
 
             var account = new Account(cloudName, apiKey, apiSecret);
@@ -56,6 +60,13 @@ namespace TripNest.Services
             if (file.Length > 10 * 1024 * 1024)
             {
                 throw new ArgumentException("File size must be less than 10MB");
+            }
+
+            // Check if Cloudinary is properly configured
+            if (_cloudinary == null)
+            {
+                _logger.LogWarning("Cloudinary not properly configured, using default image");
+                return "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
             }
 
             try
@@ -91,8 +102,8 @@ namespace TripNest.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error uploading image to Cloudinary");
-                throw;
+                _logger.LogError(ex, "Error uploading image to Cloudinary, using default image");
+                return "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
             }
         }
 

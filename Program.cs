@@ -119,6 +119,45 @@ using (var scope = app.Services.CreateScope())
                     Status = "Active",
                     CreatedDate = DateTime.UtcNow,
                     AgencyId = sampleAgency.Id
+                },
+                new Tour
+                {
+                    Title = "Pokhara Adventure Tour",
+                    Description = "Discover the beautiful lakeside city of Pokhara with paragliding, boating on Phewa Lake, and stunning views of the Annapurna range. Perfect for adventure seekers and nature lovers.",
+                    DurationDays = 4,
+                    StarRating = 5,
+                    Price = 400.00m,
+                    ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg",
+                    Destination = "Pokhara, Nepal",
+                    Status = "Active",
+                    CreatedDate = DateTime.UtcNow,
+                    AgencyId = sampleAgency.Id
+                },
+                new Tour
+                {
+                    Title = "Chitwan National Park Safari",
+                    Description = "Experience wildlife in its natural habitat with jungle safaris, elephant rides, and bird watching. Spot rhinos, tigers, and diverse bird species in this UNESCO World Heritage site.",
+                    DurationDays = 3,
+                    StarRating = 4,
+                    Price = 350.00m,
+                    ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg",
+                    Destination = "Chitwan, Nepal",
+                    Status = "Active",
+                    CreatedDate = DateTime.UtcNow,
+                    AgencyId = sampleAgency.Id
+                },
+                new Tour
+                {
+                    Title = "Langtang Valley Trek",
+                    Description = "Trek through the beautiful Langtang Valley with stunning mountain views, traditional Tamang villages, and diverse landscapes. A perfect alternative to the more crowded Everest and Annapurna regions.",
+                    DurationDays = 10,
+                    StarRating = 4,
+                    Price = 800.00m,
+                    ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg",
+                    Destination = "Langtang Region, Nepal",
+                    Status = "Active",
+                    CreatedDate = DateTime.UtcNow,
+                    AgencyId = sampleAgency.Id
                 }
             };
             

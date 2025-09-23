@@ -29,6 +29,12 @@ namespace TripNest.Controllers
 
         public IActionResult Create()
         {
+            var agencyIdCookie = Request.Cookies["AgencyId"];
+            if (string.IsNullOrEmpty(agencyIdCookie) || !int.TryParse(agencyIdCookie, out int agencyId))
+            {
+                return RedirectToAction("Login", "Agency");
+            }
+
             return View();
         }
 

@@ -60,26 +60,30 @@ namespace TripNest.Controllers
                     {
                         try
                         {
+                            _logger.LogInformation("Attempting to upload image for tour: {TourTitle}, File size: {FileSize} bytes", tour.Title, imageFile.Length);
                             var imageUrl = await _cloudinaryService.UploadImageAsync(imageFile, "tours");
                             tour.ImagePath = imageUrl;
-                            _logger.LogInformation("Image uploaded successfully for tour: {TourTitle}", tour.Title);
+                            _logger.LogInformation("Image uploaded successfully for tour: {TourTitle}, URL: {ImageUrl}", tour.Title, imageUrl);
                         }
                         catch (ArgumentException ex)
                         {
+                            _logger.LogError(ex, "Invalid image file for tour: {TourTitle}", tour.Title);
                             ModelState.AddModelError("imageFile", ex.Message);
                             return View(tour);
                         }
                         catch (Exception ex)
                         {
                             _logger.LogError(ex, "Error uploading image for tour: {TourTitle}", tour.Title);
-                            ModelState.AddModelError("imageFile", "Failed to upload image. Please try again.");
-                            return View(tour);
+                            // Don't return error, just use default image
+                            tour.ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
+                            _logger.LogWarning("Using default image for tour: {TourTitle} due to upload failure", tour.Title);
                         }
                     }
                     else
                     {
                         // Use default image URL from Cloudinary
                         tour.ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
+                        _logger.LogInformation("No image provided for tour: {TourTitle}, using default image", tour.Title);
                     }
 
                     _context.Tours.Add(tour);

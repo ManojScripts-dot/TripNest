@@ -24,17 +24,17 @@ namespace TripNest.Services
 
         public static string FormatUSD(this decimal amount)
         {
-            return $"&#36;{amount:N2}";
+            return $"${amount:N2}";
         }
 
         public static string FormatUSD(this double amount)
         {
-            return $"&#36;{amount:N2}";
+            return $"${amount:N2}";
         }
 
         public static string FormatUSD(this int amount)
         {
-            return $"&#36;{amount:N2}";
+            return $"${amount:N2}";
         }
     }
 }

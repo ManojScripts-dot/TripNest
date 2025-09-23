@@ -30,6 +30,10 @@ namespace TripNest.Services
             if (string.IsNullOrEmpty(cloudName) || string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret))
             {
                 _logger.LogWarning("Cloudinary configuration is missing. Using fallback mode.");
+                _logger.LogWarning("Missing variables - CloudName: {CloudName}, ApiKey: {ApiKey}, ApiSecret: {ApiSecret}", 
+                    string.IsNullOrEmpty(cloudName) ? "MISSING" : "SET", 
+                    string.IsNullOrEmpty(apiKey) ? "MISSING" : "SET", 
+                    string.IsNullOrEmpty(apiSecret) ? "MISSING" : "SET");
                 // Set default values to prevent initialization errors
                 cloudName = "dtudiub1v";
                 apiKey = "dummy";
@@ -66,6 +70,13 @@ namespace TripNest.Services
             if (_cloudinary == null)
             {
                 _logger.LogWarning("Cloudinary not properly configured, using default image");
+                return "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
+            }
+
+            // Check if we're using dummy credentials
+            if (_cloudinary.Api.Account.Cloud == "dtudiub1v" && _cloudinary.Api.Account.ApiKey == "dummy")
+            {
+                _logger.LogWarning("Cloudinary using dummy credentials, upload will fail, using default image");
                 return "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
             }
 

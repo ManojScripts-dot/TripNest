@@ -52,7 +52,14 @@
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="fw-bold" style="font-size: 1.25rem; color: #333;">
-                                    @(tour.Price > 0 ? tour.Price.ToString("C") : "N/A")
+                                    @if (tour.Price > 0)
+                                    {
+                                        <span class="currency">USD</span>@tour.Price.ToString("F2")
+                                    }
+                                    else
+                                    {
+                                        <text>N/A</text>
+                                    }
                                 </span>
                                 <a href="@Url.Action("Details", "Tour", new { id = tour.Id })" class="btn btn-tripnest">
                                     <i class="bi bi-bookmark-check-fill me-1"></i>Book Now
@@ -125,5 +132,15 @@
         color: #fff;
         transform: scale(1.05);
         text-decoration: none;
+    }
+    .currency {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: #27ae60;
+        font-size: 0.9em;
+        background-color: #f8f9fa;
+        padding: 2px 6px;
+        border-radius: 3px;
+        border: 1px solid #dee2e6;
     }
 </style>

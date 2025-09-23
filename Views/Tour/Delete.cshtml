@@ -58,7 +58,16 @@
                             </li>
                             <li class="list-group-item d-flex align-items-center">
                                 <i class="bi bi-currency-dollar text-success me-3"></i>
-                                <strong class="me-2">Price:</strong> <span>@(Model.Price > 0 ? Model.Price.ToString("C") : "N/A")</span>
+                                <strong class="me-2">Price:</strong> <span>
+                                    @if (Model.Price > 0)
+                                    {
+                                        <span class="currency">USD</span>@Model.Price.ToString("F2")
+                                    }
+                                    else
+                                    {
+                                        <text>N/A</text>
+                                    }
+                                </span>
                             </li>
                             <li class="list-group-item d-flex align-items-center">
                                 <i class="bi bi-toggle-on text-success me-3"></i>
@@ -141,5 +150,15 @@
     .alert-danger {
         border-radius: 0.5rem;
         padding: 0.75rem;
+    }
+    .currency {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: #27ae60;
+        font-size: 0.9em;
+        background-color: #f8f9fa;
+        padding: 2px 6px;
+        border-radius: 3px;
+        border: 1px solid #dee2e6;
     }
 </style>

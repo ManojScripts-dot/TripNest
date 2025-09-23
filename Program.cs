@@ -35,6 +35,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Register Cloudinary service
 builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
+// Register Local Image service
+builder.Services.AddScoped<LocalImageService>();
+
 // Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

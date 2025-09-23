@@ -7,11 +7,11 @@ services:
       - key: ConnectionStrings__DefaultConnection
         value: Host=aws-1-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.ggukzsqytnqexvlmvvgu;Password=Tripnest123;
       - key: Cloudinary__CloudName
-        fromSecret: CLOUDINARY_CLOUD_NAME
+        value: dtudiub1v
       - key: Cloudinary__ApiKey
-        fromSecret: CLOUDINARY_API_KEY
+        value: 123456789012345
       - key: Cloudinary__ApiSecret
-        fromSecret: CLOUDINARY_API_SECRET
+        value: your-cloudinary-api-secret-here
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: ASPNETCORE_URLS

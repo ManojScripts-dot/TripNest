@@ -10,14 +10,16 @@ namespace TripNest.Controllers
 {
     public class TourController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ICloudinaryService _cloudinaryService;
-        private readonly ILogger<TourController> _logger;
+    private readonly ApplicationDbContext _context;
+    private readonly ICloudinaryService _cloudinaryService;
+    private readonly LocalImageService _localImageService;
+    private readonly ILogger<TourController> _logger;
 
-        public TourController(ApplicationDbContext context, ICloudinaryService cloudinaryService, ILogger<TourController> logger)
+        public TourController(ApplicationDbContext context, ICloudinaryService cloudinaryService, LocalImageService localImageService, ILogger<TourController> logger)
         {
             _context = context;
             _cloudinaryService = cloudinaryService;
+            _localImageService = localImageService;
             _logger = logger;
         }
 
@@ -62,8 +64,33 @@ namespace TripNest.Controllers
                         {
                             _logger.LogInformation("Attempting to upload image for tour: {TourTitle}, File size: {FileSize} bytes", tour.Title, imageFile.Length);
                             var imageUrl = await _cloudinaryService.UploadImageAsync(imageFile, "tours");
-                            tour.ImagePath = imageUrl;
-                            _logger.LogInformation("Image uploaded successfully for tour: {TourTitle}, URL: {ImageUrl}", tour.Title, imageUrl);
+                            
+                            // Check if we got a default image URL (indicating Cloudinary failed)
+                            if (imageUrl.Contains("default-tour"))
+                            {
+                                _logger.LogWarning("Cloudinary upload failed for tour: {TourTitle}, trying local storage", tour.Title);
+                                
+                                // Try local storage as fallback
+                                try
+                                {
+                                    var localImageUrl = await _localImageService.SaveImageAsync(imageFile, "tour-images");
+                                    tour.ImagePath = localImageUrl;
+                                    _logger.LogInformation("Image saved locally for tour: {TourTitle}, URL: {ImageUrl}", tour.Title, localImageUrl);
+                                    ViewBag.Success = "Tour created successfully with locally stored image!";
+                                }
+                                catch (Exception localEx)
+                                {
+                                    _logger.LogError(localEx, "Local storage also failed for tour: {TourTitle}", tour.Title);
+                                    tour.ImagePath = imageUrl; // Use default image
+                                    ViewBag.Warning = "Image upload failed. Using default image. Please check Cloudinary configuration.";
+                                }
+                            }
+                            else
+                            {
+                                tour.ImagePath = imageUrl;
+                                _logger.LogInformation("Image uploaded successfully for tour: {TourTitle}, URL: {ImageUrl}", tour.Title, imageUrl);
+                                ViewBag.Success = "Tour created successfully with uploaded image!";
+                            }
                         }
                         catch (ArgumentException ex)
                         {
@@ -74,9 +101,23 @@ namespace TripNest.Controllers
                         catch (Exception ex)
                         {
                             _logger.LogError(ex, "Error uploading image for tour: {TourTitle}", tour.Title);
-                            // Don't return error, just use default image
-                            tour.ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
-                            _logger.LogWarning("Using default image for tour: {TourTitle} due to upload failure", tour.Title);
+                            
+                            // Try local storage as fallback
+                            try
+                            {
+                                var localImageUrl = await _localImageService.SaveImageAsync(imageFile, "tour-images");
+                                tour.ImagePath = localImageUrl;
+                                _logger.LogInformation("Image saved locally for tour: {TourTitle}, URL: {ImageUrl}", tour.Title, localImageUrl);
+                                ViewBag.Success = "Tour created successfully with locally stored image!";
+                            }
+                            catch (Exception localEx)
+                            {
+                                _logger.LogError(localEx, "Local storage also failed for tour: {TourTitle}", tour.Title);
+                                // Use default image but don't fail the tour creation
+                                tour.ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
+                                _logger.LogWarning("Using default image for tour: {TourTitle} due to upload failure", tour.Title);
+                                ViewBag.Warning = "Image upload failed. Using default image. Please check Cloudinary configuration.";
+                            }
                         }
                     }
                     else
@@ -84,6 +125,7 @@ namespace TripNest.Controllers
                         // Use default image URL from Cloudinary
                         tour.ImagePath = "https://res.cloudinary.com/dtudiub1v/image/upload/v1752921619/default-tour_clzafv.jpg";
                         _logger.LogInformation("No image provided for tour: {TourTitle}, using default image", tour.Title);
+                        ViewBag.Success = "Tour created successfully with default image!";
                     }
 
                     _context.Tours.Add(tour);
@@ -150,8 +192,10 @@ namespace TripNest.Controllers
                     {
                         try
                         {
+                            _logger.LogInformation("Attempting to upload new image for tour: {TourTitle}, File size: {FileSize} bytes", existingTour.Title, imageFile.Length);
                             var imageUrl = await _cloudinaryService.UploadImageAsync(imageFile, "tours");
                             existingTour.ImagePath = imageUrl;
+                            _logger.LogInformation("Image updated successfully for tour: {TourTitle}, New URL: {ImageUrl}", existingTour.Title, imageUrl);
 
                             // Delete old image from Cloudinary if it exists and is not the default
                             if (!string.IsNullOrEmpty(oldImagePath) && 
@@ -176,8 +220,8 @@ namespace TripNest.Controllers
                         catch (Exception ex)
                         {
                             _logger.LogError(ex, "Error uploading new image for tour: {TourTitle}", existingTour.Title);
-                            ModelState.AddModelError("imageFile", "Failed to upload image. Please try again.");
-                            return View(tour);
+                            // Don't return error, just keep the old image
+                            _logger.LogWarning("Keeping existing image for tour: {TourTitle} due to upload failure", existingTour.Title);
                         }
                     }
 

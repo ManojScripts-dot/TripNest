@@ -81,8 +81,8 @@
                         </div>
                     </div>
                     <div class="mt-4 p-3 bg-light rounded-3">
-                        <p class="mb-2"><strong>Tour Price per Guest:</strong> $@tour.Price</p>
-                        <p class="mb-0"><strong>Total Amount:</strong> <span id="totalAmount">$@(Model.TotalAmount > 0 ? Model.TotalAmount.ToString("F2") : (tour.Price * (Model.NumberOfGuests > 0 ? Model.NumberOfGuests : 1)).ToString("F2"))</span></p>
+                        <p class="mb-2"><strong>Tour Price per Guest:</strong> &#36;@tour.Price</p>
+                        <p class="mb-0"><strong>Total Amount:</strong> <span id="totalAmount">&#36;@(Model.TotalAmount > 0 ? Model.TotalAmount.ToString("F2") : (tour.Price * (Model.NumberOfGuests > 0 ? Model.NumberOfGuests : 1)).ToString("F2"))</span></p>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-custom btn-lg rounded-pill me-2">
@@ -109,7 +109,7 @@
             let guests = parseInt(guestsInput.value) || 1;
             if (guests < 1) guests = 1;
             const total = (pricePerGuest * guests).toFixed(2);
-            totalAmountSpan.textContent = `$${total}`;
+            totalAmountSpan.textContent = `&#36;${total}`;
         }
 
         if (guestsInput) {

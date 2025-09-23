@@ -200,7 +200,9 @@ namespace TripNest.Controllers
                     Id = b.Id,
                     BookingDate = b.BookingDate,
                     Status = b.Status,
-                    TourName = b.Tour != null ? b.Tour.Title : "Unknown"
+                    TourName = b.Tour != null ? b.Tour.Title : "Unknown",
+                    TourImageUrl = b.Tour != null ? b.Tour.ImagePath : null,
+                    NumberOfGuests = b.NumberOfGuests
                 }).ToList(),
                 Reviews = userReviews
             };
@@ -318,7 +320,9 @@ namespace TripNest.Controllers
                         Id = b.Id,
                         BookingDate = b.BookingDate,
                         Status = b.Status,
-                        TourName = b.Tour != null ? b.Tour.Title : "Unknown"
+                        TourName = b.Tour != null ? b.Tour.Title : "Unknown",
+                        TourImageUrl = b.Tour != null ? b.Tour.ImagePath : null,
+                        NumberOfGuests = b.NumberOfGuests
                     }).ToList(),
                     Reviews = userReviews
                 };

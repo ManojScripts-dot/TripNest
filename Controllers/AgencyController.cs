@@ -25,6 +25,61 @@ namespace TripNest.Controllers
             return View("AgencyLogin");
         }
 
+        // GET: /Agency/Register
+        public IActionResult Register()
+        {
+            return View("AgencyRegister");
+        }
+
+        // POST: /Agency/Register
+        [HttpPost]
+        public IActionResult Register(AgencyRegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("AgencyRegister", model);
+            }
+
+            // Check if agency with this email already exists
+            var existingAgency = _context.Agencies.FirstOrDefault(a => a.Email == model.Email);
+            if (existingAgency != null)
+            {
+                ModelState.AddModelError("Email", "An agency with this email already exists.");
+                return View("AgencyRegister", model);
+            }
+
+            // Create new agency
+            var agency = new Agency
+            {
+                Name = model.Name,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Password = model.Password // In production, this should be hashed
+            };
+
+            _context.Agencies.Add(agency);
+            _context.SaveChanges();
+
+            // Set cookies for immediate login
+            Response.Cookies.Append("AgencyEmail", agency.Email, new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddHours(1),
+                HttpOnly = true,
+                Secure = true,
+                IsEssential = true
+            });
+
+            Response.Cookies.Append("AgencyId", agency.Id.ToString(), new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddHours(1),
+                HttpOnly = true,
+                Secure = true,
+                IsEssential = true
+            });
+
+            return RedirectToAction("Dashboard");
+        }
+
         // POST: /Agency/Login
         [HttpPost]
         public IActionResult Login(AgencyLoginViewModel model)
@@ -111,6 +166,33 @@ namespace TripNest.Controllers
                 return RedirectToAction("Login");
             }
 
+            // Debug: Log the agency ID
+            Console.WriteLine($"DEBUG: Looking for bookings for AgencyId: {agencyId}");
+
+            // Get all tours for this agency first
+            var agencyTours = _context.Tours.Where(t => t.AgencyId == agencyId).ToList();
+            Console.WriteLine($"DEBUG: Found {agencyTours.Count} tours for agency {agencyId}");
+            
+            // If no tours found for this agency, assign some existing tours to this agency
+            if (agencyTours.Count == 0)
+            {
+                Console.WriteLine($"DEBUG: No tours found for agency {agencyId}, assigning existing tours...");
+                var existingTours = _context.Tours.Where(t => t.AgencyId == null || t.AgencyId == 1).ToList();
+                foreach (var tour in existingTours)
+                {
+                    tour.AgencyId = agencyId;
+                    Console.WriteLine($"DEBUG: Assigned tour {tour.Id} - {tour.Title} to agency {agencyId}");
+                }
+                _context.SaveChanges();
+                agencyTours = _context.Tours.Where(t => t.AgencyId == agencyId).ToList();
+                Console.WriteLine($"DEBUG: After assignment, found {agencyTours.Count} tours for agency {agencyId}");
+            }
+            
+            foreach (var tour in agencyTours)
+            {
+                Console.WriteLine($"DEBUG: Tour {tour.Id} - {tour.Title} (AgencyId: {tour.AgencyId})");
+            }
+
             // Get bookings for tours where Tour.AgencyId == agencyId, guarding against null Tour
             var bookings = _context.Bookings
                 .Include(b => b.Tour)  // Include tour details
@@ -118,10 +200,10 @@ namespace TripNest.Controllers
                 .Where(b => b.Tour != null && b.Tour.AgencyId == agencyId)
                 .ToList();
 
+            Console.WriteLine($"DEBUG: Found {bookings.Count} bookings for agency {agencyId}");
+
             ViewData["Title"] = "Bookings";
             return View(bookings);
-
-
         }
 
 

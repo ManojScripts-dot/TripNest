@@ -65,7 +65,17 @@ namespace TripNest.Controllers
                 // Assign UserId to booking
                 booking.UserId = user.Id;
                 booking.TotalAmount = tour.Price * booking.NumberOfGuests;
-                booking.BookingDate = DateTime.Now;
+                booking.BookingDate = DateTime.UtcNow;
+                
+                // Ensure PreferredTourDate is UTC
+                if (booking.PreferredTourDate.Kind == DateTimeKind.Unspecified)
+                {
+                    booking.PreferredTourDate = DateTime.SpecifyKind(booking.PreferredTourDate, DateTimeKind.Utc);
+                }
+                else if (booking.PreferredTourDate.Kind == DateTimeKind.Local)
+                {
+                    booking.PreferredTourDate = booking.PreferredTourDate.ToUniversalTime();
+                }
 
                 _context.Bookings.Add(booking);
                 await _context.SaveChangesAsync();

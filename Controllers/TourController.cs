@@ -254,7 +254,7 @@ namespace TripNest.Controllers
 
             if (!string.IsNullOrEmpty(destination))
             {
-                tours = tours.Where(t => t.Destination.Contains(destination));
+                tours = tours.Where(t => t.Destination.ToLower().Contains(destination.ToLower()));
             }
 
             // If you have no date property, you can skip this or handle differently.

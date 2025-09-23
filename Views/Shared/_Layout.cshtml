@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
 <body>
@@ -29,26 +30,44 @@
                         <li class="nav-item"><a class="nav-link" href="/Home/Packages">Packages</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Home/AboutUs">About Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Home/ContactUs">Contact Us</a></li>
-                        @if (User.Identity?.IsAuthenticated ?? false)
+                        @{
+                            var agencyEmail = Context.Request.Cookies["AgencyEmail"];
+                            var agencyId = Context.Request.Cookies["AgencyId"];
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(agencyEmail))
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    @User.Claims.FirstOrDefault(c => c.Type == "FirstName")?.Value
+                            <!-- Agency Dashboard Link -->
+                            <li class="nav-item">
+                                <a class="nav-link nav-dashboard" href="/Agency/Dashboard">
+                                    <i class="fas fa-tachometer-alt me-1"></i> Dashboard
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                    <li><a class="dropdown-item" href="/Account/Profile">Profile</a></li>
-                                    <li>
-                                        <form asp-controller="Account" asp-action="Logout" method="post">
-                                            <button type="submit" class="dropdown-item">Logout</button>
-                                        </form>
-                                    </li>
-                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Agency/Logout">
+                                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                </a>
+                            </li>
+                        }
+                        else if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <!-- User Navigation -->
+                            <li class="nav-item">
+                                <a class="nav-link nav-profile" href="/Account/Profile">
+                                    <i class="fas fa-user me-1"></i> Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Account/Logout">
+                                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                </a>
                             </li>
                         }
                         else
                         {
-                            <li class="nav-item"><a class="nav-link nav-login" href="/Account/Login">Login</a></li>
+                            <!-- Login Options -->
+                            <li class="nav-item"><a class="nav-link nav-login" href="/Account/Login">User Login</a></li>
+                            <li class="nav-item"><a class="nav-link nav-dashboard" href="/Agency/Login">Dashboard</a></li>
                         }
                     </ul>
                 </div>

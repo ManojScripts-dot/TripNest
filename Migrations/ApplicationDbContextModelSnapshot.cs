@@ -60,7 +60,6 @@ namespace TripNest.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AdditionalNotes")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -87,7 +86,6 @@ namespace TripNest.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SpecialRequests")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 

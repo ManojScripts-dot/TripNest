@@ -60,7 +60,7 @@ namespace TripNest.Controllers
                 return View("Error", new ErrorViewModel { ErrorMessage = "Review already submitted for this booking." });
 
             model.UserId = userId;
-            model.CreatedAt = DateTime.Now;
+            model.CreatedAt = DateTime.UtcNow;
 
             _context.Reviews.Add(model);
             _context.SaveChanges();

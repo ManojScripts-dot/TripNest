@@ -109,16 +109,19 @@
                                 @if (booking.Status.ToLower() == "completed")
                                 {
                                     <a asp-controller="Review" asp-action="Create" asp-route-bookingId="@booking.Id"
-                                       class="btn btn-sm btn-tripnest-outline me-2">
+                                       class="btn btn-sm btn-tripnest me-2">
                                         <i class="bi bi-star-fill me-1"></i> Add Review
                                     </a>
                                 }
-                                <form asp-controller="Bookings" asp-action="Cancel" asp-route-id="@booking.Id" method="post"
-                                      class="d-inline" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
-                                    <button type="submit" class="btn btn-sm btn-tripnest-outline text-danger">
-                                        <i class="bi bi-x-circle-fill me-1"></i> Cancel
-                                    </button>
-                                </form>
+                                else if (booking.Status.ToLower() != "cancelled")
+                                {
+                                    <form asp-controller="Bookings" asp-action="Cancel" asp-route-id="@booking.Id" method="post"
+                                          class="d-inline" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                                        <button type="submit" class="btn btn-sm btn-tripnest-outline text-danger">
+                                            <i class="bi bi-x-circle-fill me-1"></i> Cancel
+                                        </button>
+                                    </form>
+                                }
                             </td>
                         </tr>
                     }

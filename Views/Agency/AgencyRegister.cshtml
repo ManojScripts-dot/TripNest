@@ -1,0 +1,152 @@
+@model TripNest.Models.AgencyRegisterViewModel
+
+@{
+    ViewData["Title"] = "Agency Registration";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm mb-5 mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center" style="color: #27ae60;">
+                <i class="fas fa-building me-2"></i>@ViewData["Title"]
+            </h2>
+            <p class="text-center text-muted mb-4">Join TripNest as a travel agency and start managing your tours</p>
+
+            <form asp-action="Register" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-4">
+                            <label asp-for="Name" class="form-label fw-bold">
+                                <i class="fas fa-building me-1"></i>Agency Name
+                            </label>
+                            <input asp-for="Name" class="form-control rounded-3" placeholder="Enter your agency name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <label asp-for="Email" class="form-label fw-bold">
+                                <i class="fas fa-envelope me-1"></i>Email Address
+                            </label>
+                            <input asp-for="Email" class="form-control rounded-3" placeholder="Enter your email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <label asp-for="PhoneNumber" class="form-label fw-bold">
+                                <i class="fas fa-phone me-1"></i>Phone Number
+                            </label>
+                            <input asp-for="PhoneNumber" class="form-control rounded-3" placeholder="Enter your phone number" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <label asp-for="Password" class="form-label fw-bold">
+                                <i class="fas fa-lock me-1"></i>Password
+                            </label>
+                            <input asp-for="Password" type="password" class="form-control rounded-3" placeholder="Enter your password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <label asp-for="ConfirmPassword" class="form-label fw-bold">
+                                <i class="fas fa-lock me-1"></i>Confirm Password
+                            </label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control rounded-3" placeholder="Confirm your password" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-custom">
+                        <i class="fas fa-user-plus me-2"></i>Register as Agency
+                    </button>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="mb-0">Already have an agency account?</p>
+                    <a asp-action="Login" class="btn btn-outline-success">
+                        <i class="fas fa-sign-in-alt me-1"></i>Login to Agency Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    .card {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        border: 2px solid #e9ecef;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #27ae60;
+        box-shadow: 0 0 0 0.2rem rgba(39, 174, 96, 0.25);
+    }
+
+    .btn-custom {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: white;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #219653;
+        border-color: #219653;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+    }
+
+    .btn-outline-success {
+        border-color: #27ae60;
+        color: #27ae60;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .form-label {
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+</style>

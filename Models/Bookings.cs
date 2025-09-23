@@ -10,8 +10,8 @@ namespace TripNest.Models
             CustomerName = string.Empty;
             Email = string.Empty;
             PhoneNumber = string.Empty;
-            SpecialRequests = string.Empty;
-            AdditionalNotes = string.Empty;
+            SpecialRequests = null;
+            AdditionalNotes = null;
             Status = "Pending";
         }
 
@@ -44,13 +44,13 @@ namespace TripNest.Models
         [Display(Name = "Preferred Tour Date")]
         public DateTime PreferredTourDate { get; set; }
 
-        [StringLength(500)]
+        [StringLength(500, MinimumLength = 0)]
         [Display(Name = "Special Requests")]
-        public string SpecialRequests { get; set; }
+        public string? SpecialRequests { get; set; }
 
-        [StringLength(500)]
+        [StringLength(500, MinimumLength = 0)]
         [Display(Name = "Additional Notes")]
-        public string AdditionalNotes { get; set; }
+        public string? AdditionalNotes { get; set; }
 
         [Required]
         [Range(0, double.MaxValue)]
@@ -60,7 +60,7 @@ namespace TripNest.Models
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Booking Date")]
-        public DateTime BookingDate { get; set; } = DateTime.Now;
+        public DateTime BookingDate { get; set; } = DateTime.UtcNow;
 
         [StringLength(50)]
         public string Status { get; set; } = "Pending";

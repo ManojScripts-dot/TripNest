@@ -67,14 +67,14 @@
                         </div>
                         <div class="col-12">
                             <label asp-for="SpecialRequests" class="form-label fw-bold">
-                                <i class="bi bi-chat-text-fill text-success me-2"></i>Special Requests
+                                <i class="bi bi-chat-text-fill text-success me-2"></i>Special Requests <span class="text-muted">(Optional)</span>
                             </label>
-                            <textarea asp-for="SpecialRequests" class="form-control rounded-3" rows="3" placeholder="Any special requests?"></textarea>
+                            <textarea asp-for="SpecialRequests" class="form-control rounded-3" rows="3" placeholder="Any special requests? (Optional)"></textarea>
                             <span asp-validation-for="SpecialRequests" class="text-danger"></span>
                         </div>
                         <div class="col-12">
                             <label asp-for="AdditionalNotes" class="form-label fw-bold">
-                                <i class="bi bi-sticky-fill text-success me-2"></i>Additional Notes
+                                <i class="bi bi-sticky-fill text-success me-2"></i>Additional Notes <span class="text-muted">(Optional)</span>
                             </label>
                             <textarea asp-for="AdditionalNotes" class="form-control rounded-3" rows="3" placeholder="Additional notes (optional)"></textarea>
                             <span asp-validation-for="AdditionalNotes" class="text-danger"></span>
